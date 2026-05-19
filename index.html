@@ -7,35 +7,34 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif; background: #F5F3EE; color: #1a1a18; min-height: 100vh; font-size: 15px; }
-
-/* ── Header ── */
 .hdr { background: #fff; border-bottom: .5px solid rgba(0,0,0,.09); padding: 0 14px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 20; }
-.hdr-left  { display: flex; align-items: center; gap: 7px; }
+.hdr-left { display: flex; align-items: center; gap: 7px; }
 .hdr-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-.app-name  { font-size: 17px; font-weight: 800; letter-spacing: -.4px; }
-.btn-hdr   { border: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 6px 11px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-.btn-save  { background: #4A90E2; color: #fff; }
+.app-name { font-size: 17px; font-weight: 800; letter-spacing: -.4px; }
+.btn-hdr { border: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 6px 11px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.btn-save { background: #4A90E2; color: #fff; }
 .btn-ghost { background: #f0ede6; color: #555; }
-.btn-back  { background: none; border: none; cursor: pointer; font-size: 19px; color: #555; padding: 4px 6px; border-radius: 8px; font-family: inherit; }
-.btn-icon  { background: none; border: none; cursor: pointer; font-size: 20px; padding: 4px 5px; border-radius: 8px; }
-.btn-srch  { background: none; border: 1.5px solid transparent; color: #888; border-radius: 9px; padding: 5px 8px; font-size: 15px; cursor: pointer; }
+.btn-back { background: none; border: none; cursor: pointer; font-size: 20px; color: #555; padding: 4px 6px; border-radius: 8px; font-family: inherit; }
+.btn-icon { background: none; border: none; cursor: pointer; font-size: 20px; padding: 4px 5px; border-radius: 8px; }
+.btn-srch { background: none; border: 1.5px solid transparent; color: #888; border-radius: 9px; padding: 5px 8px; font-size: 15px; cursor: pointer; }
 .btn-srch.on { background: #EBF4FF; border-color: rgba(74,144,226,.3); color: #4A90E2; }
 .btn-add-hdr { color: #fff; border: none; border-radius: 9px; padding: 6px 13px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
-
-/* ── Toast ── */
+/* 검색바 - 헤더 바로 아래 고정 */
+.search-zone { background: #fff; border-bottom: .5px solid rgba(0,0,0,.07); padding: 8px 14px; position: sticky; top: 52px; z-index: 19; }
+.search-inp { background: #f0ede6; border: .5px solid rgba(74,144,226,.4); border-radius: 12px; padding: 9px 14px; font-size: 14px; width: 100%; font-family: inherit; outline: none; }
+.search-inp:focus { background: #fff; }
+/* Toast */
 .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 22px; z-index: 400; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
-
-/* ── Sticky Note (고정 메모) ── */
+/* Sticky note */
 .sticky-wrap { margin: 12px 14px 0; }
-.sticky-box  { background: #FFFDE7; border: 1px solid #F0E68C; border-radius: 12px; padding: 10px 12px; }
-.sticky-hdr  { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.sticky-box { background: #FFFDE7; border: 1px solid #F0E68C; border-radius: 12px; padding: 10px 12px; }
+.sticky-hdr { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
 .sticky-hdr-title { font-size: 11px; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: .05em; flex: 1; }
-.sticky-hdr-hint  { font-size: 10px; color: #B8860B; opacity: .7; }
-.sticky-ta { width: 100%; border: none; background: transparent; font-size: 13px; color: #555; font-family: inherit; outline: none; resize: none; line-height: 1.6; min-height: 44px; }
+.sticky-hdr-hint { font-size: 10px; color: #B8860B; opacity: .7; }
+.sticky-ta { width: 100%; border: none; background: transparent; font-size: 13px; color: #555; font-family: inherit; outline: none; resize: none; line-height: 1.6; min-height: 42px; }
 .sticky-ta::placeholder { color: #C8B44A; }
-
-/* ── Theme Grid ── */
+/* Grid */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px,1fr)); gap: 12px; padding: 16px; }
 .theme-card { border-radius: 16px; padding: 17px 14px; cursor: pointer; border: 1.5px solid transparent; transition: border-color .15s; position: relative; }
 .theme-card:hover { border-color: var(--tc); }
@@ -44,8 +43,7 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .theme-card .ct { font-size: 12px; color: #999; }
 .theme-card .lock-badge { position: absolute; top: 8px; right: 8px; font-size: 14px; }
 .add-card { border-radius: 16px; padding: 17px 14px; cursor: pointer; border: 1.5px dashed #ccc; background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 108px; color: #bbb; gap: 5px; }
-
-/* ── TODO Board ── */
+/* TODO Board */
 .todo-board { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 14px 15px; margin: 12px 14px 0; }
 .board-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .board-title { font-size: 15px; font-weight: 700; }
@@ -59,7 +57,6 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .cat-pick select { border: none; background: transparent; font-size: 12px; font-weight: 600; color: #444; outline: none; cursor: pointer; font-family: inherit; max-width: 120px; }
 .status-pick { border-radius: 8px; padding: 5px 9px; font-size: 12px; font-weight: 600; outline: none; cursor: pointer; font-family: inherit; border: 1px solid transparent; }
 .date-pick { border: .5px solid rgba(0,0,0,.14); border-radius: 8px; padding: 5px 8px; font-size: 12px; color: #666; outline: none; background: #f5f3ee; font-family: inherit; }
-/* todo items */
 .titem { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: .5px solid rgba(0,0,0,.07); }
 .titem:last-child { border-bottom: none; }
 .tcb { width: 20px; height: 20px; border: 1.5px solid rgba(0,0,0,.22); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #fff; cursor: pointer; margin-top: 1px; }
@@ -71,76 +68,68 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .tmeta { display: flex; gap: 5px; align-items: center; margin-top: 2px; }
 .tdate { font-size: 11px; color: #bbb; }
 .tcat-badge { font-size: 10px; padding: 1px 7px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
-.tactions button { background: none; border: none; color: #bbb; font-size: 15px; cursor: pointer; padding: 3px 5px; font-family: inherit; }
+.tactions button { background: none; border: none; color: #bbb; font-size: 15px; cursor: pointer; padding: 3px 5px; }
 .tsec { font-size: 11px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin: 12px 0 4px; }
 .more-btn { display: block; width: 100%; border: none; background: none; font-size: 13px; color: #4A90E2; cursor: pointer; padding: 9px 0 3px; font-family: inherit; text-align: left; font-weight: 600; }
 .no-todo { font-size: 13px; color: #bbb; padding: 6px 0 2px; }
 .tedit-row { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
 .tedit-input { flex: 1; border: .5px solid #4A90E2; border-radius: 8px; padding: 7px 10px; font-size: 14px; color: #1a1a18; background: #f0ede6; font-family: inherit; outline: none; min-width: 0; }
-.tedit-save   { background: #4A90E2; border: none; border-radius: 8px; padding: 7px 12px; font-size: 13px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
+.tedit-save { background: #4A90E2; border: none; border-radius: 8px; padding: 7px 12px; font-size: 13px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
 .tedit-cancel { background: none; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 7px 10px; font-size: 13px; color: #666; cursor: pointer; font-family: inherit; white-space: nowrap; }
-
-/* ── Memo View ── */
-.memo-view { padding: 0 14px 80px; }
-.search-wrap { padding-top: 10px; }
-.search-inp { background: #fff; border: .5px solid rgba(74,144,226,.4); border-radius: 12px; padding: 9px 14px; font-size: 14px; width: 100%; font-family: inherit; outline: none; }
-.tabs-row { display: flex; gap: 7px; overflow-x: auto; padding: 10px 0 0; scrollbar-width: none; }
+/* Memo view */
+.memo-view { padding: 0 14px; }
+.tabs-row { display: flex; gap: 7px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
 .tabs-row::-webkit-scrollbar { display: none; }
 .tab-btn { border-radius: 20px; padding: 5px 13px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: inherit; border: 1.5px solid #ddd; background: #fff; color: #666; }
 .tab-btn.on { color: #fff; border-color: transparent; }
-
-/* ── COMPACT MEMO CARD (한 줄) ── */
-.memo-list { display: flex; flex-direction: column; gap: 0; margin-top: 10px; background: #fff; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.07); overflow: hidden; }
-.mc { display: flex; align-items: center; gap: 8px; padding: 10px 13px; border-bottom: .5px solid rgba(0,0,0,.06); }
+/* Compact memo list */
+.memo-list { background: #fff; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.07); overflow: hidden; margin-bottom: 8px; }
+.mc { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border-bottom: .5px solid rgba(0,0,0,.06); }
 .mc:last-child { border-bottom: none; }
-.mc-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; flex-shrink: 0; white-space: nowrap; }
 .mc-title { flex: 1; font-size: 14px; font-weight: 500; color: #1a1a18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .mc-title.watched { text-decoration: line-through; color: #bbb; }
-.mc-region { font-size: 11px; color: #aaa; white-space: nowrap; flex-shrink: 0; }
-.mc-date   { font-size: 11px; color: #ccc; white-space: nowrap; flex-shrink: 0; }
-.mc-acts   { display: flex; gap: 1px; flex-shrink: 0; }
-.mc-acts button { background: none; border: none; cursor: pointer; font-size: 13px; padding: 3px 4px; color: #ccc; }
+.mc-date { font-size: 11px; color: #ccc; white-space: nowrap; flex-shrink: 0; }
+.mc-acts { display: flex; gap: 0; flex-shrink: 0; }
+.mc-acts button { background: none; border: none; cursor: pointer; font-size: 13px; padding: 3px 5px; color: #ccc; }
+.region-more-btn { display: block; width: 100%; border: none; background: none; font-size: 12px; color: #4A90E2; cursor: pointer; padding: 8px 13px; font-family: inherit; text-align: left; font-weight: 600; background: #fff; border-top: .5px solid rgba(0,0,0,.06); }
+.list-more-btn { display: block; width: 100%; border: none; background: #fff; font-size: 13px; color: #4A90E2; cursor: pointer; padding: 10px 13px; font-family: inherit; text-align: left; font-weight: 600; border-radius: 0 0 14px 14px; box-shadow: 0 1px 3px rgba(0,0,0,.07); margin-bottom: 8px; border-top: .5px solid rgba(0,0,0,.06); }
+/* Region groups */
+.region-group { }
+.region-hdr { display: flex; align-items: center; gap: 7px; margin: 14px 0 6px; }
+.region-hdr:first-child { margin-top: 8px; }
+.region-hdr-name { font-size: 13px; font-weight: 700; color: #444; }
+.region-hdr-count { font-size: 11px; color: #aaa; }
+.region-divider { flex: 1; height: .5px; background: rgba(0,0,0,.1); }
 .empty { text-align: center; padding: 40px 20px; color: #ccc; }
 .empty .ei { font-size: 36px; margin-bottom: 10px; }
 .empty .et { font-weight: 600; color: #bbb; margin-bottom: 4px; }
 .empty .es { font-size: 13px; }
-
-/* ── Region groups ── */
-.region-group { margin-top: 10px; }
-.region-hdr { display: flex; align-items: center; gap: 7px; margin: 14px 0 6px; }
-.region-hdr:first-child { margin-top: 6px; }
-.region-hdr-name  { font-size: 13px; font-weight: 700; color: #444; white-space: nowrap; }
-.region-hdr-count { font-size: 11px; color: #aaa; white-space: nowrap; }
-.region-divider   { flex: 1; height: .5px; background: rgba(0,0,0,.1); }
-
-/* ══════════════════════════════════════
-   SETTINGS
-══════════════════════════════════════ */
-.settings-page { padding: 14px; padding-bottom: 60px; }
+/* Settings */
+.settings-page { padding: 14px 14px 60px; }
 .ss-section { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); margin-bottom: 14px; overflow: hidden; }
-.ss-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .06em; padding: 13px 15px 8px; border-bottom: .5px solid rgba(0,0,0,.07); }
+.ss-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .06em; padding: 12px 15px 8px; border-bottom: .5px solid rgba(0,0,0,.07); }
 .st-row { padding: 12px 15px; border-bottom: .5px solid rgba(0,0,0,.06); }
 .st-row:last-child { border-bottom: none; }
 .st-main { display: flex; align-items: center; gap: 10px; }
 .st-emoji { font-size: 22px; width: 30px; text-align: center; flex-shrink: 0; }
-.st-info  { flex: 1; min-width: 0; }
-.st-name  { font-size: 15px; font-weight: 600; }
-.st-sub   { font-size: 11px; color: #aaa; margin-top: 1px; }
-.st-btns  { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
-.st-btn   { border: none; border-radius: 8px; padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
-.st-btn-edit     { background: #f0ede6; color: #555; }
+.st-info { flex: 1; min-width: 0; }
+.st-name { font-size: 15px; font-weight: 600; }
+.st-sub { font-size: 11px; color: #aaa; margin-top: 1px; }
+.st-btns { display: flex; gap: 5px; flex-shrink: 0; }
+.st-btn { border: none; border-radius: 8px; padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.st-btn-edit { background: #f0ede6; color: #555; }
 .st-btn-lock-off { background: #f0ede6; color: #888; }
-.st-btn-lock-on  { background: #FFF0E8; color: #E8743B; }
-.st-btn-del      { background: #FDEAEA; color: #C0392B; }
+.st-btn-lock-on { background: #FFF0E8; color: #E8743B; }
+.st-btn-del { background: #FDEAEA; color: #C0392B; }
 .st-edit-area { margin-top: 10px; padding: 12px; background: #f8f7f4; border-radius: 10px; }
 .st-edit-label { font-size: 11px; font-weight: 600; color: #888; margin-bottom: 5px; display: block; }
-.st-edit-name  { width: 100%; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 9px 11px; font-size: 14px; font-family: inherit; outline: none; background: #fff; margin-bottom: 10px; }
-.emoji-picker  { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+.st-edit-name { width: 100%; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 9px 11px; font-size: 14px; font-family: inherit; outline: none; background: #fff; margin-bottom: 10px; }
+.emoji-picker { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
 .ep-btn { font-size: 20px; border: 1.5px solid #e5e5e5; border-radius: 8px; width: 36px; height: 36px; cursor: pointer; background: none; }
 .ep-btn.sel { border: 2px solid #333; background: #f0f0f0; }
 .st-edit-btns { display: flex; gap: 8px; }
 .st-edit-btns button { flex: 1; border: none; border-radius: 9px; padding: 9px 0; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
-.st-save-btn   { background: #4A90E2; color: #fff; }
+.st-save-btn { background: #4A90E2; color: #fff; }
 .st-cancel-btn { background: #f0ede6; color: #555; }
 .ss-btn-row { display: flex; align-items: center; padding: 13px 15px; border-bottom: .5px solid rgba(0,0,0,.06); cursor: pointer; gap: 10px; }
 .ss-btn-row:last-child { border-bottom: none; }
@@ -149,8 +138,7 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .ss-row-arrow { font-size: 14px; color: #ccc; }
 .ss-danger { color: #C0392B; }
 .ss-info-text { font-size: 12px; color: #aaa; line-height: 1.6; padding: 12px 15px; }
-
-/* ── Modals ── */
+/* Modals */
 .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
 .modal-box { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; padding: 20px 18px 36px; max-height: 88vh; overflow-y: auto; }
 .modal-handle { width: 36px; height: 4px; background: rgba(0,0,0,.15); border-radius: 2px; margin: 0 auto 16px; }
@@ -160,10 +148,8 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .f-inp,.f-sel { width: 100%; border: .5px solid rgba(0,0,0,.16); border-radius: 9px; padding: 11px 12px; font-size: 15px; font-family: inherit; outline: none; background: #f5f3ee; color: #1a1a18; -webkit-appearance: none; }
 .f-ta { width: 100%; border: .5px solid rgba(0,0,0,.16); border-radius: 9px; padding: 11px 12px; font-size: 15px; font-family: inherit; outline: none; background: #f5f3ee; min-height: 74px; resize: vertical; color: #1a1a18; }
 .f-row-inline { display: flex; gap: 8px; }
-.f-row-inline .f-inp { flex: 1; }
-.f-sort-inp { width: 70px; border: .5px solid rgba(0,0,0,.16); border-radius: 9px; padding: 11px 10px; font-size: 15px; font-family: inherit; outline: none; background: #f5f3ee; color: #1a1a18; text-align: center; flex-shrink: 0; }
-.f-sort-inp:read-only { background: #e8e8e8; color: #888; cursor: not-allowed; }
-.btn-ok  { color: #fff; border: none; border-radius: 11px; padding: 13px 0; width: 100%; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; font-family: inherit; }
+.f-sort-inp { width: 72px; border: .5px solid rgba(0,0,0,.16); border-radius: 9px; padding: 11px 10px; font-size: 15px; font-family: inherit; outline: none; background: #f5f3ee; color: #1a1a18; text-align: center; flex-shrink: 0; }
+.btn-ok { color: #fff; border: none; border-radius: 11px; padding: 13px 0; width: 100%; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; font-family: inherit; }
 .btn-sec { background: #f0ede6; color: #555; border: none; border-radius: 11px; padding: 12px 0; width: 100%; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: inherit; }
 .icon-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .icon-btn { font-size: 20px; border: 1.5px solid #e5e5e5; border-radius: 8px; width: 38px; height: 38px; cursor: pointer; background: none; }
@@ -172,19 +158,17 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .cdot { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
 .cdot.sel { border-color: #333; }
 .t-preview { margin-top: 10px; padding: 12px 14px; border-radius: 12px; }
-
-/* PIN modal */
+/* PIN */
 .pin-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .pin-modal { background: #fff; border-radius: 20px; width: 100%; max-width: 320px; padding: 28px 24px 24px; text-align: center; }
-.pin-icon  { font-size: 36px; margin-bottom: 10px; }
+.pin-icon { font-size: 36px; margin-bottom: 10px; }
 .pin-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
-.pin-sub   { font-size: 13px; color: #888; margin-bottom: 20px; line-height: 1.5; white-space: pre-line; }
+.pin-sub { font-size: 13px; color: #888; margin-bottom: 20px; line-height: 1.5; white-space: pre-line; }
 .pin-input { width: 100%; border: 1.5px solid #ddd; border-radius: 12px; padding: 14px; font-size: 22px; text-align: center; letter-spacing: 8px; font-family: inherit; outline: none; background: #f8f7f4; margin-bottom: 10px; }
 .pin-input:focus { border-color: #4A90E2; }
 .pin-error { font-size: 13px; color: #E24B4A; margin-bottom: 10px; min-height: 18px; }
 .pin-btns { display: flex; gap: 8px; }
 .pin-btns button { flex: 1; border: none; border-radius: 11px; padding: 13px 0; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
-
 /* Confirm */
 .confirm-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 200; display: flex; align-items: center; justify-content: center; }
 .confirm-box { background: #fff; border-radius: 16px; padding: 22px 20px; width: 84%; max-width: 320px; text-align: center; }
@@ -199,58 +183,70 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 <body>
 <div id="app"></div>
 <div class="toast" id="toast"></div>
-
 <script>
-// ── 기본 테마 ─────────────────────────────────
 const DEFAULT_THEMES = [
   { id:"daily",      name:"일상생활",    icon:"📝", color:"#4A90E2", bg:"#EBF4FF", fields:[], statusOptions:["미완료","완료"], defaultStatus:"미완료" },
   { id:"travel",     name:"여행지",      icon:"✈️", color:"#7C5CBF", bg:"#F3EEFF", fields:[{key:"region",label:"지역"}], statusOptions:["가고싶다","다녀왔다"], defaultStatus:"가고싶다" },
   { id:"restaurant", name:"맛집",        icon:"🍽️", color:"#E8743B", bg:"#FFF3ED", fields:[{key:"region",label:"지역"},{key:"cuisine",label:"종류"}], statusOptions:["가보고싶다","다녀왔다","별로였다"], defaultStatus:"가보고싶다" },
   { id:"movie",      name:"영화 / OTT",  icon:"🎬", color:"#D63F6A", bg:"#FFF0F4", fields:[{key:"platform",label:"플랫폼"}], statusOptions:["보고싶다","중단함","봤다"], defaultStatus:"보고싶다" },
   { id:"finance",    name:"금융 메모",   icon:"💰", color:"#2D8A5E", bg:"#EDFAF3", fields:[{key:"category",label:"항목 구분"}], statusOptions:["중요","참고"], defaultStatus:"중요" },
-  { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[{key:"time",label:"조리 시간"},{key:"difficulty",label:"난이도"}], statusOptions:["해보고싶다","해봤다","자주해먹는다"], defaultStatus:"해보고싶다" },
+  { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[{key:"difficulty",label:"난이도"}], statusOptions:[], defaultStatus:"" },
 ];
 const ICONS  = ["📌","📝","🗺️","🏠","🎵","📚","💪","🌿","🎮","🛒","✈️","🍽️","🎬","💰","👨‍🍳","⭐","🔖","💡","🧳","🎯","🏋️","🎸","📷","🌍","🍜","☕","🧘","🎨","🐾","🌸"];
 const COLORS = [{color:"#4A90E2",bg:"#EBF4FF"},{color:"#7C5CBF",bg:"#F3EEFF"},{color:"#E8743B",bg:"#FFF3ED"},{color:"#D63F6A",bg:"#FFF0F4"},{color:"#2D8A5E",bg:"#EDFAF3"},{color:"#C97A1E",bg:"#FFF8EC"},{color:"#3B7DBF",bg:"#EBF2FF"},{color:"#8B4513",bg:"#F9F0E8"}];
-const TODAY  = new Date().toISOString().split("T")[0];
-const SHOW_MAX = 8;
+const TODAY = new Date().toISOString().split("T")[0];
+const SHOW_MAX = 8, REGION_MAX = 5, LIST_MAX = 5;
 const REGION_THEMES = ["travel","restaurant"];
-const APP_VER = "v1.2";
+const APP_VER = "v1.3";
 
-// ── State ─────────────────────────────────────
-let themes      = JSON.parse(localStorage.getItem("jaks_themes")  || "null") || DEFAULT_THEMES;
-let memos       = JSON.parse(localStorage.getItem("jaks_memos")   || "{}");
-let locks       = JSON.parse(localStorage.getItem("jaks_locks")   || "{}");
-let stickyNotes = JSON.parse(localStorage.getItem("jaks_sticky")  || "{}");  // { themeId: "text" }
-let regionOrders= JSON.parse(localStorage.getItem("jaks_regord")  || "{}");  // { themeId: { regionName: sortNum } }
+let themes       = JSON.parse(localStorage.getItem("jaks_themes")  || "null") || DEFAULT_THEMES;
+let memos        = JSON.parse(localStorage.getItem("jaks_memos")   || "{}");
+let locks        = JSON.parse(localStorage.getItem("jaks_locks")   || "{}");
+let stickyNotes  = JSON.parse(localStorage.getItem("jaks_sticky")  || "{}");
+let regionOrders = JSON.parse(localStorage.getItem("jaks_regord")  || "{}");
 
-let view         = "home";
-let activeTheme  = null;
-let filterStatus = "전체";
-let showSearch   = false;
-let searchText   = "";
-let showAddTheme = false;
-let showModal    = false;
-let modalMemo    = {};
-let modalEditId  = null;
-let newTheme     = {name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};
+let view          = "home";
+let activeTheme   = null;
+let filterStatus  = "전체";
+let showSearch    = false;
+let searchText    = "";
+let showAddTheme  = false;
+let showModal     = false;
+let modalMemo     = {};
+let modalEditId   = null;
+let newTheme      = {name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};
 let pendingDelete = null;
-let todoEditId   = null;
-let showAllPend  = false;
-let showAllDone  = false;
-let editingThemeId = null;
-let editThemeName  = "";
-let editThemeIcon  = "";
-let pinModal = null;
-let pinError = "";
+let todoEditId    = null;
+let showAllPend   = false;
+let showAllDone   = false;
+let editingThemeId= null;
+let editThemeName = "";
+let editThemeIcon = "";
+let pinModal      = null;
+let pinError      = "";
+// 지역/리스트 더보기
+let expandedRegions = {};  // { themeId: Set<regionName> }
+let showAllList     = false;
 
-function save()       { localStorage.setItem("jaks_themes",JSON.stringify(themes));    localStorage.setItem("jaks_memos",JSON.stringify(memos)); }
+function save()       { localStorage.setItem("jaks_themes",JSON.stringify(themes)); localStorage.setItem("jaks_memos",JSON.stringify(memos)); }
 function saveLocks()  { localStorage.setItem("jaks_locks",JSON.stringify(locks)); }
 function saveSticky() { localStorage.setItem("jaks_sticky",JSON.stringify(stickyNotes)); }
 function saveRegOrd() { localStorage.setItem("jaks_regord",JSON.stringify(regionOrders)); }
 
-// ── Toast ──────────────────────────────────────
-function showToast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200);}
+function showToast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2400);}
+
+// ── 자동저장 (자정) ────────────────────────────
+function scheduleMidnightSave(){
+  const now=new Date(),midnight=new Date(now);midnight.setHours(24,0,0,0);
+  const ms=midnight-now;
+  setTimeout(()=>{
+    const backup={savedAt:new Date().toISOString(),themes,memos,stickyNotes,regionOrders};
+    localStorage.setItem("jaks_backup",JSON.stringify(backup));
+    showToast("🌙 자정 자동저장 완료");
+    scheduleMidnightSave();
+  },ms);
+}
+scheduleMidnightSave();
 
 // ── Export ─────────────────────────────────────
 function saveData(){
@@ -273,36 +269,51 @@ function importData(e){
   r.readAsText(file);e.target.value="";
 }
 
-// ── Region order helpers ─────────────────────
-function getRegionOrder(themeId, regionName) {
-  const ro = regionOrders[themeId] || {};
-  return ro[regionName.trim()] !== undefined ? ro[regionName.trim()] : null;
-}
-function setRegionOrder(themeId, regionName, num) {
-  if (!regionOrders[themeId]) regionOrders[themeId] = {};
-  regionOrders[themeId][regionName.trim()] = parseInt(num,10);
-  saveRegOrd();
-}
+// ── Region order ───────────────────────────────
+function getRegionOrder(tid,r){const ro=regionOrders[tid]||{};return ro[r.trim()]!==undefined?ro[r.trim()]:null;}
+function setRegionOrder(tid,r,n){if(!regionOrders[tid])regionOrders[tid]={};regionOrders[tid][r.trim()]=parseInt(n,10);saveRegOrd();}
+
+// ── Android back button ────────────────────────
+history.pushState({view:"home"},""  );
+window.addEventListener("popstate",()=>{
+  if(showModal){showModal=false;modalEditId=null;render();history.pushState({},""  );return;}
+  if(showAddTheme){showAddTheme=false;render();history.pushState({},""  );return;}
+  if(pinModal){pinModal=null;pinError="";render();history.pushState({},""  );return;}
+  if(pendingDelete){pendingDelete=null;render();history.pushState({},""  );return;}
+  if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};render();history.pushState({},""  );return;}
+  if(view==="themes"){view="home";render();history.pushState({},""  );return;}
+  if(view==="settings"){view="home";render();history.pushState({},""  );return;}
+  // home → allow exit
+});
 
 // ══════════════════════════════════════════════
 //  RENDER
 // ══════════════════════════════════════════════
-function render() {
-  document.getElementById("app").innerHTML = buildApp();
+function render(){
+  document.getElementById("app").innerHTML=buildApp();
   bind();
-  // ★ 검색창 포커스 유지 (re-render 후에도)
-  if (showSearch) {
-    requestAnimationFrame(()=>{
-      const inp=document.getElementById("srch-inp");
-      if(inp && document.activeElement!==inp){
-        inp.focus();
-        try{inp.setSelectionRange(searchText.length,searchText.length);}catch(e){}
-      }
-    });
-  }
+  if(showSearch){const inp=document.getElementById("srch-inp");if(inp)inp.focus();}
 }
 
-function buildApp() {
+// 리스트만 업데이트 (검색 중 포커스 유지용)
+function renderListOnly(){
+  const la=document.getElementById("list-area");if(!la)return;
+  const theme=themes.find(t=>t.id===activeTheme);if(!theme)return;
+  const filtered=getFiltered();
+  const isRegion=REGION_THEMES.includes(activeTheme);
+  la.innerHTML=isRegion?buildRegionGroups(filtered,theme):buildMemoListHTML(filtered,theme);
+  bindListBtns();
+}
+
+function getFiltered(){
+  return(memos[activeTheme]||[]).filter(m=>{
+    const ms=filterStatus==="전체"||(m.status||"")===filterStatus;
+    const mt=!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText);
+    return ms&&mt;
+  });
+}
+
+function buildApp(){
   let body="";
   if(view==="home")     body=buildHome();
   if(view==="themes")   body=buildThemeGrid();
@@ -317,62 +328,58 @@ function buildApp() {
 
 // ── Header ─────────────────────────────────────
 function buildHeader(){
-  if(view==="home") return `<div class="hdr">
-    <div class="hdr-left"><span class="app-name">Jak's 메모</span></div>
-    <div class="hdr-right">
-      <button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button>
-      <button class="btn-hdr btn-ghost" id="btn-go-themes">📋 테마</button>
-      <button class="btn-icon" id="btn-go-settings">⚙️</button>
-    </div></div>`;
-  if(view==="themes") return `<div class="hdr">
-    <div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:15px;font-weight:700">테마 선택</span></div>
-    <div class="hdr-right"><button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button></div></div>`;
-  if(view==="settings") return `<div class="hdr">
-    <div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">⚙️ 환경설정</span></div>
-    <div class="hdr-right"></div></div>`;
-  if(view==="detail"){
+  let hdrHtml="";
+  if(view==="home"){
+    hdrHtml=`<div class="hdr"><div class="hdr-left"><span class="app-name">Jak's 메모</span></div>
+      <div class="hdr-right">
+        <button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button>
+        <button class="btn-hdr btn-ghost" id="btn-go-themes">📋 테마</button>
+        <button class="btn-icon" id="btn-go-settings">⚙️</button>
+      </div></div>`;
+  } else if(view==="themes"){
+    hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:15px;font-weight:700">테마 선택</span></div>
+      <div class="hdr-right"><button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button></div></div>`;
+  } else if(view==="settings"){
+    hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">⚙️ 환경설정</span></div><div class="hdr-right"></div></div>`;
+  } else if(view==="detail"){
     const t=themes.find(t=>t.id===activeTheme);
-    return `<div class="hdr">
-      <div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">${t.icon} ${t.name}</span></div>
+    hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">${t.icon} ${t.name}</span></div>
       <div class="hdr-right">
         <span style="font-size:12px;color:#aaa">${(memos[activeTheme]||[]).length}개</span>
         <button class="btn-srch${showSearch?" on":""}" id="btn-srch">🔍</button>
         <button class="btn-add-hdr" id="btn-add-modal" style="background:${t.color}">+ 추가</button>
       </div></div>`;
+    // 검색바를 헤더 바로 아래 sticky로 분리 (input 파괴 방지)
+    if(showSearch) hdrHtml+=`<div class="search-zone"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}" autocomplete="off"></div>`;
   }
-  return "";
+  return hdrHtml;
 }
 
-// ── Sticky Note 공통 빌더 ─────────────────────
-function buildStickyNote(themeId){
-  const note=stickyNotes[themeId]||"";
-  return `<div class="sticky-wrap">
-    <div class="sticky-box">
-      <div class="sticky-hdr">
-        <span class="sticky-hdr-title">📌 고정 메모</span>
-        <span class="sticky-hdr-hint">자동저장</span>
-      </div>
-      <textarea class="sticky-ta" id="sticky-ta-${themeId}" placeholder="중요한 내용을 여기에 적어두세요..." rows="2"
-        oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
-        onblur="saveSticky_ta('${themeId}',this.value)"
-      >${esc(note)}</textarea>
-    </div>
-  </div>`;
+// ── Sticky note ────────────────────────────────
+function buildStickyNote(tid){
+  const note=stickyNotes[tid]||"";
+  return `<div class="sticky-wrap"><div class="sticky-box">
+    <div class="sticky-hdr"><span class="sticky-hdr-title">📌 고정 메모</span><span class="sticky-hdr-hint">자동저장</span></div>
+    <textarea class="sticky-ta" id="sticky-ta-${tid}" placeholder="중요한 내용을 여기에 적어두세요..." rows="2"
+      oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+      onblur="saveStickyTA('${tid}',this.value)"
+    >${esc(note)}</textarea>
+  </div></div>`;
 }
+function saveStickyTA(tid,val){stickyNotes[tid]=val;saveSticky();}
 
 // ══════════════════════════════════════════════
 //  HOME
 // ══════════════════════════════════════════════
 function buildHome(){
-  const all=memos["daily"]||[];const pend=all.filter(m=>m.status!=="완료");const done=all.filter(m=>m.status==="완료");
+  const all=memos["daily"]||[],pend=all.filter(m=>m.status!=="완료"),done=all.filter(m=>m.status==="완료");
   const flt=arr=>arr.filter(m=>!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText));
   const fp=flt(pend),fd=flt(done);
-  let html="";
-  if(showSearch) html+=`<div style="padding:10px 14px 0"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}"></div>`;
-  html+=buildStickyNote("home");
+  let html=buildStickyNote("home");
   html+=`<div class="todo-board">`;
   html+=`<div class="board-head"><span class="board-title">📝 일상생활</span><span class="board-count">미완료 ${pend.length}개</span></div>`;
-  const catOpts=themes.map(t=>`<option value="${t.id}">${t.icon} ${t.name}</option>`).join("");const defT=themes[0];
+  const catOpts=themes.map(t=>`<option value="${t.id}">${t.icon} ${t.name}</option>`).join("");
+  const defT=themes[0];
   html+=`<div class="todo-input-row"><input type="text" id="todo-inp" placeholder="할 일을 입력하세요..." maxlength="80" autocomplete="off"><button class="btn-tadd" id="btn-tadd">추가</button></div>
     <div class="todo-cat-row">
       <div class="cat-pick"><span style="font-size:12px;color:#888">📂</span><select id="todo-cat">${catOpts}</select></div>
@@ -415,12 +422,9 @@ function buildTodoItem(m){
 // ══════════════════════════════════════════════
 function buildThemeGrid(){
   const cards=themes.map(t=>{
-    const cnt=(memos[t.id]||[]).length;
-    const lockBadge=locks[t.id]?`<span class="lock-badge">🔒</span>`:"";
-    // x버튼 없음 (삭제는 설정에서만)
-    return `<div class="theme-card" data-theme="${t.id}" style="background:${t.bg};--tc:${t.color}">
-      ${lockBadge}<span class="ic">${t.icon}</span>
-      <div class="nm">${t.name}</div><div class="ct">${cnt}개의 메모</div></div>`;
+    const cnt=(memos[t.id]||[]).length,lockBadge=locks[t.id]?`<span class="lock-badge">🔒</span>`:"";
+    return `<div class="theme-card" data-theme="${t.id}" style="background:${t.bg};--tc:${t.color}">${lockBadge}
+      <span class="ic">${t.icon}</span><div class="nm">${t.name}</div><div class="ct">${cnt}개의 메모</div></div>`;
   }).join("");
   return `<div class="grid">${cards}<div class="add-card" id="btn-add-theme"><span style="font-size:24px">＋</span><span style="font-size:13px;font-weight:600">테마 추가</span></div></div>`;
 }
@@ -431,92 +435,95 @@ function buildThemeGrid(){
 function buildDetailView(){
   const theme=themes.find(t=>t.id===activeTheme);
   const isRegion=REGION_THEMES.includes(activeTheme);
-  const filtered=(memos[activeTheme]||[]).filter(m=>{
-    const ms=filterStatus==="전체"||m.status===filterStatus;
-    const mt=!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText);
-    return ms&&mt;
-  });
+  const filtered=getFiltered();
+  const hasStatus=theme.statusOptions&&theme.statusOptions.length>0;
   let html=`<div class="memo-view">`;
-  if(showSearch) html+=`<div class="search-wrap"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}"></div>`;
-  const tabs=["전체",...theme.statusOptions].map(s=>`<button class="tab-btn${filterStatus===s?" on":""}" data-tab="${s}" style="${filterStatus===s?`background:${theme.color}`:""}"> ${s}</button>`).join("");
-  html+=`<div class="tabs-row">${tabs}</div>`;
+  if(hasStatus){
+    const tabs=["전체",...theme.statusOptions].map(s=>`<button class="tab-btn${filterStatus===s?" on":""}" data-tab="${s}" style="${filterStatus===s?`background:${theme.color}`:""}"> ${s}</button>`).join("");
+    html+=`<div class="tabs-row">${tabs}</div>`;
+  }
   html+=`</div>`;
-  // 고정 메모 (패딩 밖에 배치)
   html+=buildStickyNote(activeTheme);
-  // 메모 리스트
-  html+=`<div class="memo-view" style="padding-top:4px">`;
-  html+=isRegion?buildRegionGroups(filtered,theme):buildMemoList(filtered,theme);
-  html+=`</div>`;
+  html+=`<div class="memo-view" style="padding-top:4px;padding-bottom:80px"><div id="list-area">`;
+  html+=isRegion?buildRegionGroups(filtered,theme):buildMemoListHTML(filtered,theme);
+  html+=`</div></div>`;
   return html;
 }
 
-function buildMemoList(filtered,theme){
+// ── Memo list (한 줄, 더보기) ─────────────────
+function buildMemoListHTML(filtered,theme){
   if(!filtered.length) return `<div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
-  return `<div class="memo-list">${filtered.map(m=>buildMemoCard(m,theme)).join("")}</div>`;
+  const isWatchedTheme=activeTheme==="movie";
+  const show=showAllList?filtered:filtered.slice(0,LIST_MAX);
+  let html=`<div class="memo-list">${show.map(m=>{
+    const watched=isWatchedTheme&&m.status==="봤다";
+    return `<div class="mc">
+      <span class="mc-title${watched?" watched":""}">${esc(m.title)}</span>
+      <span class="mc-date">${m.date||""}</span>
+      <div class="mc-acts"><button data-edit="${m.id}">✏️</button><button data-delete="${m.id}">🗑️</button></div>
+    </div>`;
+  }).join("")}</div>`;
+  if(filtered.length>LIST_MAX){
+    html+=`<button class="list-more-btn" id="btn-list-more">${showAllList?"▲ 접기":`▼ 더보기 (${filtered.length-LIST_MAX}개 더)`}</button>`;
+  }
+  return html;
 }
 
+// ── Region groups (더보기 per group) ──────────
 function buildRegionGroups(filtered,theme){
-  if(!filtered.length) return buildMemoList(filtered,theme);
-  // regionOrders로 지역 정렬 순서 결정
+  if(!filtered.length) return `<div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
   const ro=regionOrders[activeTheme]||{};
   const groups={};
   filtered.forEach(m=>{const r=(m.region||"지역 미입력").trim()||"지역 미입력";if(!groups[r])groups[r]=[];groups[r].push(m);});
   const keys=Object.keys(groups).sort((a,b)=>{
     if(a==="지역 미입력")return 1;if(b==="지역 미입력")return -1;
-    const oa=ro[a]!==undefined?ro[a]:9999;const ob=ro[b]!==undefined?ro[b]:9999;
-    if(oa!==ob)return oa-ob;return a.localeCompare(b,"ko");
+    const oa=ro[a]!==undefined?ro[a]:9999,ob=ro[b]!==undefined?ro[b]:9999;
+    return oa!==ob?oa-ob:a.localeCompare(b,"ko");
   });
+  const expSet=expandedRegions[activeTheme]||new Set();
   let html=`<div class="region-group">`;
   keys.forEach(r=>{
+    const items=groups[r],isExp=expSet.has(r);
     const orderLabel=ro[r]!==undefined?` <span style="font-size:10px;color:#bbb;background:#f0ede6;padding:1px 6px;border-radius:8px">No.${ro[r]}</span>`:"";
-    html+=`<div class="region-hdr"><span>📍</span><span class="region-hdr-name">${esc(r)}${orderLabel}</span><span class="region-hdr-count">${groups[r].length}곳</span><div class="region-divider"></div></div>`;
-    html+=`<div class="memo-list">${groups[r].map(m=>buildMemoCard(m,theme)).join("")}</div>`;
+    html+=`<div class="region-hdr"><span>📍</span><span class="region-hdr-name">${esc(r)}${orderLabel}</span><span class="region-hdr-count">${items.length}곳</span><div class="region-divider"></div></div>`;
+    const show=isExp?items:items.slice(0,REGION_MAX);
+    const isWatchedTheme=activeTheme==="movie";
+    html+=`<div class="memo-list">${show.map(m=>{
+      const watched=isWatchedTheme&&m.status==="봤다";
+      return `<div class="mc"><span class="mc-title${watched?" watched":""}">${esc(m.title)}</span><span class="mc-date">${m.date||""}</span>
+        <div class="mc-acts"><button data-edit="${m.id}">✏️</button><button data-delete="${m.id}">🗑️</button></div></div>`;
+    }).join("")}`;
+    if(items.length>REGION_MAX){
+      html+=`<button class="region-more-btn" data-region-more="${esc(r)}">${isExp?"▲ 접기":`▼ 더보기 (${items.length-REGION_MAX}개 더)`}</button>`;
+    }
+    html+=`</div>`;
   });
   html+=`</div>`;
   return html;
-}
-
-function buildMemoCard(m,theme){
-  const isWatched = (activeTheme==="movie" && m.status==="봤다");
-  const regionText = m.region ? `<span class="mc-region">📍${esc(m.region)}</span>` : "";
-  const extraText  = (theme.fields||[]).filter(f=>f.key!=="region"&&m[f.key]).map(f=>`<span class="mc-region">${esc(m[f.key])}</span>`).join("");
-  return `<div class="mc">
-    <span class="mc-badge" style="background:${theme.bg};color:${theme.color};border:1px solid ${theme.color}30">${m.status}</span>
-    <span class="mc-title${isWatched?" watched":""}">${esc(m.title)}</span>
-    ${regionText}${extraText}
-    <span class="mc-date">${m.date||""}</span>
-    <div class="mc-acts">
-      <button data-edit="${m.id}">✏️</button>
-      <button data-delete="${m.id}">🗑️</button>
-    </div>
-  </div>`;
 }
 
 // ══════════════════════════════════════════════
 //  SETTINGS
 // ══════════════════════════════════════════════
 function buildSettings(){
-  let html=`<div class="settings-page">`;
-  html+=`<div class="ss-section"><div class="ss-section-title">테마 관리</div>`;
+  let html=`<div class="settings-page"><div class="ss-section"><div class="ss-section-title">테마 관리</div>`;
   themes.forEach(t=>{
-    const cnt=(memos[t.id]||[]).length;const isLocked=!!locks[t.id];const isEditing=editingThemeId===t.id;
+    const cnt=(memos[t.id]||[]).length,isLocked=!!locks[t.id],isEditing=editingThemeId===t.id;
     html+=`<div class="st-row"><div class="st-main">
       <span class="st-emoji">${t.icon}</span>
-      <div class="st-info"><div class="st-name">${esc(t.name)}</div><div class="st-sub">메모 ${cnt}개${isLocked?" · 🔒 잠금중":""}</div></div>
+      <div class="st-info"><div class="st-name">${esc(t.name)}</div><div class="st-sub">메모 ${cnt}개${isLocked?" · 🔒":""}</div></div>
       <div class="st-btns">
-        <button class="st-btn st-btn-edit" data-edit-theme="${t.id}">✎ 수정</button>
-        <button class="st-btn ${isLocked?"st-btn-lock-on":"st-btn-lock-off"}" data-lock-theme="${t.id}">${isLocked?"🔒 잠금":"🔓 잠금"}</button>
+        <button class="st-btn st-btn-edit" data-edit-theme="${t.id}">✎</button>
+        <button class="st-btn ${isLocked?"st-btn-lock-on":"st-btn-lock-off"}" data-lock-theme="${t.id}">${isLocked?"🔒":"🔓"}</button>
         <button class="st-btn st-btn-del" data-del-theme="${t.id}">삭제</button>
       </div></div>`;
-    if(isEditing){
-      html+=`<div class="st-edit-area">
-        <label class="st-edit-label">테마 이름</label>
-        <input class="st-edit-name" id="st-name-inp" value="${esc(editThemeName)}" maxlength="12" placeholder="테마 이름">
-        <label class="st-edit-label">아이콘</label>
-        <div class="emoji-picker">${ICONS.map(ic=>`<button class="ep-btn${editThemeIcon===ic?" sel":""}" data-ep-icon="${ic}">${ic}</button>`).join("")}</div>
-        <div class="st-edit-btns"><button class="st-save-btn" id="btn-st-save">저장</button><button class="st-cancel-btn" id="btn-st-cancel">취소</button></div>
-      </div>`;
-    }
+    if(isEditing) html+=`<div class="st-edit-area">
+      <label class="st-edit-label">테마 이름</label>
+      <input class="st-edit-name" id="st-name-inp" value="${esc(editThemeName)}" maxlength="12">
+      <label class="st-edit-label">아이콘</label>
+      <div class="emoji-picker">${ICONS.map(ic=>`<button class="ep-btn${editThemeIcon===ic?" sel":""}" data-ep-icon="${ic}">${ic}</button>`).join("")}</div>
+      <div class="st-edit-btns"><button class="st-save-btn" id="btn-st-save">저장</button><button class="st-cancel-btn" id="btn-st-cancel">취소</button></div>
+    </div>`;
     html+=`</div>`;
   });
   html+=`<div class="ss-btn-row" id="btn-add-theme-s"><span class="ss-row-icon">➕</span><span class="ss-row-text">새 테마 추가</span><span class="ss-row-arrow">›</span></div></div>`;
@@ -527,7 +534,7 @@ function buildSettings(){
     <div class="ss-btn-row ss-danger" id="btn-reset-all"><span class="ss-row-icon">⚠️</span><span class="ss-row-text">전체 데이터 초기화</span><span class="ss-row-arrow">›</span></div>
   </div>`;
   html+=`<div class="ss-section"><div class="ss-section-title">앱 정보</div>
-    <div class="ss-info-text">Jak's 메모 ${APP_VER}<br>데이터는 브라우저 localStorage에 저장됩니다.</div></div>`;
+    <div class="ss-info-text">Jak's 메모 ${APP_VER} · 매일 자정 자동저장<br>데이터는 브라우저 localStorage에 저장됩니다.</div></div>`;
   html+=`</div>`;return html;
 }
 
@@ -537,7 +544,7 @@ function buildThemeModal(){
   const colorDots=COLORS.map(c=>`<div class="cdot${newTheme.color===c.color?" sel":""}" data-color='${JSON.stringify(c)}' style="background:${c.color}"></div>`).join("");
   return `<div class="modal-bg" id="modal-bg-theme"><div class="modal-box"><div class="modal-handle"></div>
     <div class="modal-ttl">새 테마 추가</div>
-    <div class="f-row"><label class="f-lbl">테마 이름 *</label><input class="f-inp" id="nt-name" placeholder="예: 운동, 독서, 쇼핑..." value="${esc(newTheme.name)}"></div>
+    <div class="f-row"><label class="f-lbl">테마 이름 *</label><input class="f-inp" id="nt-name" placeholder="예: 운동, 독서..." value="${esc(newTheme.name)}"></div>
     <div class="f-row"><label class="f-lbl">아이콘</label><div class="icon-grid">${iconBtns}</div></div>
     <div class="f-row"><label class="f-lbl">색상</label><div class="cdots">${colorDots}</div></div>
     <div class="t-preview" style="background:${newTheme.bg};border:1.5px solid ${newTheme.color}30">
@@ -549,34 +556,33 @@ function buildThemeModal(){
   </div></div>`;
 }
 
-// ── 메모 모달 ──────────────────────────────────
+// ── 메모 추가/수정 모달 ────────────────────────
 function buildMemoModal(){
   const theme=themes.find(t=>t.id===activeTheme);const m=modalMemo;
+  const isEdit=!!modalEditId;
   let fieldsHtml="";
   (theme.fields||[]).forEach(f=>{
     if(f.key==="region"){
-      // 지역 + 정렬순서 나란히
-      const existingOrder=getRegionOrder(activeTheme, m.region||"");
-      const orderVal=existingOrder!==null?existingOrder:(m.regionOrder||"");
-      const isReadonly=m.region&&m.region.trim()&&existingOrder!==null;
-      fieldsHtml+=`<div class="f-row">
-        <label class="f-lbl">지역 <span style="font-size:10px;color:#bbb">/ 정렬순서 (숫자)</span></label>
+      const existOrd=getRegionOrder(activeTheme,m.region||"");
+      const orderVal=existOrd!==null?existOrd:(m.regionOrder||"");
+      fieldsHtml+=`<div class="f-row"><label class="f-lbl">지역 <span style="font-size:10px;color:#bbb">/ 정렬순서 (숫자, 수정 가능)</span></label>
         <div class="f-row-inline">
-          <input class="f-inp" id="f-region" data-field="region" value="${esc(m.region||"")}" placeholder="지역명 입력">
-          <input class="f-sort-inp" id="f-region-order" type="number" min="1" max="999" value="${orderVal}" placeholder="순서" ${isReadonly?"readonly":""}>
-        </div>
-      </div>`;
+          <input class="f-inp" id="f-region" data-field="region" value="${esc(m.region||"")}" placeholder="지역명">
+          <input class="f-sort-inp" id="f-region-order" type="number" min="1" max="999" value="${orderVal}" placeholder="순서">
+        </div></div>`;
     } else {
       fieldsHtml+=`<div class="f-row"><label class="f-lbl">${f.label}</label><input class="f-inp" data-field="${f.key}" value="${esc(m[f.key]||"")}"></div>`;
     }
   });
-  const statusOpts=theme.statusOptions.map(s=>`<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`).join("");
+  // 상태: 수정 모달에서만, recipe 제외
+  const showStatus=isEdit && theme.statusOptions && theme.statusOptions.length>0 && activeTheme!=="recipe";
+  const statusHtml=showStatus?`<div class="f-row"><label class="f-lbl">상태</label>
+    <select class="f-sel" id="mm-status">${theme.statusOptions.map(s=>`<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`).join("")}</select></div>`:"";
   return `<div class="modal-bg" id="modal-bg-memo"><div class="modal-box"><div class="modal-handle"></div>
-    <div class="modal-ttl">${modalEditId?"메모 수정":`새 ${theme.name} 메모`}</div>
+    <div class="modal-ttl">${isEdit?"메모 수정":`새 ${theme.name} 메모`}</div>
     <div class="f-row"><label class="f-lbl">제목 *</label><input class="f-inp" id="mm-title" value="${esc(m.title||"")}"></div>
     <div class="f-row"><label class="f-lbl">내용</label><textarea class="f-ta" id="mm-note">${esc(m.note||"")}</textarea></div>
-    ${fieldsHtml}
-    <div class="f-row"><label class="f-lbl">상태</label><select class="f-sel" id="mm-status">${statusOpts}</select></div>
+    ${fieldsHtml}${statusHtml}
     <div class="f-row"><label class="f-lbl">날짜</label><input type="date" class="f-inp" id="mm-date" value="${m.date||TODAY}"></div>
     <button class="btn-ok" id="btn-save-modal" style="background:${theme.color}">저장</button>
     <button class="btn-sec" id="btn-cancel-modal">취소</button>
@@ -586,12 +592,11 @@ function buildMemoModal(){
 // ── PIN 모달 ───────────────────────────────────
 function buildPinModal(){
   const {action,themeId}=pinModal;const t=themes.find(t=>t.id===themeId);
-  let icon="🔒",title="",sub="";
-  if(action==="setup"){icon="🔒";title="잠금 비밀번호 설정";sub=`${t?.icon} ${t?.name}\n숫자 4자리를 입력하세요.`;}
-  if(action==="enter"){icon="🔐";title="잠금 해제";sub=`${t?.icon} ${t?.name}\n비밀번호 4자리를 입력하세요.`;}
-  if(action==="remove"){icon="🔓";title="잠금 제거";sub="현재 비밀번호를 입력하면\n잠금이 제거됩니다.";}
+  const icon=action==="enter"?"🔐":"action==='setup'?'🔒':'🔓'",title=action==="setup"?"잠금 설정":action==="enter"?"잠금 해제":"잠금 제거";
+  const sub=`${t?.icon} ${t?.name}\n숫자 4자리를 입력하세요.`;
   return `<div class="pin-modal-bg" id="pin-modal-bg"><div class="pin-modal">
-    <div class="pin-icon">${icon}</div><div class="pin-title">${title}</div><div class="pin-sub">${sub}</div>
+    <div class="pin-icon">${action==="enter"?"🔐":action==="setup"?"🔒":"🔓"}</div>
+    <div class="pin-title">${title}</div><div class="pin-sub">${sub}</div>
     <input class="pin-input" type="password" id="pin-inp" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="●●●●"
       onkeydown="if(event.key==='Enter')submitPin()">
     <div class="pin-error" id="pin-err">${pinError}</div>
@@ -604,8 +609,7 @@ function buildPinModal(){
 // ── Confirm ────────────────────────────────────
 function buildConfirm(){
   return `<div class="confirm-bg" id="confirm-bg"><div class="confirm-box">
-    <div class="ci">🗑️</div><div class="ct">삭제할까요?</div>
-    <div class="cs">삭제한 메모는 복구할 수 없어요</div>
+    <div class="ci">🗑️</div><div class="ct">삭제할까요?</div><div class="cs">삭제한 메모는 복구할 수 없어요</div>
     <div class="confirm-btns">
       <button style="background:#f0ede6;color:#555" id="btn-cancel-del">취소</button>
       <button class="btn-del" id="btn-confirm-del">삭제</button>
@@ -615,8 +619,6 @@ function buildConfirm(){
 // ══════════════════════════════════════════════
 //  ACTIONS
 // ══════════════════════════════════════════════
-function saveSticky_ta(themeId,val){stickyNotes[themeId]=val;saveSticky();}
-
 function addTodo(){
   const title=document.getElementById("todo-inp")?.value?.trim();if(!title){document.getElementById("todo-inp")?.focus();return;}
   const tid=document.getElementById("todo-cat")?.value||"daily";
@@ -640,41 +642,36 @@ function deleteTodo(id){
   for(const k of Object.keys(memos)){const b=(memos[k]||[]).length;memos[k]=(memos[k]||[]).filter(m=>m.id!==id);if((memos[k]||[]).length!==b)break;}
   save();render();
 }
-
 function submitPin(){
   const val=document.getElementById("pin-inp")?.value||"";
   if(val.length<4){pinError="4자리를 입력해주세요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);return;}
-  const {action,themeId}=pinModal;
-  if(action==="setup"){
-    locks[themeId]=val;saveLocks();pinModal=null;pinError="";showToast("🔒 잠금이 설정됐어요");render();
-  } else if(action==="enter"){
-    if(locks[themeId]===val){
-      pinModal=null;pinError="";activeTheme=themeId;view="detail";filterStatus="전체";showSearch=false;searchText="";render();
-    } else {pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
-  } else if(action==="remove"){
-    if(locks[themeId]===val){
-      delete locks[themeId];saveLocks();pinModal=null;pinError="";showToast("🔓 잠금이 해제됐어요");render();
-    } else {pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
+  const{action,themeId}=pinModal;
+  if(action==="setup"){locks[themeId]=val;saveLocks();pinModal=null;pinError="";showToast("🔒 잠금 설정 완료");render();}
+  else if(action==="enter"){
+    if(locks[themeId]===val){pinModal=null;pinError="";activeTheme=themeId;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};render();history.pushState({},""  );}
+    else{pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
+  } else {
+    if(locks[themeId]===val){delete locks[themeId];saveLocks();pinModal=null;pinError="";showToast("🔓 잠금 해제 완료");render();}
+    else{pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
   }
 }
-
 function saveMemoModal(){
   const title=document.getElementById("mm-title")?.value?.trim();if(!title)return;
   const note=document.getElementById("mm-note")?.value||"";
-  const status=document.getElementById("mm-status")?.value||"";
   const date=document.getElementById("mm-date")?.value||TODAY;
+  const theme=themes.find(t=>t.id===activeTheme);
+  // 상태: 수정모달에 있으면 가져오고, 없으면 기존값 or defaultStatus
+  const statusEl=document.getElementById("mm-status");
+  const status=statusEl?statusEl.value:(modalMemo.status||theme.defaultStatus||"");
   const extra={};
   document.querySelectorAll("[data-field]").forEach(inp=>{extra[inp.dataset.field]=inp.value;});
-  // 지역 + 정렬순서 처리
+  // 지역 정렬순서
   if(REGION_THEMES.includes(activeTheme)){
     const regionVal=(document.getElementById("f-region")?.value||"").trim();
     const orderVal=document.getElementById("f-region-order")?.value||"";
     extra.region=regionVal;
-    if(regionVal && orderVal!==""){
-      const existingOrd=getRegionOrder(activeTheme,regionVal);
-      if(existingOrd===null){
-        setRegionOrder(activeTheme,regionVal,parseInt(orderVal,10));
-      }
+    if(regionVal&&orderVal!==""){
+      setRegionOrder(activeTheme,regionVal,parseInt(orderVal,10));
     }
     extra.regionOrder=orderVal?parseInt(orderVal,10):"";
   }
@@ -692,42 +689,43 @@ function bind(){
   const $=id=>document.getElementById(id);
 
   $("btn-save-data")?.addEventListener("click",saveData);
-  $("btn-go-themes")?.addEventListener("click",()=>{view="themes";render();});
-  $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;render();});
+  $("btn-go-themes")?.addEventListener("click",()=>{view="themes";render();history.pushState({},""  );});
+  $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;render();history.pushState({},""  );});
   $("btn-back")?.addEventListener("click",()=>{
-    if(view==="themes"){view="home";render();}
-    else if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";render();}
-    else if(view==="settings"){view="home";render();}
+    if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};}
+    else if(view==="themes"){view="home";}
+    else if(view==="settings"){view="home";}
+    render();history.pushState({},""  );
   });
 
   // 테마 카드
   document.querySelectorAll(".theme-card").forEach(el=>{
-    el.addEventListener("click",e=>{
+    el.addEventListener("click",()=>{
       const tid=el.dataset.theme;
-      if(locks[tid]){pinModal={action:"enter",themeId:tid};pinError="";render();setTimeout(()=>$("pin-inp")?.focus(),50);return;}
-      activeTheme=tid;view="detail";filterStatus="전체";showSearch=false;searchText="";render();
+      if(locks[tid]){pinModal={action:"enter",themeId:tid};pinError="";render();history.pushState({},""  );setTimeout(()=>$("pin-inp")?.focus(),50);return;}
+      activeTheme=tid;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};render();history.pushState({},""  );
     });
   });
 
   // 테마 추가
-  $("btn-add-theme")?.addEventListener("click",()=>{showAddTheme=true;render();});
-  $("btn-add-theme-s")?.addEventListener("click",()=>{showAddTheme=true;render();});
+  $("btn-add-theme")?.addEventListener("click",()=>{showAddTheme=true;render();history.pushState({},""  );});
+  $("btn-add-theme-s")?.addEventListener("click",()=>{showAddTheme=true;render();history.pushState({},""  );});
   $("btn-cancel-theme")?.addEventListener("click",()=>{showAddTheme=false;newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};render();});
   $("modal-bg-theme")?.addEventListener("click",e=>{if(e.target.id==="modal-bg-theme"){showAddTheme=false;render();}});
   document.querySelectorAll("[data-icon]").forEach(btn=>{btn.addEventListener("click",()=>{newTheme.icon=btn.dataset.icon;newTheme.name=($("nt-name")||{value:""}).value;render();});});
   document.querySelectorAll(".cdot").forEach(dot=>{dot.addEventListener("click",()=>{const c=JSON.parse(dot.dataset.color);newTheme.color=c.color;newTheme.bg=c.bg;newTheme.name=($("nt-name")||{value:""}).value;render();});});
   $("btn-save-theme")?.addEventListener("click",()=>{
     const name=($("nt-name")||{}).value?.trim();if(!name)return;
-    themes.push({id:"custom_"+Date.now(),name,icon:newTheme.icon,color:newTheme.color,bg:newTheme.bg,fields:[],statusOptions:["메모","완료"],defaultStatus:"메모"});
+    themes.push({id:"custom_"+Date.now(),name,icon:newTheme.icon,color:newTheme.color,bg:newTheme.bg,fields:[],statusOptions:[],defaultStatus:""});
     newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};showAddTheme=false;save();render();
   });
 
-  // Settings: 테마 수정
+  // Settings
   document.querySelectorAll("[data-edit-theme]").forEach(btn=>{
     btn.addEventListener("click",()=>{
-      const tid=btn.dataset.editTheme;const t=themes.find(t=>t.id===tid);
-      if(editingThemeId===tid){editingThemeId=null;}
-      else{editingThemeId=tid;editThemeName=t.name;editThemeIcon=t.icon;}
+      const tid=btn.dataset.editTheme,t=themes.find(t=>t.id===tid);
+      editingThemeId=editingThemeId===tid?null:tid;
+      if(editingThemeId){editThemeName=t.name;editThemeIcon=t.icon;}
       render();
     });
   });
@@ -738,31 +736,25 @@ function bind(){
   });
   $("btn-st-cancel")?.addEventListener("click",()=>{editingThemeId=null;render();});
   document.querySelectorAll("[data-ep-icon]").forEach(btn=>{
-    btn.addEventListener("click",()=>{editThemeIcon=btn.dataset.epIcon;
-      const nameInp=$("st-name-inp");const prev=nameInp?nameInp.value:editThemeName;
-      editThemeName=prev;render();
+    btn.addEventListener("click",()=>{
+      editThemeIcon=btn.dataset.epIcon;
+      const ni=$("st-name-inp");if(ni)editThemeName=ni.value;
+      render();
     });
   });
-
-  // Settings: 잠금
   document.querySelectorAll("[data-lock-theme]").forEach(btn=>{
     btn.addEventListener("click",()=>{const tid=btn.dataset.lockTheme;pinModal={action:locks[tid]?"remove":"setup",themeId:tid};pinError="";render();setTimeout(()=>$("pin-inp")?.focus(),50);});
   });
-
-  // Settings: 삭제 (모든 테마 삭제 가능)
   document.querySelectorAll("[data-del-theme]").forEach(btn=>{
     btn.addEventListener("click",()=>{
-      const t=themes.find(t=>t.id===btn.dataset.delTheme);
-      if(!t)return;
-      if(!confirm(`"${t.name}" 테마를 삭제할까요?\n메모도 함께 삭제됩니다.`))return;
+      const t=themes.find(t=>t.id===btn.dataset.delTheme);if(!t)return;
+      if(!confirm(`"${t.name}" 테마를 삭제할까요?`))return;
       themes=themes.filter(th=>th.id!==t.id);delete memos[t.id];delete locks[t.id];save();saveLocks();render();
     });
   });
-
-  // Settings: 데이터
   $("btn-export")?.addEventListener("click",saveData);
   $("btn-reset-all")?.addEventListener("click",()=>{
-    if(!confirm("모든 데이터를 초기화할까요? 복구할 수 없어요."))return;
+    if(!confirm("모든 데이터를 초기화할까요?"))return;
     memos={};locks={};stickyNotes={};regionOrders={};themes=JSON.parse(JSON.stringify(DEFAULT_THEMES));
     save();saveLocks();saveSticky();saveRegOrd();showToast("초기화 완료");render();
   });
@@ -773,31 +765,39 @@ function bind(){
   $("pin-modal-bg")?.addEventListener("click",e=>{if(e.target.id==="pin-modal-bg"){pinModal=null;pinError="";render();}});
   $("pin-inp")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitPin();});
 
-  // 검색
-  $("btn-srch")?.addEventListener("click",()=>{
-    showSearch=!showSearch;if(!showSearch)searchText="";
-    render();if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50);
-  });
-  // ★ 검색 input: render() 후 requestAnimationFrame으로 포커스 복원
-  $("srch-inp")?.addEventListener("input",e=>{
-    searchText=e.target.value;
-    render();
-  });
+  // 검색 (★ compositionstart/end으로 한글 IME 처리)
+  $("btn-srch")?.addEventListener("click",()=>{showSearch=!showSearch;if(!showSearch)searchText="";render();if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50);});
+  const srchInp=$("srch-inp");
+  if(srchInp){
+    let composing=false;
+    srchInp.addEventListener("compositionstart",()=>{composing=true;});
+    srchInp.addEventListener("compositionend",e=>{composing=false;searchText=e.target.value;renderListOnly();});
+    srchInp.addEventListener("input",e=>{if(!composing){searchText=e.target.value;renderListOnly();}});
+  }
 
   // 상태 탭
-  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;render();});});
+  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;showAllList=false;render();});});
 
-  // 지역 입력 시 기존 순서 자동 반영
+  // 더보기 (리스트 전체)
+  $("btn-list-more")?.addEventListener("click",()=>{showAllList=!showAllList;renderListOnly();});
+
+  // 더보기 (지역별)
+  document.querySelectorAll("[data-region-more]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const r=btn.dataset.regionMore;
+      if(!expandedRegions[activeTheme])expandedRegions[activeTheme]=new Set();
+      if(expandedRegions[activeTheme].has(r))expandedRegions[activeTheme].delete(r);
+      else expandedRegions[activeTheme].add(r);
+      renderListOnly();
+    });
+  });
+
+  // 지역 입력 시 기존 순서 자동 반영 (수정 가능)
   $("f-region")?.addEventListener("input",e=>{
-    const regionVal=e.target.value.trim();
-    const orderInp=$("f-region-order");if(!orderInp)return;
-    const existing=getRegionOrder(activeTheme,regionVal);
-    if(regionVal && existing!==null){
-      orderInp.value=existing;orderInp.readOnly=true;orderInp.style.background="#e8e8e8";orderInp.style.color="#888";
-    } else {
-      orderInp.readOnly=false;orderInp.style.background="";orderInp.style.color="";
-      if(!regionVal)orderInp.value="";
-    }
+    const rv=e.target.value.trim(),oi=$("f-region-order");if(!oi)return;
+    const ex=getRegionOrder(activeTheme,rv);
+    if(rv&&ex!==null){oi.value=ex;}
+    else if(!rv){oi.value="";}
   });
 
   // home todo
@@ -818,45 +818,27 @@ function bind(){
   // 메모 모달
   $("btn-add-modal")?.addEventListener("click",()=>{
     const t=themes.find(t=>t.id===activeTheme);
-    modalMemo={title:"",note:"",status:t.defaultStatus,date:TODAY};(t.fields||[]).forEach(f=>{modalMemo[f.key]="";});
-    modalEditId=null;showModal=true;render();
+    modalMemo={title:"",note:"",status:t.defaultStatus||"",date:TODAY};(t.fields||[]).forEach(f=>{modalMemo[f.key]="";});
+    modalEditId=null;showModal=true;render();history.pushState({},""  );
   });
   $("btn-save-modal")?.addEventListener("click",saveMemoModal);
   $("btn-cancel-modal")?.addEventListener("click",()=>{showModal=false;modalEditId=null;render();});
   $("modal-bg-memo")?.addEventListener("click",e=>{if(e.target.id==="modal-bg-memo"){showModal=false;modalEditId=null;render();}});
-  document.querySelectorAll("[data-edit]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);
-      if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();}
-    });
-  });
-  document.querySelectorAll("[data-delete]").forEach(btn=>{btn.addEventListener("click",()=>{pendingDelete=btn.dataset.delete;render();});});
 
   // confirm
   $("btn-cancel-del")?.addEventListener("click",()=>{pendingDelete=null;render();});
   $("confirm-bg")?.addEventListener("click",e=>{if(e.target.id==="confirm-bg"){pendingDelete=null;render();}});
   $("btn-confirm-del")?.addEventListener("click",()=>{memos[activeTheme]=(memos[activeTheme]||[]).filter(m=>m.id!==pendingDelete);pendingDelete=null;save();render();});
+
+  bindListBtns();
 }
 
-// ★ 검색어 변경 시 리스트만 업데이트 (포커스 유지용)
-function updateListOnly(){
-  const theme=themes.find(t=>t.id===activeTheme);if(!theme)return;
-  const isRegion=REGION_THEMES.includes(activeTheme);
-  const filtered=(memos[activeTheme]||[]).filter(m=>{
-    const ms=filterStatus==="전체"||m.status===filterStatus;
-    const mt=!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText);
-    return ms&&mt;
-  });
-  // list 컨테이너만 교체
-  const target=document.querySelector(".region-group, .memo-list.main-list, .empty");
-  if(!target)return;
-  const parent=target.parentNode;
-  const tmp=document.createElement("div");
-  tmp.innerHTML=isRegion?buildRegionGroups(filtered,theme):buildMemoList(filtered,theme);
-  parent.replaceChild(tmp.firstChild,target);
-  // 버튼 이벤트 재등록
+function bindListBtns(){
   document.querySelectorAll("[data-edit]").forEach(btn=>{
-    btn.addEventListener("click",()=>{const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();}});
+    btn.addEventListener("click",()=>{
+      const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);
+      if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();history.pushState({},""  );}
+    });
   });
   document.querySelectorAll("[data-delete]").forEach(btn=>{btn.addEventListener("click",()=>{pendingDelete=btn.dataset.delete;render();});});
 }
