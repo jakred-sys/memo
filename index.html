@@ -32,7 +32,7 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .sticky-hdr { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
 .sticky-hdr-title { font-size: 11px; font-weight: 700; color: #B8860B; text-transform: uppercase; letter-spacing: .05em; flex: 1; }
 .sticky-hdr-hint { font-size: 10px; color: #B8860B; opacity: .7; }
-.sticky-ta { width: 100%; border: none; background: transparent; font-size: 13px; color: #555; font-family: inherit; outline: none; resize: none; line-height: 1.6; min-height: 42px; }
+.sticky-ta { width: 100%; border: none; background: transparent; font-size: 13px; color: #555; font-family: inherit; outline: none; resize: none; line-height: 1.65; min-height: 42px; max-height: 220px; overflow-y: auto; }
 .sticky-ta::placeholder { color: #C8B44A; }
 /* Grid */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px,1fr)); gap: 12px; padding: 16px; }
@@ -190,7 +190,7 @@ const DEFAULT_THEMES = [
   { id:"restaurant", name:"맛집",        icon:"🍽️", color:"#E8743B", bg:"#FFF3ED", fields:[{key:"region",label:"지역"},{key:"cuisine",label:"종류"}], statusOptions:["가보고싶다","다녀왔다","별로였다"], defaultStatus:"가보고싶다" },
   { id:"movie",      name:"영화 / OTT",  icon:"🎬", color:"#D63F6A", bg:"#FFF0F4", fields:[{key:"platform",label:"플랫폼"}], statusOptions:["보고싶다","중단함","봤다"], defaultStatus:"보고싶다" },
   { id:"finance",    name:"금융 메모",   icon:"💰", color:"#2D8A5E", bg:"#EDFAF3", fields:[{key:"category",label:"항목 구분"}], statusOptions:["중요","참고"], defaultStatus:"중요" },
-  { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[{key:"difficulty",label:"난이도"}], statusOptions:[], defaultStatus:"" },
+  { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[], statusOptions:["해보고싶다","해봤다","자주해먹는다"], defaultStatus:"해보고싶다" },
 ];
 const ICONS  = ["📌","📝","🗺️","🏠","🎵","📚","💪","🌿","🎮","🛒","✈️","🍽️","🎬","💰","👨‍🍳","⭐","🔖","💡","🧳","🎯","🏋️","🎸","📷","🌍","🍜","☕","🧘","🎨","🐾","🌸"];
 const COLORS = [{color:"#4A90E2",bg:"#EBF4FF"},{color:"#7C5CBF",bg:"#F3EEFF"},{color:"#E8743B",bg:"#FFF3ED"},{color:"#D63F6A",bg:"#FFF0F4"},{color:"#2D8A5E",bg:"#EDFAF3"},{color:"#C97A1E",bg:"#FFF8EC"},{color:"#3B7DBF",bg:"#EBF2FF"},{color:"#8B4513",bg:"#F9F0E8"}];
@@ -204,6 +204,30 @@ let memos        = JSON.parse(localStorage.getItem("jaks_memos")   || "{}");
 let locks        = JSON.parse(localStorage.getItem("jaks_locks")   || "{}");
 let stickyNotes  = JSON.parse(localStorage.getItem("jaks_sticky")  || "{}");
 let regionOrders = JSON.parse(localStorage.getItem("jaks_regord")  || "{}");
+
+// ── localStorage 마이그레이션 ─────────────────
+// 저장된 테마가 DEFAULT_THEMES와 다를 경우 핵심 속성 동기화
+(function migrateSavedThemes(){
+  let changed = false;
+  DEFAULT_THEMES.forEach(def => {
+    const saved = themes.find(t => t.id === def.id);
+    if (!saved) return;
+    // fields, statusOptions, defaultStatus를 DEFAULT 기준으로 덮어씀
+    if (JSON.stringify(saved.fields) !== JSON.stringify(def.fields)) {
+      saved.fields = def.fields;
+      changed = true;
+    }
+    if (JSON.stringify(saved.statusOptions) !== JSON.stringify(def.statusOptions)) {
+      saved.statusOptions = def.statusOptions;
+      changed = true;
+    }
+    if (saved.defaultStatus !== def.defaultStatus) {
+      saved.defaultStatus = def.defaultStatus;
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem("jaks_themes", JSON.stringify(themes));
+})();
 
 let view          = "home";
 let activeTheme   = null;
@@ -292,7 +316,20 @@ window.addEventListener("popstate",()=>{
 function render(){
   document.getElementById("app").innerHTML=buildApp();
   bind();
+  initStickyHeights();
   if(showSearch){const inp=document.getElementById("srch-inp");if(inp)inp.focus();}
+}
+
+// 고정메모 높이 초기화 (내용 있으면 10줄까지 자동 확장)
+function initStickyHeights(){
+  document.querySelectorAll(".sticky-ta").forEach(ta=>{
+    ta.style.height="auto";
+    if(ta.value.trim()){
+      ta.style.height=Math.min(ta.scrollHeight,220)+"px";
+    } else {
+      ta.style.height="42px";
+    }
+  });
 }
 
 // 리스트만 업데이트 (검색 중 포커스 유지용)
@@ -360,8 +397,8 @@ function buildStickyNote(tid){
   const note=stickyNotes[tid]||"";
   return `<div class="sticky-wrap"><div class="sticky-box">
     <div class="sticky-hdr"><span class="sticky-hdr-title">📌 고정 메모</span><span class="sticky-hdr-hint">자동저장</span></div>
-    <textarea class="sticky-ta" id="sticky-ta-${tid}" placeholder="중요한 내용을 여기에 적어두세요..." rows="2"
-      oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+    <textarea class="sticky-ta" id="sticky-ta-${tid}" placeholder="중요한 내용을 여기에 적어두세요..." 
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,220)+'px'"
       onblur="saveStickyTA('${tid}',this.value)"
     >${esc(note)}</textarea>
   </div></div>`;
@@ -574,14 +611,16 @@ function buildMemoModal(){
       fieldsHtml+=`<div class="f-row"><label class="f-lbl">${f.label}</label><input class="f-inp" data-field="${f.key}" value="${esc(m[f.key]||"")}"></div>`;
     }
   });
-  // 상태: 수정 모달에서만, recipe 제외
-  const showStatus=isEdit && theme.statusOptions && theme.statusOptions.length>0 && activeTheme!=="recipe";
-  const statusHtml=showStatus?`<div class="f-row"><label class="f-lbl">상태</label>
-    <select class="f-sel" id="mm-status">${theme.statusOptions.map(s=>`<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`).join("")}</select></div>`:"";
+  const isRecipe = activeTheme === "recipe";
+  // 상태: 추가모달에서도 recipe는 보여줌 / 수정모달에서는 항상 보여줌 (recipe 포함)
+  const showStatus = theme.statusOptions && theme.statusOptions.length > 0 && (isEdit || isRecipe);
+  const statusHtml = showStatus ? `<div class="f-row"><label class="f-lbl">상태</label>
+    <select class="f-sel" id="mm-status">${theme.statusOptions.map(s=>`<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`).join("")}</select></div>` : "";
+  const noteStyle = isRecipe ? 'min-height:160px' : '';
   return `<div class="modal-bg" id="modal-bg-memo"><div class="modal-box"><div class="modal-handle"></div>
     <div class="modal-ttl">${isEdit?"메모 수정":`새 ${theme.name} 메모`}</div>
     <div class="f-row"><label class="f-lbl">제목 *</label><input class="f-inp" id="mm-title" value="${esc(m.title||"")}"></div>
-    <div class="f-row"><label class="f-lbl">내용</label><textarea class="f-ta" id="mm-note">${esc(m.note||"")}</textarea></div>
+    <div class="f-row"><label class="f-lbl">${isRecipe?"레시피 내용":"내용"}</label><textarea class="f-ta" id="mm-note" style="${noteStyle}">${esc(m.note||"")}</textarea></div>
     ${fieldsHtml}${statusHtml}
     <div class="f-row"><label class="f-lbl">날짜</label><input type="date" class="f-inp" id="mm-date" value="${m.date||TODAY}"></div>
     <button class="btn-ok" id="btn-save-modal" style="background:${theme.color}">저장</button>
@@ -778,19 +817,7 @@ function bind(){
   // 상태 탭
   document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;showAllList=false;render();});});
 
-  // 더보기 (리스트 전체)
-  $("btn-list-more")?.addEventListener("click",()=>{showAllList=!showAllList;renderListOnly();});
-
-  // 더보기 (지역별)
-  document.querySelectorAll("[data-region-more]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const r=btn.dataset.regionMore;
-      if(!expandedRegions[activeTheme])expandedRegions[activeTheme]=new Set();
-      if(expandedRegions[activeTheme].has(r))expandedRegions[activeTheme].delete(r);
-      else expandedRegions[activeTheme].add(r);
-      renderListOnly();
-    });
-  });
+  // 더보기/접기는 bindListBtns()에서 처리
 
   // 지역 입력 시 기존 순서 자동 반영 (수정 가능)
   $("f-region")?.addEventListener("input",e=>{
@@ -837,10 +864,22 @@ function bindListBtns(){
   document.querySelectorAll("[data-edit]").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);
-      if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();history.pushState({},""  );}
+      if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();history.pushState({},"");}
     });
   });
   document.querySelectorAll("[data-delete]").forEach(btn=>{btn.addEventListener("click",()=>{pendingDelete=btn.dataset.delete;render();});});
+  // ★ 더보기/접기 (리스트 전체)
+  document.getElementById("btn-list-more")?.addEventListener("click",()=>{showAllList=!showAllList;renderListOnly();});
+  // ★ 더보기/접기 (지역별 그룹)
+  document.querySelectorAll("[data-region-more]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const r=btn.dataset.regionMore;
+      if(!expandedRegions[activeTheme])expandedRegions[activeTheme]=new Set();
+      if(expandedRegions[activeTheme].has(r))expandedRegions[activeTheme].delete(r);
+      else expandedRegions[activeTheme].add(r);
+      renderListOnly();
+    });
+  });
 }
 
 function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
