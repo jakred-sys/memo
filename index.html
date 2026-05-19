@@ -10,33 +10,33 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 
 /* ── Header ── */
 .hdr { background: #fff; border-bottom: .5px solid rgba(0,0,0,.09); padding: 0 14px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 20; }
-.hdr-left  { display: flex; align-items: center; gap: 7px; }
-.hdr-right { display: flex; align-items: center; gap: 6px; }
-.app-name  { font-size: 17px; font-weight: 800; letter-spacing: -.4px; color: #1a1a18; }
-.app-sub   { font-size: 12px; color: #aaa; font-weight: 500; }
-.btn-hdr   { border: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 6px 12px; display: flex; align-items: center; gap: 4px; }
+.hdr-left  { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.hdr-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.app-name  { font-size: 17px; font-weight: 800; letter-spacing: -.4px; }
+.btn-hdr   { border: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 6px 11px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .btn-save  { background: #4A90E2; color: #fff; }
-.btn-theme-nav { background: #f0ede6; color: #555; }
+.btn-ghost { background: #f0ede6; color: #555; }
 .btn-back  { background: none; border: none; cursor: pointer; font-size: 19px; color: #555; padding: 4px 6px; border-radius: 8px; font-family: inherit; }
+.btn-icon  { background: none; border: none; cursor: pointer; font-size: 20px; padding: 4px 5px; border-radius: 8px; }
 .btn-srch  { background: none; border: 1.5px solid transparent; color: #888; border-radius: 9px; padding: 5px 8px; font-size: 15px; cursor: pointer; }
 .btn-srch.on { background: #EBF4FF; border-color: rgba(74,144,226,.3); color: #4A90E2; }
-.btn-add-hdr { color: #fff; border: none; border-radius: 9px; padding: 6px 13px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.btn-add-hdr { color: #fff; border: none; border-radius: 9px; padding: 6px 13px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
 
-/* ── Save Toast ── */
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 20px; border-radius: 20px; z-index: 300; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+/* ── Toast ── */
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 22px; z-index: 400; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
 
-/* ── Theme Grid (overlay page) ── */
+/* ── Theme Grid ── */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px,1fr)); gap: 12px; padding: 16px; }
 .theme-card { border-radius: 16px; padding: 17px 14px; cursor: pointer; border: 1.5px solid transparent; transition: border-color .15s; position: relative; }
 .theme-card:hover { border-color: var(--tc); }
-.theme-card .ic { font-size: 28px; margin-bottom: 7px; display: block; }
-.theme-card .nm { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
-.theme-card .ct { font-size: 12px; color: #999; }
-.theme-card .xbtn { position: absolute; top: 7px; right: 7px; background: rgba(255,255,255,.85); border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 10px; color: #888; display: flex; align-items: center; justify-content: center; }
+.theme-card .ic  { font-size: 28px; margin-bottom: 7px; display: block; }
+.theme-card .nm  { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+.theme-card .ct  { font-size: 12px; color: #999; }
+.theme-card .lock-badge { position: absolute; top: 8px; right: 8px; font-size: 14px; }
 .add-card { border-radius: 16px; padding: 17px 14px; cursor: pointer; border: 1.5px dashed #ccc; background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 108px; color: #bbb; gap: 5px; }
 
-/* ── TODO / 일상생활 BOARD ── */
+/* ── TODO Board ── */
 .todo-board { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 14px 15px; margin: 14px 14px 0; }
 .board-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .board-title { font-size: 15px; font-weight: 700; }
@@ -44,8 +44,8 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .todo-input-row { display: flex; gap: 8px; margin-bottom: 4px; }
 .todo-input-row input { flex: 1; border: .5px solid rgba(0,0,0,.16); border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #1a1a18; background: #f0ede6; font-family: inherit; outline: none; }
 .todo-input-row input:focus { border-color: #4A90E2; background: #fff; }
-.btn-tadd { background: #4A90E2; border: none; border-radius: 8px; padding: 10px 16px; font-size: 14px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
-.todo-cat-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; padding: 0 2px; }
+.btn-tadd { background: #4A90E2; border: none; border-radius: 8px; padding: 10px 16px; font-size: 14px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; }
+.todo-cat-row { display: flex; gap: 7px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
 .cat-pick { display: flex; align-items: center; gap: 4px; background: #f0ede6; border-radius: 8px; padding: 5px 4px 5px 9px; }
 .cat-pick select { border: none; background: transparent; font-size: 12px; font-weight: 600; color: #444; outline: none; cursor: pointer; font-family: inherit; max-width: 120px; }
 .status-pick { border-radius: 8px; padding: 5px 9px; font-size: 12px; font-weight: 600; outline: none; cursor: pointer; font-family: inherit; border: 1px solid transparent; }
@@ -54,7 +54,7 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .titem:last-child { border-bottom: none; }
 .tcb { width: 20px; height: 20px; border: 1.5px solid rgba(0,0,0,.22); border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #fff; cursor: pointer; margin-top: 1px; }
 .tcb.done { background: #4A90E2; border-color: #4A90E2; }
-.tcb.done::after { content: '✓'; color: #fff; font-size: 12px; line-height: 1; }
+.tcb.done::after { content: '✓'; color: #fff; font-size: 12px; }
 .ttext-wrap { flex: 1; min-width: 0; }
 .ttxt { font-size: 14px; color: #1a1a18; line-height: 1.45; }
 .ttxt.done { text-decoration: line-through; color: #aaa; }
@@ -66,22 +66,20 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .tsec { font-size: 11px; color: #aaa; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin: 12px 0 4px; }
 .more-btn { display: block; width: 100%; border: none; background: none; font-size: 13px; color: #4A90E2; cursor: pointer; padding: 9px 0 3px; font-family: inherit; text-align: left; font-weight: 600; }
 .no-todo { font-size: 13px; color: #bbb; padding: 6px 0 2px; }
-/* inline edit */
 .tedit-row { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
 .tedit-input { flex: 1; border: .5px solid #4A90E2; border-radius: 8px; padding: 7px 10px; font-size: 14px; color: #1a1a18; background: #f0ede6; font-family: inherit; outline: none; min-width: 0; }
-.tedit-save   { background: #4A90E2; border: none; border-radius: 8px; padding: 7px 13px; font-size: 13px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; flex-shrink: 0; }
-.tedit-cancel { background: none; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 7px 11px; font-size: 13px; color: #666; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+.tedit-save   { background: #4A90E2; border: none; border-radius: 8px; padding: 7px 12px; font-size: 13px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
+.tedit-cancel { background: none; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 7px 10px; font-size: 13px; color: #666; cursor: pointer; font-family: inherit; white-space: nowrap; }
 
-/* ── 지역 그룹 (여행지/맛집) ── */
+/* ── Region groups ── */
 .region-group { margin-top: 14px; }
 .region-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; margin-top: 16px; }
 .region-header:first-child { margin-top: 0; }
-.region-pin { font-size: 13px; }
-.region-name { font-size: 13px; font-weight: 700; color: #444; }
+.region-name  { font-size: 13px; font-weight: 700; color: #444; }
 .region-count { font-size: 11px; color: #aaa; }
 .region-divider { flex: 1; height: .5px; background: rgba(0,0,0,.1); }
 
-/* ── Non-todo Memo View ── */
+/* ── Memo View ── */
 .memo-view { padding: 0 14px 80px; }
 .search-wrap { padding-top: 12px; }
 .search-inp { background: #fff; border: .5px solid rgba(74,144,226,.4); border-radius: 12px; padding: 9px 14px; font-size: 14px; width: 100%; font-family: inherit; outline: none; }
@@ -91,20 +89,64 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .tab-btn.on { color: #fff; border-color: transparent; }
 .memo-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
 .memo-card { background: #fff; border-radius: 14px; padding: 13px 15px; border: .5px solid rgba(0,0,0,.09); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.mc-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-.mc-note  { font-size: 13px; color: #555; line-height: 1.6; white-space: pre-wrap; margin-bottom: 7px; }
-.mc-meta  { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.badge    { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
-.meta-tag { font-size: 12px; color: #888; background: #F5F5F5; border-radius: 8px; padding: 2px 8px; }
+.mc-title  { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.mc-note   { font-size: 13px; color: #555; line-height: 1.6; white-space: pre-wrap; margin-bottom: 7px; }
+.mc-meta   { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.badge     { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
+.meta-tag  { font-size: 12px; color: #888; background: #F5F5F5; border-radius: 8px; padding: 2px 8px; }
 .meta-date { font-size: 11px; color: #ccc; }
-.mc-actions button { background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px 5px; border-radius: 7px; }
+.mc-actions button { background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px 5px; }
 .empty { text-align: center; padding: 40px 20px; color: #ccc; }
 .empty .ei { font-size: 36px; margin-bottom: 10px; }
 .empty .et { font-weight: 600; color: #bbb; margin-bottom: 4px; }
 .empty .es { font-size: 13px; }
 
+/* ══════════════════════════════════════
+   SETTINGS PAGE
+══════════════════════════════════════ */
+.settings-page { padding: 14px; padding-bottom: 60px; }
+.ss-section { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); margin-bottom: 14px; overflow: hidden; }
+.ss-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .06em; padding: 13px 15px 8px; border-bottom: .5px solid rgba(0,0,0,.07); }
+
+/* theme row in settings */
+.st-row { padding: 12px 15px; border-bottom: .5px solid rgba(0,0,0,.06); }
+.st-row:last-child { border-bottom: none; }
+.st-main { display: flex; align-items: center; gap: 10px; }
+.st-emoji { font-size: 22px; width: 32px; text-align: center; flex-shrink: 0; }
+.st-info  { flex: 1; min-width: 0; }
+.st-name  { font-size: 15px; font-weight: 600; }
+.st-sub   { font-size: 12px; color: #aaa; margin-top: 1px; }
+.st-btns  { display: flex; gap: 6px; align-items: center; }
+.st-btn   { border: none; border-radius: 8px; padding: 6px 11px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.st-btn-edit { background: #f0ede6; color: #555; }
+.st-btn-lock-off { background: #f0ede6; color: #888; }
+.st-btn-lock-on  { background: #FFF0E8; color: #E8743B; }
+.st-btn-del  { background: #FDEAEA; color: #C0392B; }
+
+/* inline edit in settings */
+.st-edit-area { margin-top: 10px; padding: 12px; background: #f8f7f4; border-radius: 10px; }
+.st-edit-label { font-size: 11px; font-weight: 600; color: #888; margin-bottom: 6px; display: block; }
+.st-edit-name  { width: 100%; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 9px 11px; font-size: 14px; font-family: inherit; outline: none; background: #fff; margin-bottom: 10px; }
+.emoji-picker  { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+.ep-btn { font-size: 20px; border: 1.5px solid #e5e5e5; border-radius: 8px; width: 36px; height: 36px; cursor: pointer; background: none; }
+.ep-btn.sel { border: 2px solid #333; background: #f0f0f0; }
+.st-edit-btns { display: flex; gap: 8px; }
+.st-edit-btns button { flex: 1; border: none; border-radius: 9px; padding: 9px 0; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.st-save-btn   { background: #4A90E2; color: #fff; }
+.st-cancel-btn { background: #f0ede6; color: #555; }
+
+/* settings misc rows */
+.ss-btn-row { display: flex; align-items: center; padding: 13px 15px; border-bottom: .5px solid rgba(0,0,0,.06); cursor: pointer; gap: 10px; }
+.ss-btn-row:last-child { border-bottom: none; }
+.ss-btn-row:active { background: #f5f3ee; }
+.ss-row-icon  { font-size: 18px; width: 28px; text-align: center; }
+.ss-row-text  { flex: 1; font-size: 14px; font-weight: 500; }
+.ss-row-arrow { font-size: 14px; color: #ccc; }
+.ss-danger    { color: #C0392B; }
+.ss-info-text { font-size: 12px; color: #aaa; line-height: 1.6; padding: 12px 15px; }
+
 /* ── Modals ── */
-.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.38); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
 .modal-box { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; padding: 20px 18px 36px; max-height: 88vh; overflow-y: auto; }
 .modal-handle { width: 36px; height: 4px; background: rgba(0,0,0,.15); border-radius: 2px; margin: 0 auto 16px; }
 .modal-ttl { font-weight: 700; font-size: 17px; margin-bottom: 16px; }
@@ -117,12 +159,25 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .icon-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .icon-btn { font-size: 20px; border: 1.5px solid #e5e5e5; border-radius: 8px; width: 38px; height: 38px; cursor: pointer; background: none; }
 .icon-btn.sel { border: 2px solid #333; background: #f0f0f0; }
-.cdots { display: flex; gap: 9px; margin-top: 8px; }
+.cdots { display: flex; gap: 9px; margin-top: 8px; flex-wrap: wrap; }
 .cdot { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
 .cdot.sel { border-color: #333; }
 .t-preview { margin-top: 10px; padding: 12px 14px; border-radius: 12px; }
+
+/* PIN modal */
+.pin-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.pin-modal { background: #fff; border-radius: 20px; width: 100%; max-width: 320px; padding: 28px 24px 24px; text-align: center; }
+.pin-icon  { font-size: 36px; margin-bottom: 10px; }
+.pin-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.pin-sub   { font-size: 13px; color: #888; margin-bottom: 20px; line-height: 1.5; }
+.pin-input { width: 100%; border: 1.5px solid #ddd; border-radius: 12px; padding: 14px; font-size: 22px; text-align: center; letter-spacing: 8px; font-family: inherit; outline: none; background: #f8f7f4; margin-bottom: 14px; }
+.pin-input:focus { border-color: #4A90E2; }
+.pin-error { font-size: 13px; color: #E24B4A; margin-bottom: 10px; min-height: 18px; }
+.pin-btns { display: flex; gap: 8px; }
+.pin-btns button { flex: 1; border: none; border-radius: 11px; padding: 13px 0; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
 /* Confirm */
-.confirm-bg { position: fixed; inset: 0; background: rgba(0,0,0,.38); z-index: 200; display: flex; align-items: center; justify-content: center; }
+.confirm-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 200; display: flex; align-items: center; justify-content: center; }
 .confirm-box { background: #fff; border-radius: 16px; padding: 22px 20px; width: 84%; max-width: 320px; text-align: center; }
 .confirm-box .ci { font-size: 24px; margin-bottom: 8px; }
 .confirm-box .ct { font-weight: 700; margin-bottom: 4px; font-size: 16px; }
@@ -137,28 +192,29 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 <div class="toast" id="toast"></div>
 
 <script>
-// ── 기본 테마 정의 ──────────────────────────────
+// ── 기본 테마 ─────────────────────────────────
 const DEFAULT_THEMES = [
   { id:"daily",      name:"일상생활",    icon:"📝", color:"#4A90E2", bg:"#EBF4FF", fields:[], statusOptions:["미완료","완료"], defaultStatus:"미완료" },
-  { id:"travel",     name:"여행지",      icon:"✈️", color:"#7C5CBF", bg:"#F3EEFF", fields:[{key:"region",label:"지역"}],                               statusOptions:["가고싶다","다녀왔다"],           defaultStatus:"가고싶다" },
-  { id:"restaurant", name:"맛집",        icon:"🍽️", color:"#E8743B", bg:"#FFF3ED", fields:[{key:"region",label:"지역"},{key:"cuisine",label:"종류"}],  statusOptions:["가보고싶다","다녀왔다","별로였다"], defaultStatus:"가보고싶다" },
-  { id:"movie",      name:"영화 / OTT",  icon:"🎬", color:"#D63F6A", bg:"#FFF0F4", fields:[{key:"platform",label:"플랫폼"}],                           statusOptions:["보고싶다","보는중","봤다"],      defaultStatus:"보고싶다" },
-  { id:"finance",    name:"금융 메모",   icon:"💰", color:"#2D8A5E", bg:"#EDFAF3", fields:[{key:"category",label:"항목 구분"}],                         statusOptions:["중요","참고"],                  defaultStatus:"중요" },
+  { id:"travel",     name:"여행지",      icon:"✈️", color:"#7C5CBF", bg:"#F3EEFF", fields:[{key:"region",label:"지역"}], statusOptions:["가고싶다","다녀왔다"], defaultStatus:"가고싶다" },
+  { id:"restaurant", name:"맛집",        icon:"🍽️", color:"#E8743B", bg:"#FFF3ED", fields:[{key:"region",label:"지역"},{key:"cuisine",label:"종류"}], statusOptions:["가보고싶다","다녀왔다","별로였다"], defaultStatus:"가보고싶다" },
+  { id:"movie",      name:"영화 / OTT",  icon:"🎬", color:"#D63F6A", bg:"#FFF0F4", fields:[{key:"platform",label:"플랫폼"}], statusOptions:["보고싶다","보는중","봤다"], defaultStatus:"보고싶다" },
+  { id:"finance",    name:"금융 메모",   icon:"💰", color:"#2D8A5E", bg:"#EDFAF3", fields:[{key:"category",label:"항목 구분"}], statusOptions:["중요","참고"], defaultStatus:"중요" },
   { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[{key:"time",label:"조리 시간"},{key:"difficulty",label:"난이도"}], statusOptions:["해보고싶다","해봤다","자주해먹는다"], defaultStatus:"해보고싶다" },
 ];
-const ICONS  = ["📌","📝","🗺️","🏠","🎵","📚","💪","🌿","🎮","🛒","✈️","🍽️","🎬","💰","👨‍🍳","⭐","🔖","💡","🧳","🎯"];
+const ICONS  = ["📌","📝","🗺️","🏠","🎵","📚","💪","🌿","🎮","🛒","✈️","🍽️","🎬","💰","👨‍🍳","⭐","🔖","💡","🧳","🎯","🏋️","🎸","📷","🌍","🍜","☕","🧘","🎨","🐾","🌸"];
 const COLORS = [{color:"#4A90E2",bg:"#EBF4FF"},{color:"#7C5CBF",bg:"#F3EEFF"},{color:"#E8743B",bg:"#FFF3ED"},{color:"#D63F6A",bg:"#FFF0F4"},{color:"#2D8A5E",bg:"#EDFAF3"},{color:"#C97A1E",bg:"#FFF8EC"},{color:"#3B7DBF",bg:"#EBF2FF"},{color:"#8B4513",bg:"#F9F0E8"}];
 const TODAY  = new Date().toISOString().split("T")[0];
 const SHOW_MAX = 8;
-// 지역별 정렬 테마
 const REGION_THEMES = ["travel","restaurant"];
+const APP_VER = "v1.1";
 
-// ── State ────────────────────────────────────
+// ── State ─────────────────────────────────────
 let themes  = JSON.parse(localStorage.getItem("jaks_themes") || "null") || DEFAULT_THEMES;
 let memos   = JSON.parse(localStorage.getItem("jaks_memos")  || "{}");
-// view: "home" | "themes" | "detail"
-let view         = "home";
-let activeTheme  = null;   // detail 뷰에서 선택된 테마
+let locks   = JSON.parse(localStorage.getItem("jaks_locks")  || "{}"); // { themeId: "1234" }
+
+let view         = "home";   // home | themes | detail | settings
+let activeTheme  = null;
 let filterStatus = "전체";
 let showSearch   = false;
 let searchText   = "";
@@ -168,194 +224,151 @@ let modalMemo    = {};
 let modalEditId  = null;
 let newTheme     = {name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};
 let pendingDelete = null;
-// daily(일상생활) 전용
+// home todo
 let todoEditId  = null;
 let showAllPend = false;
 let showAllDone = false;
+// settings
+let editingThemeId = null;  // 설정에서 수정 중인 테마
+let editThemeName  = "";
+let editThemeIcon  = "";
+// PIN
+let pinModal = null; // null | { action:"setup"|"enter"|"remove", themeId }
+let pinError = "";
 
-function save() {
-  localStorage.setItem("jaks_themes", JSON.stringify(themes));
-  localStorage.setItem("jaks_memos",  JSON.stringify(memos));
-}
+function save()  { localStorage.setItem("jaks_themes",JSON.stringify(themes)); localStorage.setItem("jaks_memos",JSON.stringify(memos)); }
+function saveLocks() { localStorage.setItem("jaks_locks",JSON.stringify(locks)); }
 
-// ── Toast ─────────────────────────────────────
+// ── Toast ──────────────────────────────────────
 function showToast(msg) {
-  const el = document.getElementById("toast");
-  el.textContent = msg; el.classList.add("show");
-  setTimeout(() => el.classList.remove("show"), 2000);
+  const el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2200);
 }
 
-// ── 저장 (JSON export) ─────────────────────────
+// ── Export JSON ────────────────────────────────
 function saveData() {
   try {
-    const data = { version:"1.0", savedAt: new Date().toISOString(), themes, memos };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement("a");
-    a.href = url; a.download = `jaks메모_${TODAY}.json`; a.click();
-    URL.revokeObjectURL(url);
+    const data={version:APP_VER, savedAt:new Date().toISOString(), themes, memos};
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob); const a=document.createElement("a");
+    a.href=url; a.download=`jaks메모_${TODAY}.json`; a.click(); URL.revokeObjectURL(url);
     showToast("💾 저장 완료!");
   } catch(e) { showToast("저장 실패"); }
 }
 
-// ── RENDER ────────────────────────────────────
+// ── Import JSON ────────────────────────────────
+function importData(e) {
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try {
+      const data=JSON.parse(ev.target.result);
+      if(data.themes) { themes=data.themes; }
+      if(data.memos)  { memos=data.memos; }
+      save(); showToast("📤 불러오기 완료!"); render();
+    } catch(err) { showToast("파일 읽기 실패"); }
+  };
+  reader.readAsText(file); e.target.value="";
+}
+
+// ══════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════
 function render() {
   document.getElementById("app").innerHTML = buildApp();
   bind();
 }
-
 function buildApp() {
-  let body = "";
-  if (view === "home")   body = buildHome();
-  if (view === "themes") body = buildThemeGrid();
-  if (view === "detail") body = buildDetailView();
-  return buildHeader()
-    + body
+  let body="";
+  if (view==="home")     body=buildHome();
+  if (view==="themes")   body=buildThemeGrid();
+  if (view==="detail")   body=buildDetailView();
+  if (view==="settings") body=buildSettings();
+  return buildHeader() + body
     + (showAddTheme  ? buildThemeModal() : "")
     + (showModal     ? buildMemoModal()  : "")
-    + (pendingDelete ? buildConfirm()    : "");
+    + (pendingDelete ? buildConfirm()    : "")
+    + (pinModal      ? buildPinModal()   : "");
 }
 
-// ── HEADER ────────────────────────────────────
+// ── Header ─────────────────────────────────────
 function buildHeader() {
-  const t = view === "detail" ? themes.find(t=>t.id===activeTheme) : null;
+  if (view==="home") return `<div class="hdr">
+    <div class="hdr-left"><span class="app-name">Jak's 메모</span></div>
+    <div class="hdr-right">
+      <button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button>
+      <button class="btn-hdr btn-ghost" id="btn-go-themes">📋 테마</button>
+      <button class="btn-icon" id="btn-go-settings" title="환경설정">⚙️</button>
+    </div></div>`;
 
-  if (view === "home") {
-    return `<div class="hdr">
-      <div class="hdr-left">
-        <span class="app-name">Jak's 메모</span>
-      </div>
-      <div class="hdr-right">
-        <button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button>
-        <button class="btn-hdr btn-theme-nav" id="btn-go-themes">📋 테마</button>
-      </div>
-    </div>`;
-  }
+  if (view==="themes") return `<div class="hdr">
+    <div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:15px;font-weight:700">테마 선택</span></div>
+    <div class="hdr-right"><button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button></div></div>`;
 
-  if (view === "themes") {
-    return `<div class="hdr">
-      <div class="hdr-left">
-        <button class="btn-back" id="btn-back">←</button>
-        <span class="app-name" style="font-size:15px">테마 선택</span>
-      </div>
-      <div class="hdr-right">
-        <button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button>
-      </div>
-    </div>`;
-  }
+  if (view==="settings") return `<div class="hdr">
+    <div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">⚙️ 환경설정</span></div>
+    <div class="hdr-right"></div></div>`;
 
-  if (view === "detail") {
+  if (view==="detail") {
+    const t=themes.find(t=>t.id===activeTheme);
     return `<div class="hdr">
-      <div class="hdr-left">
-        <button class="btn-back" id="btn-back">←</button>
-        <span style="font-size:16px;font-weight:700">${t.icon} ${t.name}</span>
-      </div>
+      <div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">${t.icon} ${t.name}</span></div>
       <div class="hdr-right">
         <span style="font-size:12px;color:#aaa">${(memos[activeTheme]||[]).length}개</span>
         <button class="btn-srch${showSearch?" on":""}" id="btn-srch">🔍</button>
         <button class="btn-add-hdr" id="btn-add-modal" style="background:${t.color}">+ 추가</button>
-      </div>
-    </div>`;
+      </div></div>`;
   }
   return "";
 }
 
 // ══════════════════════════════════════════════
-//  HOME = 일상생활 보드
+//  HOME
 // ══════════════════════════════════════════════
 function buildHome() {
-  const all  = memos["daily"] || [];
-  const pend = all.filter(m => m.status !== "완료");
-  const done = all.filter(m => m.status === "완료");
-  const flt  = arr => arr.filter(m =>
-    !searchText || (m.title||"").includes(searchText) || (m.note||"").includes(searchText)
-  );
-  const fp = flt(pend), fd = flt(done);
-
-  let html = "";
-  if (showSearch) {
-    html += `<div style="padding:12px 14px 0"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}"></div>`;
-  }
-
-  html += `<div class="todo-board">`;
-  html += `<div class="board-head"><span class="board-title">📝 일상생활</span><span class="board-count">미완료 ${pend.length}개</span></div>`;
-
-  // 입력창
-  const catOpts  = themes.map(t=>`<option value="${t.id}">${t.icon} ${t.name}</option>`).join("");
-  const defT     = themes[0];
-  html += `
-    <div class="todo-input-row">
-      <input type="text" id="todo-inp" placeholder="할 일을 입력하세요..." maxlength="80" autocomplete="off">
-      <button class="btn-tadd" id="btn-tadd">추가</button>
-    </div>
+  const all=memos["daily"]||[]; const pend=all.filter(m=>m.status!=="완료"); const done=all.filter(m=>m.status==="완료");
+  const flt=arr=>arr.filter(m=>!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText));
+  const fp=flt(pend), fd=flt(done);
+  let html="";
+  if (showSearch) html+=`<div style="padding:12px 14px 0"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}"></div>`;
+  html+=`<div class="todo-board">`;
+  html+=`<div class="board-head"><span class="board-title">📝 일상생활</span><span class="board-count">미완료 ${pend.length}개</span></div>`;
+  const catOpts=themes.map(t=>`<option value="${t.id}">${t.icon} ${t.name}</option>`).join(""); const defT=themes[0];
+  html+=`<div class="todo-input-row"><input type="text" id="todo-inp" placeholder="할 일을 입력하세요..." maxlength="80" autocomplete="off"><button class="btn-tadd" id="btn-tadd">추가</button></div>
     <div class="todo-cat-row">
-      <div class="cat-pick">
-        <span style="font-size:12px;color:#888">📂</span>
-        <select id="todo-cat">${catOpts}</select>
-      </div>
-      <select class="status-pick" id="todo-status" style="background:${defT.bg};color:${defT.color};border-color:${defT.color}40">
-        ${defT.statusOptions.map(s=>`<option value="${s}">${s}</option>`).join("")}
-      </select>
+      <div class="cat-pick"><span style="font-size:12px;color:#888">📂</span><select id="todo-cat">${catOpts}</select></div>
+      <select class="status-pick" id="todo-status" style="background:${defT.bg};color:${defT.color};border-color:${defT.color}40">${defT.statusOptions.map(s=>`<option value="${s}">${s}</option>`).join("")}</select>
       <input type="date" class="date-pick" id="todo-date" value="${TODAY}">
     </div>`;
-
-  // pending
-  if (!fp.length && !searchText) {
-    html += `<div class="no-todo">등록된 내용이 없어요.</div>`;
-  } else {
-    const slice = showAllPend ? fp : fp.slice(0, SHOW_MAX);
-    slice.forEach(m => { html += buildTodoItem(m); });
-    if (fp.length > SHOW_MAX) {
-      html += `<button class="more-btn" id="btn-more-pend">${showAllPend?"▲ 접기":`▼ 더보기 (${fp.length-SHOW_MAX}개)`}</button>`;
-    }
+  if (!fp.length&&!searchText) { html+=`<div class="no-todo">등록된 내용이 없어요.</div>`; }
+  else {
+    (showAllPend?fp:fp.slice(0,SHOW_MAX)).forEach(m=>{html+=buildTodoItem(m);});
+    if (fp.length>SHOW_MAX) html+=`<button class="more-btn" id="btn-more-pend">${showAllPend?"▲ 접기":`▼ 더보기 (${fp.length-SHOW_MAX}개)`}</button>`;
   }
-
-  // done
   if (fd.length) {
-    html += `<div class="tsec">완료됨 (${fd.length})</div>`;
-    const slice = showAllDone ? fd : fd.slice(0, SHOW_MAX);
-    slice.forEach(m => { html += buildTodoItem(m); });
-    if (fd.length > SHOW_MAX) {
-      html += `<button class="more-btn" id="btn-more-done">${showAllDone?"▲ 접기":`▼ 더보기 (${fd.length-SHOW_MAX}개)`}</button>`;
-    }
+    html+=`<div class="tsec">완료됨 (${fd.length})</div>`;
+    (showAllDone?fd:fd.slice(0,SHOW_MAX)).forEach(m=>{html+=buildTodoItem(m);});
+    if (fd.length>SHOW_MAX) html+=`<button class="more-btn" id="btn-more-done">${showAllDone?"▲ 접기":`▼ 더보기 (${fd.length-SHOW_MAX}개)`}</button>`;
   }
-
-  html += `</div><div style="height:40px"></div>`;
+  html+=`</div><div style="height:40px"></div>`;
   return html;
 }
 
 function buildTodoItem(m) {
-  const isDone = m.status === "완료";
-  if (todoEditId === m.id) {
-    return `<div class="titem" id="titem-${m.id}">
-      <div class="tcb${isDone?" done":""}" data-check="${m.id}"></div>
-      <div class="tedit-row">
-        <input class="tedit-input" id="tedit-inp" value="${esc(m.title)}" maxlength="80"
-          onkeydown="if(event.key==='Enter')commitEdit('${m.id}');if(event.key==='Escape')cancelEdit()">
-        <button class="tedit-save" onclick="commitEdit('${m.id}')">저장</button>
-        <button class="tedit-cancel" onclick="cancelEdit()">취소</button>
-      </div>
-    </div>`;
-  }
-  // cat badge — only if saved in non-daily theme
-  const savedTheme = themes.find(t => t.id !== "daily" && (memos[t.id]||[]).some(x=>x.id===m.id));
-  const catBadge = savedTheme
-    ? `<span class="tcat-badge" style="background:${savedTheme.bg};color:${savedTheme.color}">${savedTheme.icon} ${savedTheme.name}</span>`
-    : "";
+  const isDone=m.status==="완료";
+  if (todoEditId===m.id) return `<div class="titem"><div class="tcb${isDone?" done":""}" data-check="${m.id}"></div>
+    <div class="tedit-row"><input class="tedit-input" id="tedit-inp" value="${esc(m.title)}" maxlength="80"
+      onkeydown="if(event.key==='Enter')commitEdit('${m.id}');if(event.key==='Escape')cancelEdit()">
+      <button class="tedit-save" onclick="commitEdit('${m.id}')">저장</button>
+      <button class="tedit-cancel" onclick="cancelEdit()">취소</button></div></div>`;
+  const st=themes.find(t=>t.id!=="daily"&&(memos[t.id]||[]).some(x=>x.id===m.id));
+  const catBadge=st?`<span class="tcat-badge" style="background:${st.bg};color:${st.color}">${st.icon} ${st.name}</span>`:"";
   return `<div class="titem" id="titem-${m.id}">
     <div class="tcb${isDone?" done":""}" data-check="${m.id}"></div>
-    <div class="ttext-wrap">
-      <div class="ttxt${isDone?" done":""}">${esc(m.title)}</div>
+    <div class="ttext-wrap"><div class="ttxt${isDone?" done":""}">${esc(m.title)}</div>
       ${m.note?`<div class="tnote">${esc(m.note)}</div>`:""}
-      <div class="tmeta">
-        <span class="tdate">${m.date||""}</span>
-        ${catBadge}
-      </div>
-    </div>
-    <div class="tactions">
-      <button data-edit-todo="${m.id}">✎</button>
-      <button data-del-todo="${m.id}">✕</button>
-    </div>
+      <div class="tmeta"><span class="tdate">${m.date||""}</span>${catBadge}</div></div>
+    <div class="tactions"><button data-edit-todo="${m.id}">✎</button><button data-del-todo="${m.id}">✕</button></div>
   </div>`;
 }
 
@@ -363,352 +376,392 @@ function buildTodoItem(m) {
 //  THEME GRID
 // ══════════════════════════════════════════════
 function buildThemeGrid() {
-  const cards = themes.map(t => {
-    const cnt  = (memos[t.id]||[]).length;
-    const xbtn = t.id.startsWith("custom_")
-      ? `<button class="xbtn" data-del-theme="${t.id}">✕</button>` : "";
+  const cards=themes.map(t=>{
+    const cnt=(memos[t.id]||[]).length;
+    const xbtn=t.id.startsWith("custom_")?`<button class="xbtn" data-del-theme="${t.id}">✕</button>`:"";
+    const lockBadge=locks[t.id]?`<span class="lock-badge">🔒</span>`:"";
     return `<div class="theme-card" data-theme="${t.id}" style="background:${t.bg};--tc:${t.color}">
-      ${xbtn}<span class="ic">${t.icon}</span>
-      <div class="nm">${t.name}</div>
-      <div class="ct">${cnt}개의 메모</div>
-    </div>`;
+      ${xbtn}${lockBadge}<span class="ic">${t.icon}</span>
+      <div class="nm">${t.name}</div><div class="ct">${cnt}개의 메모</div></div>`;
   }).join("");
-  return `<div class="grid">
-    ${cards}
-    <div class="add-card" id="btn-add-theme">
-      <span style="font-size:24px">＋</span>
-      <span style="font-size:13px;font-weight:600">테마 추가</span>
-    </div>
-  </div>`;
+  return `<div class="grid">${cards}<div class="add-card" id="btn-add-theme"><span style="font-size:24px">＋</span><span style="font-size:13px;font-weight:600">테마 추가</span></div></div>`;
 }
 
 // ══════════════════════════════════════════════
-//  DETAIL VIEW (테마별 메모)
+//  DETAIL VIEW
 // ══════════════════════════════════════════════
 function buildDetailView() {
-  const theme    = themes.find(t=>t.id===activeTheme);
-  const isRegion = REGION_THEMES.includes(activeTheme);
-  const allMemos = memos[activeTheme] || [];
-
-  // filter
-  const filtered = allMemos.filter(m => {
-    const ms = filterStatus==="전체" || m.status===filterStatus;
-    const mt = !searchText || (m.title||"").includes(searchText) || (m.note||"").includes(searchText);
-    return ms && mt;
+  const theme=themes.find(t=>t.id===activeTheme);
+  const isRegion=REGION_THEMES.includes(activeTheme);
+  const filtered=(memos[activeTheme]||[]).filter(m=>{
+    const ms=filterStatus==="전체"||m.status===filterStatus;
+    const mt=!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText);
+    return ms&&mt;
   });
-
-  let html = `<div class="memo-view">`;
-
-  // search bar
-  if (showSearch) {
-    html += `<div class="search-wrap"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}"></div>`;
-  }
-
-  // status tabs
-  const tabs = ["전체",...theme.statusOptions].map(s =>
-    `<button class="tab-btn${filterStatus===s?" on":""}" data-tab="${s}" style="${filterStatus===s?`background:${theme.color}`:""}"> ${s}</button>`
-  ).join("");
-  html += `<div class="tabs-row">${tabs}</div>`;
-
-  // ── 지역별 정렬 (여행지, 맛집) ──
-  if (isRegion) {
-    html += buildRegionGroups(filtered, theme);
-  } else {
-    html += `<div class="memo-list">`;
-    if (!filtered.length) {
-      html += `<div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
-    }
-    filtered.forEach(m => { html += buildMemoCard(m, theme); });
-    html += `</div>`;
-  }
-
-  html += `</div>`;
+  let html=`<div class="memo-view">`;
+  if (showSearch) html+=`<div class="search-wrap"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}"></div>`;
+  const tabs=["전체",...theme.statusOptions].map(s=>`<button class="tab-btn${filterStatus===s?" on":""}" data-tab="${s}" style="${filterStatus===s?`background:${theme.color}`:""}"> ${s}</button>`).join("");
+  html+=`<div class="tabs-row">${tabs}</div>`;
+  html+=isRegion ? buildRegionGroups(filtered,theme) : buildMemoList(filtered,theme);
+  html+=`</div>`;
   return html;
 }
 
-function buildRegionGroups(filtered, theme) {
-  if (!filtered.length) {
-    return `<div class="memo-list"><div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div></div>`;
-  }
-
-  // 지역별 그룹핑
-  const groups = {};
-  filtered.forEach(m => {
-    const region = (m.region || "지역 미입력").trim() || "지역 미입력";
-    if (!groups[region]) groups[region] = [];
-    groups[region].push(m);
-  });
-
-  // 지역명 가나다순 정렬 (지역 미입력은 맨 뒤)
-  const sortedKeys = Object.keys(groups).sort((a, b) => {
-    if (a === "지역 미입력") return 1;
-    if (b === "지역 미입력") return -1;
-    return a.localeCompare(b, "ko");
-  });
-
-  let html = `<div class="region-group">`;
-  sortedKeys.forEach(region => {
-    const items = groups[region];
-    html += `<div class="region-header">
-      <span class="region-pin">📍</span>
-      <span class="region-name">${esc(region)}</span>
-      <span class="region-count">${items.length}곳</span>
-      <div class="region-divider"></div>
-    </div>`;
-    html += `<div class="memo-list" style="margin-top:0">`;
-    items.forEach(m => { html += buildMemoCard(m, theme); });
-    html += `</div>`;
-  });
-  html += `</div>`;
-  return html;
+function buildMemoList(filtered,theme) {
+  let html=`<div class="memo-list">`;
+  if (!filtered.length) html+=`<div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
+  filtered.forEach(m=>{html+=buildMemoCard(m,theme);});
+  html+=`</div>`; return html;
 }
 
-function buildMemoCard(m, theme) {
-  const extraTags = (theme.fields||[]).filter(f=>m[f.key]).map(f=>
-    `<span class="meta-tag">${f.label}: ${esc(m[f.key])}</span>`).join("");
+function buildRegionGroups(filtered,theme) {
+  if (!filtered.length) return buildMemoList(filtered,theme);
+  const groups={};
+  filtered.forEach(m=>{const r=(m.region||"지역 미입력").trim()||"지역 미입력"; if(!groups[r])groups[r]=[]; groups[r].push(m);});
+  const keys=Object.keys(groups).sort((a,b)=>a==="지역 미입력"?1:b==="지역 미입력"?-1:a.localeCompare(b,"ko"));
+  let html=`<div class="region-group">`;
+  keys.forEach(r=>{
+    html+=`<div class="region-header"><span>📍</span><span class="region-name">${esc(r)}</span><span class="region-count">${groups[r].length}곳</span><div class="region-divider"></div></div>`;
+    html+=`<div class="memo-list" style="margin-top:0">`;
+    groups[r].forEach(m=>{html+=buildMemoCard(m,theme);});
+    html+=`</div>`;
+  });
+  html+=`</div>`; return html;
+}
+
+function buildMemoCard(m,theme) {
+  const extra=(theme.fields||[]).filter(f=>m[f.key]).map(f=>`<span class="meta-tag">${f.label}: ${esc(m[f.key])}</span>`).join("");
   return `<div class="memo-card">
     <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div style="flex:1">
-        <div class="mc-title">${esc(m.title)}</div>
+      <div style="flex:1"><div class="mc-title">${esc(m.title)}</div>
         ${m.note?`<div class="mc-note">${esc(m.note)}</div>`:""}
-        <div class="mc-meta">
-          <span class="badge" style="background:${theme.bg};color:${theme.color};border:1px solid ${theme.color}30">${m.status}</span>
-          ${extraTags}
-          <span class="meta-date">${m.date||""}</span>
-        </div>
+        <div class="mc-meta"><span class="badge" style="background:${theme.bg};color:${theme.color};border:1px solid ${theme.color}30">${m.status}</span>${extra}<span class="meta-date">${m.date||""}</span></div>
       </div>
-      <div class="mc-actions" style="display:flex;gap:1px;margin-left:8px;flex-shrink:0">
-        <button data-edit="${m.id}">✏️</button>
-        <button data-delete="${m.id}">🗑️</button>
+      <div class="mc-actions" style="display:flex;gap:2px;margin-left:8px;flex-shrink:0">
+        <button data-edit="${m.id}">✏️</button><button data-delete="${m.id}">🗑️</button>
       </div>
-    </div>
-  </div>`;
+    </div></div>`;
 }
 
-// ── 테마 모달 ──────────────────────────────────
-function buildThemeModal() {
-  const iconBtns  = ICONS.map(ic=>`<button class="icon-btn${newTheme.icon===ic?" sel":""}" data-icon="${ic}">${ic}</button>`).join("");
-  const colorDots = COLORS.map(c=>`<div class="cdot${newTheme.color===c.color?" sel":""}" data-color='${JSON.stringify(c)}' style="background:${c.color}"></div>`).join("");
-  return `<div class="modal-bg" id="modal-bg-theme">
-    <div class="modal-box"><div class="modal-handle"></div>
-      <div class="modal-ttl">새 테마 추가</div>
-      <div class="f-row"><label class="f-lbl">테마 이름 *</label><input class="f-inp" id="nt-name" placeholder="예: 운동, 독서, 쇼핑..." value="${esc(newTheme.name)}"></div>
-      <div class="f-row"><label class="f-lbl">아이콘</label><div class="icon-grid">${iconBtns}</div></div>
-      <div class="f-row"><label class="f-lbl">색상</label><div class="cdots">${colorDots}</div></div>
-      <div class="t-preview" style="background:${newTheme.bg};border:1.5px solid ${newTheme.color}30">
-        <span style="font-size:22px">${newTheme.icon}</span>
-        <span style="font-weight:700;margin-left:8px;color:${newTheme.color}">${newTheme.name||"미리보기"}</span>
-      </div>
-      <button class="btn-ok" id="btn-save-theme" style="background:${newTheme.color}">추가하기</button>
-      <button class="btn-sec" id="btn-cancel-theme">취소</button>
-    </div>
+// ══════════════════════════════════════════════
+//  SETTINGS PAGE
+// ══════════════════════════════════════════════
+function buildSettings() {
+  let html=`<div class="settings-page">`;
+
+  // ── 테마 관리 ──
+  html+=`<div class="ss-section"><div class="ss-section-title">테마 관리</div>`;
+  themes.forEach(t=>{
+    const cnt=(memos[t.id]||[]).length;
+    const isLocked=!!locks[t.id];
+    const isCustom=t.id.startsWith("custom_");
+    const isEditing=editingThemeId===t.id;
+    html+=`<div class="st-row">
+      <div class="st-main">
+        <span class="st-emoji">${t.icon}</span>
+        <div class="st-info"><div class="st-name">${esc(t.name)}</div><div class="st-sub">메모 ${cnt}개${isLocked?" · 🔒 잠금중":""}</div></div>
+        <div class="st-btns">
+          <button class="st-btn st-btn-edit" data-edit-theme="${t.id}">✎ 수정</button>
+          <button class="st-btn ${isLocked?"st-btn-lock-on":"st-btn-lock-off"}" data-lock-theme="${t.id}">${isLocked?"🔒 잠금":"🔓 잠금"}</button>
+          ${isCustom?`<button class="st-btn st-btn-del" data-del-theme="${t.id}">삭제</button>`:""}
+        </div>
+      </div>`;
+    // inline edit area
+    if (isEditing) {
+      html+=`<div class="st-edit-area">
+        <label class="st-edit-label">테마 이름</label>
+        <input class="st-edit-name" id="st-name-inp" value="${esc(editThemeName)}" maxlength="12" placeholder="테마 이름">
+        <label class="st-edit-label">아이콘</label>
+        <div class="emoji-picker">${ICONS.map(ic=>`<button class="ep-btn${editThemeIcon===ic?" sel":""}" data-ep-icon="${ic}">${ic}</button>`).join("")}</div>
+        <div class="st-edit-btns">
+          <button class="st-save-btn" id="btn-st-save">저장</button>
+          <button class="st-cancel-btn" id="btn-st-cancel">취소</button>
+        </div>
+      </div>`;
+    }
+    html+=`</div>`;
+  });
+  html+=`<div class="ss-btn-row" id="btn-add-theme-settings"><span class="ss-row-icon">➕</span><span class="ss-row-text">새 테마 추가</span><span class="ss-row-arrow">›</span></div>`;
+  html+=`</div>`;
+
+  // ── 데이터 관리 ──
+  html+=`<div class="ss-section"><div class="ss-section-title">데이터</div>
+    <div class="ss-btn-row" id="btn-export"><span class="ss-row-icon">💾</span><span class="ss-row-text">JSON 파일로 저장</span><span class="ss-row-arrow">›</span></div>
+    <label class="ss-btn-row" for="import-file-inp" style="cursor:pointer"><span class="ss-row-icon">📤</span><span class="ss-row-text">JSON 파일 불러오기</span><span class="ss-row-arrow">›</span></label>
+    <input type="file" id="import-file-inp" accept=".json" style="display:none" onchange="importData(event)">
+    <div class="ss-btn-row ss-danger" id="btn-reset-all"><span class="ss-row-icon">⚠️</span><span class="ss-row-text">전체 데이터 초기화</span><span class="ss-row-arrow">›</span></div>
   </div>`;
+
+  // ── 앱 정보 ──
+  html+=`<div class="ss-section"><div class="ss-section-title">앱 정보</div>
+    <div class="ss-info-text">Jak's 메모 ${APP_VER}<br>메모, 여행지, 맛집, 영화, 금융, 레시피를 테마별로 관리하는 개인 메모앱입니다.<br>데이터는 브라우저 localStorage에 저장됩니다.</div>
+  </div>`;
+
+  html+=`</div>`; return html;
+}
+
+// ── 테마 추가 모달 ─────────────────────────────
+function buildThemeModal() {
+  const iconBtns=ICONS.map(ic=>`<button class="icon-btn${newTheme.icon===ic?" sel":""}" data-icon="${ic}">${ic}</button>`).join("");
+  const colorDots=COLORS.map(c=>`<div class="cdot${newTheme.color===c.color?" sel":""}" data-color='${JSON.stringify(c)}' style="background:${c.color}"></div>`).join("");
+  return `<div class="modal-bg" id="modal-bg-theme"><div class="modal-box"><div class="modal-handle"></div>
+    <div class="modal-ttl">새 테마 추가</div>
+    <div class="f-row"><label class="f-lbl">테마 이름 *</label><input class="f-inp" id="nt-name" placeholder="예: 운동, 독서, 쇼핑..." value="${esc(newTheme.name)}"></div>
+    <div class="f-row"><label class="f-lbl">아이콘</label><div class="icon-grid">${iconBtns}</div></div>
+    <div class="f-row"><label class="f-lbl">색상</label><div class="cdots">${colorDots}</div></div>
+    <div class="t-preview" style="background:${newTheme.bg};border:1.5px solid ${newTheme.color}30">
+      <span style="font-size:22px">${newTheme.icon}</span>
+      <span style="font-weight:700;margin-left:8px;color:${newTheme.color}">${newTheme.name||"미리보기"}</span>
+    </div>
+    <button class="btn-ok" id="btn-save-theme" style="background:${newTheme.color}">추가하기</button>
+    <button class="btn-sec" id="btn-cancel-theme">취소</button>
+  </div></div>`;
 }
 
 // ── 메모 모달 ──────────────────────────────────
 function buildMemoModal() {
-  const theme = themes.find(t=>t.id===activeTheme);
-  const m     = modalMemo;
-  const fields = (theme.fields||[]).map(f =>
-    `<div class="f-row"><label class="f-lbl">${f.label}</label><input class="f-inp" data-field="${f.key}" value="${esc(m[f.key]||"")}"></div>`
-  ).join("");
-  const statusOpts = theme.statusOptions.map(s =>
-    `<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`
-  ).join("");
-  return `<div class="modal-bg" id="modal-bg-memo">
-    <div class="modal-box"><div class="modal-handle"></div>
-      <div class="modal-ttl">${modalEditId?"메모 수정":`새 ${theme.name} 메모`}</div>
-      <div class="f-row"><label class="f-lbl">제목 *</label><input class="f-inp" id="mm-title" value="${esc(m.title||"")}"></div>
-      <div class="f-row"><label class="f-lbl">내용</label><textarea class="f-ta" id="mm-note">${esc(m.note||"")}</textarea></div>
-      ${fields}
-      <div class="f-row"><label class="f-lbl">상태</label><select class="f-sel" id="mm-status">${statusOpts}</select></div>
-      <div class="f-row"><label class="f-lbl">날짜</label><input type="date" class="f-inp" id="mm-date" value="${m.date||TODAY}"></div>
-      <button class="btn-ok" id="btn-save-modal" style="background:${theme.color}">저장</button>
-      <button class="btn-sec" id="btn-cancel-modal">취소</button>
+  const theme=themes.find(t=>t.id===activeTheme); const m=modalMemo;
+  const fields=(theme.fields||[]).map(f=>`<div class="f-row"><label class="f-lbl">${f.label}</label><input class="f-inp" data-field="${f.key}" value="${esc(m[f.key]||"")}"></div>`).join("");
+  const statusOpts=theme.statusOptions.map(s=>`<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`).join("");
+  return `<div class="modal-bg" id="modal-bg-memo"><div class="modal-box"><div class="modal-handle"></div>
+    <div class="modal-ttl">${modalEditId?"메모 수정":`새 ${theme.name} 메모`}</div>
+    <div class="f-row"><label class="f-lbl">제목 *</label><input class="f-inp" id="mm-title" value="${esc(m.title||"")}"></div>
+    <div class="f-row"><label class="f-lbl">내용</label><textarea class="f-ta" id="mm-note">${esc(m.note||"")}</textarea></div>
+    ${fields}
+    <div class="f-row"><label class="f-lbl">상태</label><select class="f-sel" id="mm-status">${statusOpts}</select></div>
+    <div class="f-row"><label class="f-lbl">날짜</label><input type="date" class="f-inp" id="mm-date" value="${m.date||TODAY}"></div>
+    <button class="btn-ok" id="btn-save-modal" style="background:${theme.color}">저장</button>
+    <button class="btn-sec" id="btn-cancel-modal">취소</button>
+  </div></div>`;
+}
+
+// ── PIN 모달 ───────────────────────────────────
+function buildPinModal() {
+  const {action, themeId} = pinModal;
+  const t = themes.find(t=>t.id===themeId);
+  let icon="🔒", title="", sub="";
+  if (action==="setup")  { icon="🔒"; title="잠금 비밀번호 설정"; sub=`${t?.icon} ${t?.name} 테마에 잠금을 설정합니다.\n숫자 4자리를 입력하세요.`; }
+  if (action==="enter")  { icon="🔐"; title="잠금 해제"; sub=`${t?.icon} ${t?.name}\n비밀번호 4자리를 입력하세요.`; }
+  if (action==="remove") { icon="🔓"; title="잠금 해제 (잠금 제거)"; sub="현재 비밀번호를 입력하면\n잠금이 제거됩니다."; }
+  return `<div class="pin-modal-bg" id="pin-modal-bg">
+    <div class="pin-modal">
+      <div class="pin-icon">${icon}</div>
+      <div class="pin-title">${title}</div>
+      <div class="pin-sub" style="white-space:pre-line">${sub}</div>
+      <input class="pin-input" type="password" id="pin-inp" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="●●●●"
+        onkeydown="if(event.key==='Enter')submitPin()">
+      <div class="pin-error" id="pin-err">${pinError}</div>
+      <div class="pin-btns">
+        <button style="background:#f0ede6;color:#555" id="btn-pin-cancel">취소</button>
+        <button style="background:#4A90E2;color:#fff" id="btn-pin-ok">확인</button>
+      </div>
     </div>
   </div>`;
 }
 
-// ── Confirm 모달 ───────────────────────────────
+function submitPin() {
+  const val=document.getElementById("pin-inp")?.value||"";
+  if (val.length<4) { pinError="4자리를 입력해주세요"; render(); setTimeout(()=>document.getElementById("pin-inp")?.focus(),30); return; }
+  const {action,themeId}=pinModal;
+  if (action==="setup") {
+    locks[themeId]=val; saveLocks(); pinModal=null; pinError="";
+    showToast("🔒 잠금이 설정됐어요"); render();
+  } else if (action==="enter") {
+    if (locks[themeId]===val) {
+      pinModal=null; pinError="";
+      activeTheme=themeId; view="detail"; filterStatus="전체"; showSearch=false; searchText=""; render();
+    } else { pinError="비밀번호가 틀렸어요"; render(); setTimeout(()=>document.getElementById("pin-inp")?.focus(),30); }
+  } else if (action==="remove") {
+    if (locks[themeId]===val) {
+      delete locks[themeId]; saveLocks(); pinModal=null; pinError="";
+      showToast("🔓 잠금이 해제됐어요"); render();
+    } else { pinError="비밀번호가 틀렸어요"; render(); setTimeout(()=>document.getElementById("pin-inp")?.focus(),30); }
+  }
+}
+
+// ── Confirm ────────────────────────────────────
 function buildConfirm() {
-  return `<div class="confirm-bg" id="confirm-bg">
-    <div class="confirm-box">
-      <div class="ci">🗑️</div><div class="ct">삭제할까요?</div>
-      <div class="cs">삭제한 메모는 복구할 수 없어요</div>
-      <div class="confirm-btns">
-        <button style="background:#f0ede6;color:#555" id="btn-cancel-del">취소</button>
-        <button class="btn-del" id="btn-confirm-del">삭제</button>
-      </div>
+  return `<div class="confirm-bg" id="confirm-bg"><div class="confirm-box">
+    <div class="ci">🗑️</div><div class="ct">삭제할까요?</div>
+    <div class="cs">삭제한 메모는 복구할 수 없어요</div>
+    <div class="confirm-btns">
+      <button style="background:#f0ede6;color:#555" id="btn-cancel-del">취소</button>
+      <button class="btn-del" id="btn-confirm-del">삭제</button>
     </div>
-  </div>`;
+  </div></div>`;
 }
 
 // ══════════════════════════════════════════════
 //  TODO ACTIONS
 // ══════════════════════════════════════════════
 function addTodo() {
-  const title  = document.getElementById("todo-inp")?.value?.trim();
-  if (!title) { document.getElementById("todo-inp")?.focus(); return; }
-  const tid    = document.getElementById("todo-cat")?.value || "daily";
-  const status = document.getElementById("todo-status")?.value || "미완료";
-  const date   = document.getElementById("todo-date")?.value  || TODAY;
-  if (!memos[tid]) memos[tid] = [];
-  memos[tid].unshift({ id: Date.now().toString(), title, note:"", status, date });
-  save(); render();
-  setTimeout(() => document.getElementById("todo-inp")?.focus(), 30);
+  const title=document.getElementById("todo-inp")?.value?.trim(); if(!title){document.getElementById("todo-inp")?.focus();return;}
+  const tid=document.getElementById("todo-cat")?.value||"daily";
+  const status=document.getElementById("todo-status")?.value||"미완료";
+  const date=document.getElementById("todo-date")?.value||TODAY;
+  if(!memos[tid])memos[tid]=[];
+  memos[tid].unshift({id:Date.now().toString(),title,note:"",status,date});
+  save();render();setTimeout(()=>document.getElementById("todo-inp")?.focus(),30);
 }
-
-function commitEdit(id) {
-  const val = document.getElementById("tedit-inp")?.value?.trim();
-  if (!val) return;
-  for (const key of Object.keys(memos)) {
-    const idx = (memos[key]||[]).findIndex(m=>m.id===id);
-    if (idx !== -1) { memos[key][idx].title = val; break; }
-  }
-  todoEditId = null; save(); render();
+function commitEdit(id){
+  const val=document.getElementById("tedit-inp")?.value?.trim();if(!val)return;
+  for(const k of Object.keys(memos)){const i=(memos[k]||[]).findIndex(m=>m.id===id);if(i!==-1){memos[k][i].title=val;break;}}
+  todoEditId=null;save();render();
 }
-function cancelEdit() { todoEditId = null; render(); }
-
-function toggleTodo(id) {
-  for (const key of Object.keys(memos)) {
-    const m = (memos[key]||[]).find(m=>m.id===id);
-    if (m) { m.status = m.status==="완료"?"미완료":"완료"; break; }
-  }
-  save(); render();
+function cancelEdit(){todoEditId=null;render();}
+function toggleTodo(id){
+  for(const k of Object.keys(memos)){const m=(memos[k]||[]).find(m=>m.id===id);if(m){m.status=m.status==="완료"?"미완료":"완료";break;}}
+  save();render();
 }
-
-function deleteTodo(id) {
-  for (const key of Object.keys(memos)) {
-    const before = (memos[key]||[]).length;
-    memos[key] = (memos[key]||[]).filter(m=>m.id!==id);
-    if ((memos[key]||[]).length !== before) break;
-  }
-  save(); render();
+function deleteTodo(id){
+  for(const k of Object.keys(memos)){const b=(memos[k]||[]).length;memos[k]=(memos[k]||[]).filter(m=>m.id!==id);if((memos[k]||[]).length!==b)break;}
+  save();render();
 }
 
 // ══════════════════════════════════════════════
 //  EVENT BINDING
 // ══════════════════════════════════════════════
 function bind() {
-  const $ = id => document.getElementById(id);
+  const $=id=>document.getElementById(id);
 
-  // 저장 버튼
-  $("btn-save-data")?.addEventListener("click", saveData);
+  // 저장
+  $("btn-save-data")?.addEventListener("click",saveData);
 
-  // 홈 ↔ 테마
-  $("btn-go-themes")?.addEventListener("click", () => { view="themes"; render(); });
-  $("btn-back")?.addEventListener("click", () => {
-    if (view==="themes") { view="home"; render(); }
-    if (view==="detail") {
-      view="themes"; activeTheme=null; filterStatus="전체"; showSearch=false; searchText=""; render();
-    }
+  // 네비게이션
+  $("btn-go-themes")?.addEventListener("click",()=>{view="themes";render();});
+  $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;render();});
+  $("btn-back")?.addEventListener("click",()=>{
+    if(view==="themes"){view="home";render();}
+    else if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";render();}
+    else if(view==="settings"){view="home";render();}
   });
 
   // 테마 카드 클릭
-  document.querySelectorAll(".theme-card").forEach(el => {
-    el.addEventListener("click", e => {
-      if (e.target.closest("[data-del-theme]")) return;
-      activeTheme=el.dataset.theme; view="detail";
-      filterStatus="전체"; showSearch=false; searchText=""; render();
+  document.querySelectorAll(".theme-card").forEach(el=>{
+    el.addEventListener("click",e=>{
+      if(e.target.closest("[data-del-theme]"))return;
+      const tid=el.dataset.theme;
+      if(locks[tid]){pinModal={action:"enter",themeId:tid};pinError="";render();setTimeout(()=>$("pin-inp")?.focus(),50);return;}
+      activeTheme=tid;view="detail";filterStatus="전체";showSearch=false;searchText="";render();
     });
   });
-  document.querySelectorAll("[data-del-theme]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      themes = themes.filter(t=>t.id!==btn.dataset.delTheme);
-      delete memos[btn.dataset.delTheme];
-      save(); render();
+  document.querySelectorAll("[data-del-theme]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      if(!confirm(`"${themes.find(t=>t.id===btn.dataset.delTheme)?.name}" 테마를 삭제할까요?`))return;
+      themes=themes.filter(t=>t.id!==btn.dataset.delTheme);delete memos[btn.dataset.delTheme];delete locks[btn.dataset.delTheme];save();saveLocks();render();
     });
   });
 
   // 테마 추가
-  $("btn-add-theme")?.addEventListener("click", () => { showAddTheme=true; render(); });
-  $("btn-cancel-theme")?.addEventListener("click", () => { showAddTheme=false; newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"}; render(); });
-  $("modal-bg-theme")?.addEventListener("click", e => { if(e.target.id==="modal-bg-theme"){showAddTheme=false;render();} });
-  document.querySelectorAll("[data-icon]").forEach(btn => {
-    btn.addEventListener("click", () => { newTheme.icon=btn.dataset.icon; newTheme.name=($("nt-name")||{value:""}).value; render(); });
-  });
-  document.querySelectorAll(".cdot").forEach(dot => {
-    dot.addEventListener("click", () => { const c=JSON.parse(dot.dataset.color); newTheme.color=c.color; newTheme.bg=c.bg; newTheme.name=($("nt-name")||{value:""}).value; render(); });
-  });
-  $("btn-save-theme")?.addEventListener("click", () => {
-    const name=($("nt-name")||{}).value?.trim(); if(!name) return;
-    themes.push({id:"custom_"+Date.now(), name, icon:newTheme.icon, color:newTheme.color, bg:newTheme.bg, fields:[], statusOptions:["메모","완료"], defaultStatus:"메모"});
-    newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"}; showAddTheme=false; save(); render();
+  $("btn-add-theme")?.addEventListener("click",()=>{showAddTheme=true;render();});
+  $("btn-add-theme-settings")?.addEventListener("click",()=>{showAddTheme=true;render();});
+  $("btn-cancel-theme")?.addEventListener("click",()=>{showAddTheme=false;newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};render();});
+  $("modal-bg-theme")?.addEventListener("click",e=>{if(e.target.id==="modal-bg-theme"){showAddTheme=false;render();}});
+  document.querySelectorAll("[data-icon]").forEach(btn=>{btn.addEventListener("click",()=>{newTheme.icon=btn.dataset.icon;newTheme.name=($("nt-name")||{value:""}).value;render();});});
+  document.querySelectorAll(".cdot").forEach(dot=>{dot.addEventListener("click",()=>{const c=JSON.parse(dot.dataset.color);newTheme.color=c.color;newTheme.bg=c.bg;newTheme.name=($("nt-name")||{value:""}).value;render();});});
+  $("btn-save-theme")?.addEventListener("click",()=>{
+    const name=($("nt-name")||{}).value?.trim();if(!name)return;
+    themes.push({id:"custom_"+Date.now(),name,icon:newTheme.icon,color:newTheme.color,bg:newTheme.bg,fields:[],statusOptions:["메모","완료"],defaultStatus:"메모"});
+    newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};showAddTheme=false;save();render();
   });
 
-  // 검색
-  $("btn-srch")?.addEventListener("click", () => { showSearch=!showSearch; if(!showSearch)searchText=""; render(); if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50); });
-  $("srch-inp")?.addEventListener("input", e => { searchText=e.target.value; render(); });
-
-  // 상태 탭
-  document.querySelectorAll("[data-tab]").forEach(btn => {
-    btn.addEventListener("click", () => { filterStatus=btn.dataset.tab; render(); });
-  });
-
-  // ── 일상생활 home ──
-  $("todo-cat")?.addEventListener("change", () => {
-    const t = themes.find(th=>th.id===$("todo-cat").value);
-    if (!t) return;
-    const sel=$("todo-status");
-    sel.innerHTML=t.statusOptions.map(s=>`<option value="${s}">${s}</option>`).join("");
-    sel.style.background=t.bg; sel.style.color=t.color; sel.style.borderColor=t.color+"40";
-  });
-  $("todo-inp")?.addEventListener("keydown", e => { if(e.key==="Enter"){e.preventDefault();addTodo();} });
-  $("btn-tadd")?.addEventListener("click", addTodo);
-  $("btn-more-pend")?.addEventListener("click", () => { showAllPend=!showAllPend; render(); });
-  $("btn-more-done")?.addEventListener("click", () => { showAllDone=!showAllDone; render(); });
-  document.querySelectorAll("[data-check]").forEach(cb => { cb.addEventListener("click", () => toggleTodo(cb.dataset.check)); });
-  document.querySelectorAll("[data-edit-todo]").forEach(btn => {
-    btn.addEventListener("click", () => { todoEditId=btn.dataset.editTodo; render(); setTimeout(()=>$("tedit-inp")?.focus(),30); });
-  });
-  document.querySelectorAll("[data-del-todo]").forEach(btn => {
-    btn.addEventListener("click", () => deleteTodo(btn.dataset.delTodo));
-  });
-
-  // ── detail 메모 모달 ──
-  $("btn-add-modal")?.addEventListener("click", () => {
-    const t=themes.find(t=>t.id===activeTheme);
-    modalMemo={title:"",note:"",status:t.defaultStatus,date:TODAY};
-    (t.fields||[]).forEach(f=>{modalMemo[f.key]="";});
-    modalEditId=null; showModal=true; render();
-  });
-  $("btn-save-modal")?.addEventListener("click", saveMemoModal);
-  $("btn-cancel-modal")?.addEventListener("click", () => { showModal=false; modalEditId=null; render(); });
-  $("modal-bg-memo")?.addEventListener("click", e => { if(e.target.id==="modal-bg-memo"){showModal=false;modalEditId=null;render();} });
-  document.querySelectorAll("[data-edit]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);
-      if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();}
+  // ── Settings: 테마 수정 ──
+  document.querySelectorAll("[data-edit-theme]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const tid=btn.dataset.editTheme; const t=themes.find(t=>t.id===tid);
+      if(editingThemeId===tid){editingThemeId=null;}
+      else{editingThemeId=tid;editThemeName=t.name;editThemeIcon=t.icon;}
+      render();
     });
   });
-  document.querySelectorAll("[data-delete]").forEach(btn => {
-    btn.addEventListener("click", () => { pendingDelete=btn.dataset.delete; render(); });
+  $("btn-st-save")?.addEventListener("click",()=>{
+    const name=($("st-name-inp")||{}).value?.trim();
+    if(!name){showToast("이름을 입력해주세요");return;}
+    const t=themes.find(t=>t.id===editingThemeId);
+    if(t){t.name=name;t.icon=editThemeIcon;}
+    save();editingThemeId=null;showToast("✅ 저장됐어요");render();
   });
+  $("btn-st-cancel")?.addEventListener("click",()=>{editingThemeId=null;render();});
+  document.querySelectorAll("[data-ep-icon]").forEach(btn=>{
+    btn.addEventListener("click",()=>{editThemeIcon=btn.dataset.epIcon;render();setTimeout(()=>{$("st-name-inp")?.focus();$("st-name-inp") && ($("st-name-inp").value=editThemeName);},10);});
+  });
+
+  // ── Settings: 잠금 ──
+  document.querySelectorAll("[data-lock-theme]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const tid=btn.dataset.lockTheme;
+      pinModal={action:locks[tid]?"remove":"setup",themeId:tid};pinError="";render();setTimeout(()=>$("pin-inp")?.focus(),50);
+    });
+  });
+
+  // ── Settings: 데이터 ──
+  $("btn-export")?.addEventListener("click",saveData);
+  $("btn-reset-all")?.addEventListener("click",()=>{
+    if(!confirm("모든 데이터를 초기화할까요? 복구할 수 없어요."))return;
+    memos={}; locks={}; themes=JSON.parse(JSON.stringify(DEFAULT_THEMES));
+    save();saveLocks();showToast("초기화 완료");render();
+  });
+
+  // PIN 모달
+  $("btn-pin-ok")?.addEventListener("click",submitPin);
+  $("btn-pin-cancel")?.addEventListener("click",()=>{pinModal=null;pinError="";render();});
+  $("pin-modal-bg")?.addEventListener("click",e=>{if(e.target.id==="pin-modal-bg"){pinModal=null;pinError="";render();}});
+  $("pin-inp")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitPin();});
+
+  // 검색
+  $("btn-srch")?.addEventListener("click",()=>{showSearch=!showSearch;if(!showSearch)searchText="";render();if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50);});
+  $("srch-inp")?.addEventListener("input",e=>{searchText=e.target.value;render();});
+
+  // 상태 탭
+  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;render();});});
+
+  // home todo
+  $("todo-cat")?.addEventListener("change",()=>{
+    const t=themes.find(th=>th.id===$("todo-cat").value);if(!t)return;
+    const sel=$("todo-status");
+    sel.innerHTML=t.statusOptions.map(s=>`<option value="${s}">${s}</option>`).join("");
+    sel.style.background=t.bg;sel.style.color=t.color;sel.style.borderColor=t.color+"40";
+  });
+  $("todo-inp")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addTodo();}});
+  $("btn-tadd")?.addEventListener("click",addTodo);
+  $("btn-more-pend")?.addEventListener("click",()=>{showAllPend=!showAllPend;render();});
+  $("btn-more-done")?.addEventListener("click",()=>{showAllDone=!showAllDone;render();});
+  document.querySelectorAll("[data-check]").forEach(cb=>{cb.addEventListener("click",()=>toggleTodo(cb.dataset.check));});
+  document.querySelectorAll("[data-edit-todo]").forEach(btn=>{btn.addEventListener("click",()=>{todoEditId=btn.dataset.editTodo;render();setTimeout(()=>$("tedit-inp")?.focus(),30);});});
+  document.querySelectorAll("[data-del-todo]").forEach(btn=>{btn.addEventListener("click",()=>deleteTodo(btn.dataset.delTodo));});
+
+  // 메모 모달
+  $("btn-add-modal")?.addEventListener("click",()=>{
+    const t=themes.find(t=>t.id===activeTheme);
+    modalMemo={title:"",note:"",status:t.defaultStatus,date:TODAY};(t.fields||[]).forEach(f=>{modalMemo[f.key]="";});
+    modalEditId=null;showModal=true;render();
+  });
+  $("btn-save-modal")?.addEventListener("click",saveMemoModal);
+  $("btn-cancel-modal")?.addEventListener("click",()=>{showModal=false;modalEditId=null;render();});
+  $("modal-bg-memo")?.addEventListener("click",e=>{if(e.target.id==="modal-bg-memo"){showModal=false;modalEditId=null;render();}});
+  document.querySelectorAll("[data-edit]").forEach(btn=>{btn.addEventListener("click",()=>{const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();}});});
+  document.querySelectorAll("[data-delete]").forEach(btn=>{btn.addEventListener("click",()=>{pendingDelete=btn.dataset.delete;render();});});
 
   // confirm
-  $("btn-cancel-del")?.addEventListener("click", () => { pendingDelete=null; render(); });
-  $("confirm-bg")?.addEventListener("click", e => { if(e.target.id==="confirm-bg"){pendingDelete=null;render();} });
-  $("btn-confirm-del")?.addEventListener("click", () => {
-    memos[activeTheme]=(memos[activeTheme]||[]).filter(m=>m.id!==pendingDelete);
-    pendingDelete=null; save(); render();
-  });
+  $("btn-cancel-del")?.addEventListener("click",()=>{pendingDelete=null;render();});
+  $("confirm-bg")?.addEventListener("click",e=>{if(e.target.id==="confirm-bg"){pendingDelete=null;render();}});
+  $("btn-confirm-del")?.addEventListener("click",()=>{memos[activeTheme]=(memos[activeTheme]||[]).filter(m=>m.id!==pendingDelete);pendingDelete=null;save();render();});
 }
 
-function saveMemoModal() {
-  const title=document.getElementById("mm-title")?.value?.trim(); if(!title) return;
-  const note  =document.getElementById("mm-note")?.value||"";
+function saveMemoModal(){
+  const title=document.getElementById("mm-title")?.value?.trim();if(!title)return;
+  const note=document.getElementById("mm-note")?.value||"";
   const status=document.getElementById("mm-status")?.value||"";
-  const date  =document.getElementById("mm-date")?.value||TODAY;
-  const extra={};
-  document.querySelectorAll("[data-field]").forEach(inp=>{ extra[inp.dataset.field]=inp.value; });
+  const date=document.getElementById("mm-date")?.value||TODAY;
+  const extra={};document.querySelectorAll("[data-field]").forEach(inp=>{extra[inp.dataset.field]=inp.value;});
   const m={title,note,status,date,...extra};
   if(!memos[activeTheme])memos[activeTheme]=[];
-  if(modalEditId){ memos[activeTheme]=memos[activeTheme].map(x=>x.id===modalEditId?{...x,...m}:x); }
-  else { memos[activeTheme].unshift({...m, id:Date.now().toString()}); }
-  showModal=false; modalEditId=null; save(); render();
+  if(modalEditId){memos[activeTheme]=memos[activeTheme].map(x=>x.id===modalEditId?{...x,...m}:x);}
+  else{memos[activeTheme].unshift({...m,id:Date.now().toString()});}
+  showModal=false;modalEditId=null;save();render();
 }
 
-function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 
 render();
 </script>
