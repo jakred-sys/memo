@@ -19,14 +19,11 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .btn-srch { background: none; border: 1.5px solid transparent; color: #888; border-radius: 9px; padding: 5px 8px; font-size: 15px; cursor: pointer; }
 .btn-srch.on { background: #EBF4FF; border-color: rgba(74,144,226,.3); color: #4A90E2; }
 .btn-add-hdr { color: #fff; border: none; border-radius: 9px; padding: 6px 13px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
-/* 검색바 - 헤더 바로 아래 고정 */
 .search-zone { background: #fff; border-bottom: .5px solid rgba(0,0,0,.07); padding: 8px 14px; position: sticky; top: 52px; z-index: 19; }
 .search-inp { background: #f0ede6; border: .5px solid rgba(74,144,226,.4); border-radius: 12px; padding: 9px 14px; font-size: 14px; width: 100%; font-family: inherit; outline: none; }
 .search-inp:focus { background: #fff; }
-/* Toast */
 .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 22px; z-index: 400; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
 .toast.show { opacity: 1; }
-/* Sticky note */
 .sticky-wrap { margin: 12px 14px 0; }
 .sticky-box { background: #FFFDE7; border: 1px solid #F0E68C; border-radius: 12px; padding: 10px 12px; }
 .sticky-hdr { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
@@ -34,7 +31,6 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .sticky-hdr-hint { font-size: 10px; color: #B8860B; opacity: .7; }
 .sticky-ta { width: 100%; border: none; background: transparent; font-size: 13px; color: #555; font-family: inherit; outline: none; resize: none; line-height: 1.65; min-height: 42px; max-height: 220px; overflow-y: auto; }
 .sticky-ta::placeholder { color: #C8B44A; }
-/* Grid */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px,1fr)); gap: 12px; padding: 16px; }
 .theme-card { border-radius: 16px; padding: 17px 14px; cursor: pointer; border: 1.5px solid transparent; transition: border-color .15s; position: relative; }
 .theme-card:hover { border-color: var(--tc); }
@@ -43,7 +39,6 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .theme-card .ct { font-size: 12px; color: #999; }
 .theme-card .lock-badge { position: absolute; top: 8px; right: 8px; font-size: 14px; }
 .add-card { border-radius: 16px; padding: 17px 14px; cursor: pointer; border: 1.5px dashed #ccc; background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 108px; color: #bbb; gap: 5px; }
-/* TODO Board */
 .todo-board { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.08); padding: 14px 15px; margin: 12px 14px 0; }
 .board-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .board-title { font-size: 15px; font-weight: 700; }
@@ -76,24 +71,23 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .tedit-input { flex: 1; border: .5px solid #4A90E2; border-radius: 8px; padding: 7px 10px; font-size: 14px; color: #1a1a18; background: #f0ede6; font-family: inherit; outline: none; min-width: 0; }
 .tedit-save { background: #4A90E2; border: none; border-radius: 8px; padding: 7px 12px; font-size: 13px; color: #fff; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
 .tedit-cancel { background: none; border: .5px solid rgba(0,0,0,.18); border-radius: 8px; padding: 7px 10px; font-size: 13px; color: #666; cursor: pointer; font-family: inherit; white-space: nowrap; }
-/* Memo view */
 .memo-view { padding: 0 14px; }
 .tabs-row { display: flex; gap: 7px; overflow-x: auto; padding: 10px 0; scrollbar-width: none; }
 .tabs-row::-webkit-scrollbar { display: none; }
 .tab-btn { border-radius: 20px; padding: 5px 13px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: inherit; border: 1.5px solid #ddd; background: #fff; color: #666; }
 .tab-btn.on { color: #fff; border-color: transparent; }
-/* Compact memo list */
 .memo-list { background: #fff; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.07); overflow: hidden; margin-bottom: 8px; }
 .mc { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border-bottom: .5px solid rgba(0,0,0,.06); }
 .mc:last-child { border-bottom: none; }
-.mc-title { flex: 1; font-size: 14px; font-weight: 500; color: #1a1a18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.mc-info { flex: 1; min-width: 0; cursor: pointer; }
+.mc-title { font-size: 14px; font-weight: 500; color: #1a1a18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mc-title.watched { text-decoration: line-through; color: #bbb; }
+.mc-stars-inline { font-size: 11px; color: #FFB800; letter-spacing: 1px; margin-top: 1px; }
 .mc-date { font-size: 11px; color: #ccc; white-space: nowrap; flex-shrink: 0; }
 .mc-acts { display: flex; gap: 0; flex-shrink: 0; }
 .mc-acts button { background: none; border: none; cursor: pointer; font-size: 13px; padding: 3px 5px; color: #ccc; }
 .region-more-btn { display: block; width: 100%; border: none; background: none; font-size: 12px; color: #4A90E2; cursor: pointer; padding: 8px 13px; font-family: inherit; text-align: left; font-weight: 600; background: #fff; border-top: .5px solid rgba(0,0,0,.06); }
 .list-more-btn { display: block; width: 100%; border: none; background: #fff; font-size: 13px; color: #4A90E2; cursor: pointer; padding: 10px 13px; font-family: inherit; text-align: left; font-weight: 600; border-radius: 0 0 14px 14px; box-shadow: 0 1px 3px rgba(0,0,0,.07); margin-bottom: 8px; border-top: .5px solid rgba(0,0,0,.06); }
-/* Region groups */
 .region-group { }
 .region-hdr { display: flex; align-items: center; gap: 7px; margin: 14px 0 6px; }
 .region-hdr:first-child { margin-top: 8px; }
@@ -104,7 +98,6 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .empty .ei { font-size: 36px; margin-bottom: 10px; }
 .empty .et { font-weight: 600; color: #bbb; margin-bottom: 4px; }
 .empty .es { font-size: 13px; }
-/* Settings */
 .settings-page { padding: 14px 14px 60px; }
 .ss-section { background: #fff; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); margin-bottom: 14px; overflow: hidden; }
 .ss-section-title { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .06em; padding: 12px 15px 8px; border-bottom: .5px solid rgba(0,0,0,.07); }
@@ -138,7 +131,6 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .ss-row-arrow { font-size: 14px; color: #ccc; }
 .ss-danger { color: #C0392B; }
 .ss-info-text { font-size: 12px; color: #aaa; line-height: 1.6; padding: 12px 15px; }
-/* Modals */
 .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
 .modal-box { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; padding: 20px 18px 36px; max-height: 88vh; overflow-y: auto; }
 .modal-handle { width: 36px; height: 4px; background: rgba(0,0,0,.15); border-radius: 2px; margin: 0 auto 16px; }
@@ -158,6 +150,29 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .cdot { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
 .cdot.sel { border-color: #333; }
 .t-preview { margin-top: 10px; padding: 12px 14px; border-radius: 12px; }
+/* Star rating */
+.star-row { display: flex; gap: 2px; align-items: center; margin-top: 4px; }
+.star-btn { font-size: 26px; cursor: pointer; background: none; border: none; padding: 2px 3px; line-height: 1; transition: transform .1s; }
+.star-btn:active { transform: scale(1.2); }
+.mc-stars-inline { font-size: 12px; color: #FFB800; letter-spacing: 1px; }
+/* View modal */
+.vm-bg { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 100; display: flex; align-items: flex-end; justify-content: center; }
+.vm-box { background: #fff; border-radius: 20px 20px 0 0; width: 100%; max-width: 600px; padding: 20px 18px 36px; max-height: 90vh; overflow-y: auto; }
+.vm-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+.vm-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
+.vm-title { font-size: 20px; font-weight: 800; color: #1a1a18; line-height: 1.3; flex: 1; }
+.vm-badge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.vm-status { font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 20px; }
+.vm-stars { font-size: 18px; color: #FFB800; letter-spacing: 2px; }
+.vm-field-list { margin-bottom: 14px; }
+.vm-field { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-bottom: .5px solid rgba(0,0,0,.06); }
+.vm-field:last-child { border-bottom: none; }
+.vm-field-lbl { font-size: 12px; font-weight: 700; color: #aaa; width: 60px; flex-shrink: 0; padding-top: 1px; }
+.vm-field-val { font-size: 14px; color: #1a1a18; flex: 1; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+.vm-note-box { background: #f8f7f4; border-radius: 12px; padding: 13px 14px; margin-bottom: 16px; font-size: 14px; color: #333; line-height: 1.7; white-space: pre-wrap; word-break: break-word; min-height: 48px; }
+.vm-btns { display: flex; gap: 8px; }
+.vm-edit-btn { flex: 1; background: #4A90E2; color: #fff; border: none; border-radius: 11px; padding: 13px 0; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.vm-close-btn { background: #f0ede6; color: #555; border: none; border-radius: 11px; padding: 13px 20px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
 /* PIN */
 .pin-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .pin-modal { background: #fff; border-radius: 20px; width: 100%; max-width: 320px; padding: 28px 24px 24px; text-align: center; }
@@ -169,7 +184,6 @@ body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-seri
 .pin-error { font-size: 13px; color: #E24B4A; margin-bottom: 10px; min-height: 18px; }
 .pin-btns { display: flex; gap: 8px; }
 .pin-btns button { flex: 1; border: none; border-radius: 11px; padding: 13px 0; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
-/* Confirm */
 .confirm-bg { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 200; display: flex; align-items: center; justify-content: center; }
 .confirm-box { background: #fff; border-radius: 16px; padding: 22px 20px; width: 84%; max-width: 320px; text-align: center; }
 .confirm-box .ci { font-size: 24px; margin-bottom: 8px; }
@@ -197,7 +211,9 @@ const COLORS = [{color:"#4A90E2",bg:"#EBF4FF"},{color:"#7C5CBF",bg:"#F3EEFF"},{c
 const TODAY = new Date().toISOString().split("T")[0];
 const SHOW_MAX = 8, REGION_MAX = 5, LIST_MAX = 5;
 const REGION_THEMES = ["travel","restaurant"];
-const APP_VER = "v1.3";
+const APP_VER = "v1.4";
+// 별점 활성화: 테마ID -> 별점 표시 트리거 상태 목록
+const STAR_THEMES = { travel:["다녀왔다"], restaurant:["다녀왔다"], movie:["봤다"], recipe:["해봤다","자주해먹는다"] };
 
 let themes       = JSON.parse(localStorage.getItem("jaks_themes")  || "null") || DEFAULT_THEMES;
 let memos        = JSON.parse(localStorage.getItem("jaks_memos")   || "{}");
@@ -205,26 +221,14 @@ let locks        = JSON.parse(localStorage.getItem("jaks_locks")   || "{}");
 let stickyNotes  = JSON.parse(localStorage.getItem("jaks_sticky")  || "{}");
 let regionOrders = JSON.parse(localStorage.getItem("jaks_regord")  || "{}");
 
-// ── localStorage 마이그레이션 ─────────────────
-// 저장된 테마가 DEFAULT_THEMES와 다를 경우 핵심 속성 동기화
 (function migrateSavedThemes(){
   let changed = false;
   DEFAULT_THEMES.forEach(def => {
     const saved = themes.find(t => t.id === def.id);
     if (!saved) return;
-    // fields, statusOptions, defaultStatus를 DEFAULT 기준으로 덮어씀
-    if (JSON.stringify(saved.fields) !== JSON.stringify(def.fields)) {
-      saved.fields = def.fields;
-      changed = true;
-    }
-    if (JSON.stringify(saved.statusOptions) !== JSON.stringify(def.statusOptions)) {
-      saved.statusOptions = def.statusOptions;
-      changed = true;
-    }
-    if (saved.defaultStatus !== def.defaultStatus) {
-      saved.defaultStatus = def.defaultStatus;
-      changed = true;
-    }
+    if (JSON.stringify(saved.fields) !== JSON.stringify(def.fields)) { saved.fields = def.fields; changed = true; }
+    if (JSON.stringify(saved.statusOptions) !== JSON.stringify(def.statusOptions)) { saved.statusOptions = def.statusOptions; changed = true; }
+    if (saved.defaultStatus !== def.defaultStatus) { saved.defaultStatus = def.defaultStatus; changed = true; }
   });
   if (changed) localStorage.setItem("jaks_themes", JSON.stringify(themes));
 })();
@@ -248,18 +252,39 @@ let editThemeName = "";
 let editThemeIcon = "";
 let pinModal      = null;
 let pinError      = "";
-// 지역/리스트 더보기
-let expandedRegions = {};  // { themeId: Set<regionName> }
+let expandedRegions = {};
 let showAllList     = false;
+// 뷰 모달 (읽기 전용)
+let showViewModal  = false;
+let viewMemoData   = null;
+// 별점 (모달에서 선택 중인 값)
+let modalRating    = 0;
 
 function save()       { localStorage.setItem("jaks_themes",JSON.stringify(themes)); localStorage.setItem("jaks_memos",JSON.stringify(memos)); }
 function saveLocks()  { localStorage.setItem("jaks_locks",JSON.stringify(locks)); }
 function saveSticky() { localStorage.setItem("jaks_sticky",JSON.stringify(stickyNotes)); }
 function saveRegOrd() { localStorage.setItem("jaks_regord",JSON.stringify(regionOrders)); }
 
+// ── 뷰 상태 저장/복원 (화면 전환 후 돌아와도 유지) ──
+function saveViewState() {
+  const state = { view, activeTheme, filterStatus };
+  localStorage.setItem("jaks_viewstate", JSON.stringify(state));
+}
+function restoreViewState() {
+  try {
+    const s = JSON.parse(localStorage.getItem("jaks_viewstate") || "{}");
+    if (s.view) view = s.view;
+    if (s.activeTheme && themes.find(t => t.id === s.activeTheme)) {
+      activeTheme = s.activeTheme;
+    } else if (s.view === "detail") {
+      view = "home";
+    }
+    if (s.filterStatus) filterStatus = s.filterStatus;
+  } catch(e) {}
+}
+
 function showToast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2400);}
 
-// ── 자동저장 (자정) ────────────────────────────
 function scheduleMidnightSave(){
   const now=new Date(),midnight=new Date(now);midnight.setHours(24,0,0,0);
   const ms=midnight-now;
@@ -272,7 +297,6 @@ function scheduleMidnightSave(){
 }
 scheduleMidnightSave();
 
-// ── Export ─────────────────────────────────────
 function saveData(){
   try{
     const data={version:APP_VER,savedAt:new Date().toISOString(),themes,memos,stickyNotes,regionOrders};
@@ -293,26 +317,37 @@ function importData(e){
   r.readAsText(file);e.target.value="";
 }
 
-// ── Region order ───────────────────────────────
 function getRegionOrder(tid,r){const ro=regionOrders[tid]||{};return ro[r.trim()]!==undefined?ro[r.trim()]:null;}
 function setRegionOrder(tid,r,n){if(!regionOrders[tid])regionOrders[tid]={};regionOrders[tid][r.trim()]=parseInt(n,10);saveRegOrd();}
 
-// ── Android back button ────────────────────────
+// 별점 렌더 (filled/empty)
+function renderStars(rating, color="#FFB800") {
+  rating = parseInt(rating) || 0;
+  return [1,2,3,4,5].map(i => `<span style="color:${i<=rating?color:'#ddd'}">${i<=rating?'★':'☆'}</span>`).join('');
+}
+// 별점 인라인 텍스트
+function starsText(rating) {
+  rating = parseInt(rating) || 0;
+  return '★'.repeat(rating) + '☆'.repeat(5-rating);
+}
+// 해당 테마+상태에서 별점 표시 여부
+function shouldShowStar(themeId, status) {
+  if(!STAR_THEMES[themeId]) return false;
+  return STAR_THEMES[themeId].includes(status);
+}
+
 history.pushState({view:"home"},""  );
 window.addEventListener("popstate",()=>{
   if(showModal){showModal=false;modalEditId=null;render();history.pushState({},""  );return;}
+  if(showViewModal){showViewModal=false;viewMemoData=null;render();history.pushState({},""  );return;}
   if(showAddTheme){showAddTheme=false;render();history.pushState({},""  );return;}
   if(pinModal){pinModal=null;pinError="";render();history.pushState({},""  );return;}
   if(pendingDelete){pendingDelete=null;render();history.pushState({},""  );return;}
-  if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};render();history.pushState({},""  );return;}
-  if(view==="themes"){view="home";render();history.pushState({},""  );return;}
-  if(view==="settings"){view="home";render();history.pushState({},""  );return;}
-  // home → allow exit
+  if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};saveViewState();render();history.pushState({},""  );return;}
+  if(view==="themes"){view="home";saveViewState();render();history.pushState({},""  );return;}
+  if(view==="settings"){view="home";saveViewState();render();history.pushState({},""  );return;}
 });
 
-// ══════════════════════════════════════════════
-//  RENDER
-// ══════════════════════════════════════════════
 function render(){
   document.getElementById("app").innerHTML=buildApp();
   bind();
@@ -320,19 +355,14 @@ function render(){
   if(showSearch){const inp=document.getElementById("srch-inp");if(inp)inp.focus();}
 }
 
-// 고정메모 높이 초기화 (내용 있으면 10줄까지 자동 확장)
 function initStickyHeights(){
   document.querySelectorAll(".sticky-ta").forEach(ta=>{
     ta.style.height="auto";
-    if(ta.value.trim()){
-      ta.style.height=Math.min(ta.scrollHeight,220)+"px";
-    } else {
-      ta.style.height="42px";
-    }
+    if(ta.value.trim()){ta.style.height=Math.min(ta.scrollHeight,220)+"px";}
+    else{ta.style.height="42px";}
   });
 }
 
-// 리스트만 업데이트 (검색 중 포커스 유지용)
 function renderListOnly(){
   const la=document.getElementById("list-area");if(!la)return;
   const theme=themes.find(t=>t.id===activeTheme);if(!theme)return;
@@ -359,11 +389,11 @@ function buildApp(){
   return buildHeader()+body
     +(showAddTheme?buildThemeModal():"")
     +(showModal?buildMemoModal():"")
+    +(showViewModal&&viewMemoData?buildViewModal():"")
     +(pendingDelete?buildConfirm():"")
     +(pinModal?buildPinModal():"");
 }
 
-// ── Header ─────────────────────────────────────
 function buildHeader(){
   let hdrHtml="";
   if(view==="home"){
@@ -386,18 +416,16 @@ function buildHeader(){
         <button class="btn-srch${showSearch?" on":""}" id="btn-srch">🔍</button>
         <button class="btn-add-hdr" id="btn-add-modal" style="background:${t.color}">+ 추가</button>
       </div></div>`;
-    // 검색바를 헤더 바로 아래 sticky로 분리 (input 파괴 방지)
     if(showSearch) hdrHtml+=`<div class="search-zone"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}" autocomplete="off"></div>`;
   }
   return hdrHtml;
 }
 
-// ── Sticky note ────────────────────────────────
 function buildStickyNote(tid){
   const note=stickyNotes[tid]||"";
   return `<div class="sticky-wrap"><div class="sticky-box">
     <div class="sticky-hdr"><span class="sticky-hdr-title">📌 고정 메모</span><span class="sticky-hdr-hint">자동저장</span></div>
-    <textarea class="sticky-ta" id="sticky-ta-${tid}" placeholder="중요한 내용을 여기에 적어두세요..." 
+    <textarea class="sticky-ta" id="sticky-ta-${tid}" placeholder="중요한 내용을 여기에 적어두세요..."
       oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,220)+'px'"
       onblur="saveStickyTA('${tid}',this.value)"
     >${esc(note)}</textarea>
@@ -405,9 +433,6 @@ function buildStickyNote(tid){
 }
 function saveStickyTA(tid,val){stickyNotes[tid]=val;saveSticky();}
 
-// ══════════════════════════════════════════════
-//  HOME
-// ══════════════════════════════════════════════
 function buildHome(){
   const all=memos["daily"]||[],pend=all.filter(m=>m.status!=="완료"),done=all.filter(m=>m.status==="완료");
   const flt=arr=>arr.filter(m=>!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText));
@@ -454,9 +479,6 @@ function buildTodoItem(m){
   </div>`;
 }
 
-// ══════════════════════════════════════════════
-//  THEME GRID
-// ══════════════════════════════════════════════
 function buildThemeGrid(){
   const cards=themes.map(t=>{
     const cnt=(memos[t.id]||[]).length,lockBadge=locks[t.id]?`<span class="lock-badge">🔒</span>`:"";
@@ -466,9 +488,6 @@ function buildThemeGrid(){
   return `<div class="grid">${cards}<div class="add-card" id="btn-add-theme"><span style="font-size:24px">＋</span><span style="font-size:13px;font-weight:600">테마 추가</span></div></div>`;
 }
 
-// ══════════════════════════════════════════════
-//  DETAIL VIEW
-// ══════════════════════════════════════════════
 function buildDetailView(){
   const theme=themes.find(t=>t.id===activeTheme);
   const isRegion=REGION_THEMES.includes(activeTheme);
@@ -487,26 +506,31 @@ function buildDetailView(){
   return html;
 }
 
-// ── Memo list (한 줄, 더보기) ─────────────────
+function buildMemoItem(m, theme) {
+  const isWatchedTheme = activeTheme === "movie";
+  const watched = isWatchedTheme && m.status === "봤다";
+  const hasStar = shouldShowStar(activeTheme, m.status) && parseInt(m.rating||0) > 0;
+  const starsHtml = hasStar ? `<div class="mc-stars-inline">${starsText(m.rating)}</div>` : '';
+  return `<div class="mc">
+    <div class="mc-info" data-view="${m.id}">
+      <div class="mc-title${watched?" watched":""}">${esc(m.title)}</div>
+      ${starsHtml}
+    </div>
+    <span class="mc-date">${m.date||""}</span>
+    <div class="mc-acts"><button data-edit="${m.id}">✏️</button><button data-delete="${m.id}">🗑️</button></div>
+  </div>`;
+}
+
 function buildMemoListHTML(filtered,theme){
   if(!filtered.length) return `<div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
-  const isWatchedTheme=activeTheme==="movie";
   const show=showAllList?filtered:filtered.slice(0,LIST_MAX);
-  let html=`<div class="memo-list">${show.map(m=>{
-    const watched=isWatchedTheme&&m.status==="봤다";
-    return `<div class="mc">
-      <span class="mc-title${watched?" watched":""}">${esc(m.title)}</span>
-      <span class="mc-date">${m.date||""}</span>
-      <div class="mc-acts"><button data-edit="${m.id}">✏️</button><button data-delete="${m.id}">🗑️</button></div>
-    </div>`;
-  }).join("")}</div>`;
+  let html=`<div class="memo-list">${show.map(m=>buildMemoItem(m,theme)).join("")}</div>`;
   if(filtered.length>LIST_MAX){
     html+=`<button class="list-more-btn" id="btn-list-more">${showAllList?"▲ 접기":`▼ 더보기 (${filtered.length-LIST_MAX}개 더)`}</button>`;
   }
   return html;
 }
 
-// ── Region groups (더보기 per group) ──────────
 function buildRegionGroups(filtered,theme){
   if(!filtered.length) return `<div class="empty"><div class="ei">${theme.icon}</div><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
   const ro=regionOrders[activeTheme]||{};
@@ -524,12 +548,7 @@ function buildRegionGroups(filtered,theme){
     const orderLabel=ro[r]!==undefined?` <span style="font-size:10px;color:#bbb;background:#f0ede6;padding:1px 6px;border-radius:8px">No.${ro[r]}</span>`:"";
     html+=`<div class="region-hdr"><span>📍</span><span class="region-hdr-name">${esc(r)}${orderLabel}</span><span class="region-hdr-count">${items.length}곳</span><div class="region-divider"></div></div>`;
     const show=isExp?items:items.slice(0,REGION_MAX);
-    const isWatchedTheme=activeTheme==="movie";
-    html+=`<div class="memo-list">${show.map(m=>{
-      const watched=isWatchedTheme&&m.status==="봤다";
-      return `<div class="mc"><span class="mc-title${watched?" watched":""}">${esc(m.title)}</span><span class="mc-date">${m.date||""}</span>
-        <div class="mc-acts"><button data-edit="${m.id}">✏️</button><button data-delete="${m.id}">🗑️</button></div></div>`;
-    }).join("")}`;
+    html+=`<div class="memo-list">${show.map(m=>buildMemoItem(m,theme)).join("")}`;
     if(items.length>REGION_MAX){
       html+=`<button class="region-more-btn" data-region-more="${esc(r)}">${isExp?"▲ 접기":`▼ 더보기 (${items.length-REGION_MAX}개 더)`}</button>`;
     }
@@ -539,9 +558,38 @@ function buildRegionGroups(filtered,theme){
   return html;
 }
 
-// ══════════════════════════════════════════════
-//  SETTINGS
-// ══════════════════════════════════════════════
+// ── 뷰 모달 (읽기 전용) ───────────────────────
+function buildViewModal(){
+  const m=viewMemoData;
+  const theme=themes.find(t=>t.id===activeTheme);
+  if(!m||!theme) return "";
+  const hasStar = shouldShowStar(activeTheme, m.status);
+  const starsHtml = hasStar ? `<div class="vm-stars">${renderStars(m.rating||0)}</div>` : '';
+  let fieldsHtml = '';
+  (theme.fields||[]).forEach(f => {
+    if(m[f.key]) fieldsHtml += `<div class="vm-field"><span class="vm-field-lbl">${f.label}</span><span class="vm-field-val">${esc(m[f.key])}</span></div>`;
+  });
+  const noteHtml = (m.note||"").trim() ? `<div class="vm-note-box">${esc(m.note)}</div>` : '';
+  return `<div class="vm-bg" id="vm-bg"><div class="vm-box">
+    <div class="modal-handle"></div>
+    <div class="vm-head">
+      <span class="vm-icon">${theme.icon}</span>
+      <span class="vm-title">${esc(m.title)}</span>
+    </div>
+    <div class="vm-badge-row">
+      ${m.status?`<span class="vm-status" style="background:${theme.bg};color:${theme.color}">${esc(m.status)}</span>`:""}
+      ${starsHtml}
+      ${m.date?`<span style="font-size:12px;color:#bbb">${esc(m.date)}</span>`:""}
+    </div>
+    ${fieldsHtml?`<div class="vm-field-list">${fieldsHtml}</div>`:""}
+    ${noteHtml}
+    <div class="vm-btns">
+      <button class="vm-close-btn" id="btn-vm-close">닫기</button>
+      <button class="vm-edit-btn" id="btn-vm-edit">✏️ 수정</button>
+    </div>
+  </div></div>`;
+}
+
 function buildSettings(){
   let html=`<div class="settings-page"><div class="ss-section"><div class="ss-section-title">테마 관리</div>`;
   themes.forEach(t=>{
@@ -575,7 +623,6 @@ function buildSettings(){
   html+=`</div>`;return html;
 }
 
-// ── 테마 추가 모달 ─────────────────────────────
 function buildThemeModal(){
   const iconBtns=ICONS.map(ic=>`<button class="icon-btn${newTheme.icon===ic?" sel":""}" data-icon="${ic}">${ic}</button>`).join("");
   const colorDots=COLORS.map(c=>`<div class="cdot${newTheme.color===c.color?" sel":""}" data-color='${JSON.stringify(c)}' style="background:${c.color}"></div>`).join("");
@@ -593,7 +640,6 @@ function buildThemeModal(){
   </div></div>`;
 }
 
-// ── 메모 추가/수정 모달 ────────────────────────
 function buildMemoModal(){
   const theme=themes.find(t=>t.id===activeTheme);const m=modalMemo;
   const isEdit=!!modalEditId;
@@ -612,26 +658,57 @@ function buildMemoModal(){
     }
   });
   const isRecipe = activeTheme === "recipe";
-  // 상태: 추가모달에서도 recipe는 보여줌 / 수정모달에서는 항상 보여줌 (recipe 포함)
-  const showStatus = theme.statusOptions && theme.statusOptions.length > 0 && (isEdit || isRecipe);
+  const showStatus = theme.statusOptions && theme.statusOptions.length > 0 && (isEdit || isRecipe || true);
+  const curStatus = m.status || theme.defaultStatus || "";
   const statusHtml = showStatus ? `<div class="f-row"><label class="f-lbl">상태</label>
-    <select class="f-sel" id="mm-status">${theme.statusOptions.map(s=>`<option value="${s}"${(m.status||theme.defaultStatus)===s?" selected":""}>${s}</option>`).join("")}</select></div>` : "";
+    <select class="f-sel" id="mm-status" onchange="onModalStatusChange(this.value)">${theme.statusOptions.map(s=>`<option value="${s}"${curStatus===s?" selected":""}>${s}</option>`).join("")}</select></div>` : "";
+  // 별점 (해당 상태일 때만 표시)
+  const showStar = shouldShowStar(activeTheme, curStatus);
+  const curRating = modalRating || parseInt(m.rating||0);
+  const starHtml = showStar ? `<div class="f-row" id="star-row">
+    <label class="f-lbl">별점</label>
+    <div class="star-row">${[1,2,3,4,5].map(i=>`<button type="button" class="star-btn" data-star="${i}" style="color:${i<=curRating?'#FFB800':'#ddd'}">${i<=curRating?'★':'☆'}</button>`).join("")}</div>
+  </div>` : `<div id="star-row"></div>`;
   const noteStyle = isRecipe ? 'min-height:160px' : '';
   return `<div class="modal-bg" id="modal-bg-memo"><div class="modal-box"><div class="modal-handle"></div>
     <div class="modal-ttl">${isEdit?"메모 수정":`새 ${theme.name} 메모`}</div>
     <div class="f-row"><label class="f-lbl">제목 *</label><input class="f-inp" id="mm-title" value="${esc(m.title||"")}"></div>
     <div class="f-row"><label class="f-lbl">${isRecipe?"레시피 내용":"내용"}</label><textarea class="f-ta" id="mm-note" style="${noteStyle}">${esc(m.note||"")}</textarea></div>
-    ${fieldsHtml}${statusHtml}
+    ${fieldsHtml}${statusHtml}${starHtml}
     <div class="f-row"><label class="f-lbl">날짜</label><input type="date" class="f-inp" id="mm-date" value="${m.date||TODAY}"></div>
     <button class="btn-ok" id="btn-save-modal" style="background:${theme.color}">저장</button>
     <button class="btn-sec" id="btn-cancel-modal">취소</button>
   </div></div>`;
 }
 
-// ── PIN 모달 ───────────────────────────────────
+function onModalStatusChange(val){
+  modalRating = 0; // 상태 바꾸면 별점 초기화
+  const starRowEl = document.getElementById("star-row");
+  if(!starRowEl) return;
+  const showStar = shouldShowStar(activeTheme, val);
+  if(showStar){
+    starRowEl.innerHTML = `<label class="f-lbl">별점</label>
+    <div class="star-row">${[1,2,3,4,5].map(i=>`<button type="button" class="star-btn" data-star="${i}" style="color:#ddd">☆</button>`).join("")}</div>`;
+    starRowEl.querySelectorAll("[data-star]").forEach(btn=>{
+      btn.addEventListener("click",()=>{ setModalRating(parseInt(btn.dataset.star)); });
+    });
+  } else {
+    starRowEl.innerHTML = '';
+  }
+}
+
+function setModalRating(val){
+  modalRating = val;
+  document.querySelectorAll(".star-btn").forEach(btn=>{
+    const n=parseInt(btn.dataset.star);
+    btn.textContent = n<=val?'★':'☆';
+    btn.style.color = n<=val?'#FFB800':'#ddd';
+  });
+}
+
 function buildPinModal(){
   const {action,themeId}=pinModal;const t=themes.find(t=>t.id===themeId);
-  const icon=action==="enter"?"🔐":"action==='setup'?'🔒':'🔓'",title=action==="setup"?"잠금 설정":action==="enter"?"잠금 해제":"잠금 제거";
+  const title=action==="setup"?"잠금 설정":action==="enter"?"잠금 해제":"잠금 제거";
   const sub=`${t?.icon} ${t?.name}\n숫자 4자리를 입력하세요.`;
   return `<div class="pin-modal-bg" id="pin-modal-bg"><div class="pin-modal">
     <div class="pin-icon">${action==="enter"?"🔐":action==="setup"?"🔒":"🔓"}</div>
@@ -645,7 +722,6 @@ function buildPinModal(){
     </div></div></div>`;
 }
 
-// ── Confirm ────────────────────────────────────
 function buildConfirm(){
   return `<div class="confirm-bg" id="confirm-bg"><div class="confirm-box">
     <div class="ci">🗑️</div><div class="ct">삭제할까요?</div><div class="cs">삭제한 메모는 복구할 수 없어요</div>
@@ -655,9 +731,6 @@ function buildConfirm(){
     </div></div></div>`;
 }
 
-// ══════════════════════════════════════════════
-//  ACTIONS
-// ══════════════════════════════════════════════
 function addTodo(){
   const title=document.getElementById("todo-inp")?.value?.trim();if(!title){document.getElementById("todo-inp")?.focus();return;}
   const tid=document.getElementById("todo-cat")?.value||"daily";
@@ -687,7 +760,7 @@ function submitPin(){
   const{action,themeId}=pinModal;
   if(action==="setup"){locks[themeId]=val;saveLocks();pinModal=null;pinError="";showToast("🔒 잠금 설정 완료");render();}
   else if(action==="enter"){
-    if(locks[themeId]===val){pinModal=null;pinError="";activeTheme=themeId;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};render();history.pushState({},""  );}
+    if(locks[themeId]===val){pinModal=null;pinError="";activeTheme=themeId;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};saveViewState();render();history.pushState({},""  );}
     else{pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
   } else {
     if(locks[themeId]===val){delete locks[themeId];saveLocks();pinModal=null;pinError="";showToast("🔓 잠금 해제 완료");render();}
@@ -699,54 +772,47 @@ function saveMemoModal(){
   const note=document.getElementById("mm-note")?.value||"";
   const date=document.getElementById("mm-date")?.value||TODAY;
   const theme=themes.find(t=>t.id===activeTheme);
-  // 상태: 수정모달에 있으면 가져오고, 없으면 기존값 or defaultStatus
   const statusEl=document.getElementById("mm-status");
   const status=statusEl?statusEl.value:(modalMemo.status||theme.defaultStatus||"");
+  // 별점 저장
+  const rating = shouldShowStar(activeTheme, status) ? (modalRating || parseInt(modalMemo.rating||0)) : 0;
   const extra={};
   document.querySelectorAll("[data-field]").forEach(inp=>{extra[inp.dataset.field]=inp.value;});
-  // 지역 정렬순서
   if(REGION_THEMES.includes(activeTheme)){
     const regionVal=(document.getElementById("f-region")?.value||"").trim();
     const orderVal=document.getElementById("f-region-order")?.value||"";
     extra.region=regionVal;
-    if(regionVal&&orderVal!==""){
-      setRegionOrder(activeTheme,regionVal,parseInt(orderVal,10));
-    }
+    if(regionVal&&orderVal!==""){setRegionOrder(activeTheme,regionVal,parseInt(orderVal,10));}
     extra.regionOrder=orderVal?parseInt(orderVal,10):"";
   }
-  const m={title,note,status,date,...extra};
+  const m={title,note,status,date,rating,...extra};
   if(!memos[activeTheme])memos[activeTheme]=[];
   if(modalEditId){memos[activeTheme]=memos[activeTheme].map(x=>x.id===modalEditId?{...x,...m}:x);}
   else{memos[activeTheme].unshift({...m,id:Date.now().toString()});}
-  showModal=false;modalEditId=null;save();render();
+  showModal=false;modalEditId=null;modalRating=0;save();render();
 }
 
-// ══════════════════════════════════════════════
-//  BIND
-// ══════════════════════════════════════════════
 function bind(){
   const $=id=>document.getElementById(id);
 
   $("btn-save-data")?.addEventListener("click",saveData);
-  $("btn-go-themes")?.addEventListener("click",()=>{view="themes";render();history.pushState({},""  );});
-  $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;render();history.pushState({},""  );});
+  $("btn-go-themes")?.addEventListener("click",()=>{view="themes";saveViewState();render();history.pushState({},""  );});
+  $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;saveViewState();render();history.pushState({},""  );});
   $("btn-back")?.addEventListener("click",()=>{
     if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};}
     else if(view==="themes"){view="home";}
     else if(view==="settings"){view="home";}
-    render();history.pushState({},""  );
+    saveViewState();render();history.pushState({},""  );
   });
 
-  // 테마 카드
   document.querySelectorAll(".theme-card").forEach(el=>{
     el.addEventListener("click",()=>{
       const tid=el.dataset.theme;
       if(locks[tid]){pinModal={action:"enter",themeId:tid};pinError="";render();history.pushState({},""  );setTimeout(()=>$("pin-inp")?.focus(),50);return;}
-      activeTheme=tid;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};render();history.pushState({},""  );
+      activeTheme=tid;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};saveViewState();render();history.pushState({},""  );
     });
   });
 
-  // 테마 추가
   $("btn-add-theme")?.addEventListener("click",()=>{showAddTheme=true;render();history.pushState({},""  );});
   $("btn-add-theme-s")?.addEventListener("click",()=>{showAddTheme=true;render();history.pushState({},""  );});
   $("btn-cancel-theme")?.addEventListener("click",()=>{showAddTheme=false;newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};render();});
@@ -759,7 +825,6 @@ function bind(){
     newTheme={name:"",icon:"📌",color:"#4A90E2",bg:"#EBF4FF"};showAddTheme=false;save();render();
   });
 
-  // Settings
   document.querySelectorAll("[data-edit-theme]").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const tid=btn.dataset.editTheme,t=themes.find(t=>t.id===tid);
@@ -775,11 +840,7 @@ function bind(){
   });
   $("btn-st-cancel")?.addEventListener("click",()=>{editingThemeId=null;render();});
   document.querySelectorAll("[data-ep-icon]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      editThemeIcon=btn.dataset.epIcon;
-      const ni=$("st-name-inp");if(ni)editThemeName=ni.value;
-      render();
-    });
+    btn.addEventListener("click",()=>{editThemeIcon=btn.dataset.epIcon;const ni=$("st-name-inp");if(ni)editThemeName=ni.value;render();});
   });
   document.querySelectorAll("[data-lock-theme]").forEach(btn=>{
     btn.addEventListener("click",()=>{const tid=btn.dataset.lockTheme;pinModal={action:locks[tid]?"remove":"setup",themeId:tid};pinError="";render();setTimeout(()=>$("pin-inp")?.focus(),50);});
@@ -798,13 +859,11 @@ function bind(){
     save();saveLocks();saveSticky();saveRegOrd();showToast("초기화 완료");render();
   });
 
-  // PIN
   $("btn-pin-ok")?.addEventListener("click",submitPin);
   $("btn-pin-cancel")?.addEventListener("click",()=>{pinModal=null;pinError="";render();});
   $("pin-modal-bg")?.addEventListener("click",e=>{if(e.target.id==="pin-modal-bg"){pinModal=null;pinError="";render();}});
   $("pin-inp")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitPin();});
 
-  // 검색 (★ compositionstart/end으로 한글 IME 처리)
   $("btn-srch")?.addEventListener("click",()=>{showSearch=!showSearch;if(!showSearch)searchText="";render();if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50);});
   const srchInp=$("srch-inp");
   if(srchInp){
@@ -814,12 +873,8 @@ function bind(){
     srchInp.addEventListener("input",e=>{if(!composing){searchText=e.target.value;renderListOnly();}});
   }
 
-  // 상태 탭
-  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;showAllList=false;render();});});
+  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;showAllList=false;saveViewState();render();});});
 
-  // 더보기/접기는 bindListBtns()에서 처리
-
-  // 지역 입력 시 기존 순서 자동 반영 (수정 가능)
   $("f-region")?.addEventListener("input",e=>{
     const rv=e.target.value.trim(),oi=$("f-region-order");if(!oi)return;
     const ex=getRegionOrder(activeTheme,rv);
@@ -827,7 +882,6 @@ function bind(){
     else if(!rv){oi.value="";}
   });
 
-  // home todo
   $("todo-cat")?.addEventListener("change",()=>{
     const t=themes.find(th=>th.id===$("todo-cat").value);if(!t)return;
     const sel=$("todo-status");
@@ -842,17 +896,31 @@ function bind(){
   document.querySelectorAll("[data-edit-todo]").forEach(btn=>{btn.addEventListener("click",()=>{todoEditId=btn.dataset.editTodo;render();setTimeout(()=>$("tedit-inp")?.focus(),30);});});
   document.querySelectorAll("[data-del-todo]").forEach(btn=>{btn.addEventListener("click",()=>deleteTodo(btn.dataset.delTodo));});
 
-  // 메모 모달
   $("btn-add-modal")?.addEventListener("click",()=>{
     const t=themes.find(t=>t.id===activeTheme);
-    modalMemo={title:"",note:"",status:t.defaultStatus||"",date:TODAY};(t.fields||[]).forEach(f=>{modalMemo[f.key]="";});
-    modalEditId=null;showModal=true;render();history.pushState({},""  );
+    modalMemo={title:"",note:"",status:t.defaultStatus||"",date:TODAY,rating:0};
+    (t.fields||[]).forEach(f=>{modalMemo[f.key]="";});
+    modalEditId=null;modalRating=0;showModal=true;render();history.pushState({},""  );
   });
   $("btn-save-modal")?.addEventListener("click",saveMemoModal);
-  $("btn-cancel-modal")?.addEventListener("click",()=>{showModal=false;modalEditId=null;render();});
-  $("modal-bg-memo")?.addEventListener("click",e=>{if(e.target.id==="modal-bg-memo"){showModal=false;modalEditId=null;render();}});
+  $("btn-cancel-modal")?.addEventListener("click",()=>{showModal=false;modalEditId=null;modalRating=0;render();});
+  $("modal-bg-memo")?.addEventListener("click",e=>{if(e.target.id==="modal-bg-memo"){showModal=false;modalEditId=null;modalRating=0;render();}});
 
-  // confirm
+  // 별점 버튼 (모달)
+  document.querySelectorAll(".star-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>setModalRating(parseInt(btn.dataset.star)));
+  });
+
+  // 뷰 모달
+  $("btn-vm-close")?.addEventListener("click",()=>{showViewModal=false;viewMemoData=null;render();});
+  $("vm-bg")?.addEventListener("click",e=>{if(e.target.id==="vm-bg"){showViewModal=false;viewMemoData=null;render();}});
+  $("btn-vm-edit")?.addEventListener("click",()=>{
+    if(!viewMemoData) return;
+    const m=viewMemoData;
+    modalMemo={...m};modalEditId=m.id;modalRating=parseInt(m.rating||0);
+    showViewModal=false;viewMemoData=null;showModal=true;render();history.pushState({},""  );
+  });
+
   $("btn-cancel-del")?.addEventListener("click",()=>{pendingDelete=null;render();});
   $("confirm-bg")?.addEventListener("click",e=>{if(e.target.id==="confirm-bg"){pendingDelete=null;render();}});
   $("btn-confirm-del")?.addEventListener("click",()=>{memos[activeTheme]=(memos[activeTheme]||[]).filter(m=>m.id!==pendingDelete);pendingDelete=null;save();render();});
@@ -861,16 +929,20 @@ function bind(){
 }
 
 function bindListBtns(){
+  document.querySelectorAll("[data-view]").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const m=(memos[activeTheme]||[]).find(x=>x.id===el.dataset.view);
+      if(m){viewMemoData={...m};showViewModal=true;render();history.pushState({},""  );}
+    });
+  });
   document.querySelectorAll("[data-edit]").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const m=(memos[activeTheme]||[]).find(x=>x.id===btn.dataset.edit);
-      if(m){modalMemo={...m};modalEditId=m.id;showModal=true;render();history.pushState({},"");}
+      if(m){modalMemo={...m};modalEditId=m.id;modalRating=parseInt(m.rating||0);showModal=true;render();history.pushState({},"");}
     });
   });
   document.querySelectorAll("[data-delete]").forEach(btn=>{btn.addEventListener("click",()=>{pendingDelete=btn.dataset.delete;render();});});
-  // ★ 더보기/접기 (리스트 전체)
   document.getElementById("btn-list-more")?.addEventListener("click",()=>{showAllList=!showAllList;renderListOnly();});
-  // ★ 더보기/접기 (지역별 그룹)
   document.querySelectorAll("[data-region-more]").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const r=btn.dataset.regionMore;
@@ -884,6 +956,7 @@ function bindListBtns(){
 
 function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 
+restoreViewState();
 render();
 </script>
 </body>
