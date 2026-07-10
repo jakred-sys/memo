@@ -9,7 +9,8 @@
 body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif; background: #F5F3EE; color: #1a1a18; min-height: 100vh; font-size: 15px; }
 .hdr { background: #fff; border-bottom: .5px solid rgba(0,0,0,.09); padding: 0 14px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 20; }
 .hdr-left { display: flex; align-items: center; gap: 7px; }
-.hdr-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+.hdr-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; max-width: 62%; overflow-x: auto; scrollbar-width: none; }
+.hdr-right::-webkit-scrollbar { display: none; }
 .app-name { font-size: 17px; font-weight: 800; letter-spacing: -.4px; }
 .btn-hdr { border: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 6px 11px; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .btn-save { background: #4A90E2; color: #fff; }
@@ -414,6 +415,7 @@ function buildHeader(){
       <div class="hdr-right">
         <button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button>
         <button class="btn-hdr btn-ghost" id="btn-go-themes">📋 테마</button>
+        <button class="btn-hdr btn-ghost" id="btn-go-farm">🌙 달빛농장</button>
         <button class="btn-icon" id="btn-go-settings">⚙️</button>
       </div></div>`;
   } else if(view==="themes"){
@@ -423,7 +425,7 @@ function buildHeader(){
     hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">⚙️ 환경설정</span></div><div class="hdr-right"></div></div>`;
   } else if(view==="detail"){
     const t=themes.find(t=>t.id===activeTheme);
-    hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">${t.icon} ${t.name}</span></div>
+    hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><button class="btn-icon" id="btn-go-home" title="처음 화면으로">🏠</button><span style="font-size:16px;font-weight:700">${t.icon} ${t.name}</span></div>
       <div class="hdr-right">
         <span style="font-size:12px;color:#aaa">${(memos[activeTheme]||[]).length}개</span>
         <button class="btn-srch${showSearch?" on":""}" id="btn-srch">🔍</button>
@@ -500,7 +502,7 @@ function buildThemeGrid(){
   }).join("");
   const farmCard=`<div class="theme-card farm-card" data-theme="__farm__">
       <span class="ic">🌙</span><div class="nm">달빛농장</div><div class="ct">농장 앱 열기</div></div>`;
-  return `<div class="grid">${cards}${farmCard}<div class="add-card" id="btn-add-theme"><span style="font-size:24px">＋</span><span style="font-size:13px;font-weight:600">테마 추가</span></div></div>`;
+  return `<div class="grid">${farmCard}${cards}<div class="add-card" id="btn-add-theme"><span style="font-size:24px">＋</span><span style="font-size:13px;font-weight:600">테마 추가</span></div></div>`;
 }
 
 function openFarmApp(){
@@ -823,7 +825,13 @@ function bind(){
 
   $("btn-save-data")?.addEventListener("click",saveData);
   $("btn-go-themes")?.addEventListener("click",()=>{view="themes";saveViewState();render();history.pushState({},""  );});
+  $("btn-go-farm")?.addEventListener("click",openFarmApp);
   $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;saveViewState();render();history.pushState({},""  );});
+  $("btn-go-home")?.addEventListener("click",()=>{
+    view="home";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};
+    saveViewState();render();history.pushState({},""  );
+  });
+
   $("btn-back")?.addEventListener("click",()=>{
     if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};}
     else if(view==="themes"){view="home";}
