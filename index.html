@@ -223,6 +223,7 @@ button.theme-card .ct { display:block; color:#555c56; }
   <div class="car-toolbar"><button type="button" id="car-back-btn">메모로</button></div>
   <iframe id="car-iframe" title="나의 차계부"></iframe>
 </div>
+<script type="application/json" id="initial-car-history">{"version": 1, "records": [{"id": "provided-vehicle-history-01", "date": "2017-08-31", "work": "타이어 교체", "km": 60000, "shop": "한국타이어", "note": "노블2, 개당 14만원, 뒤에 2개를 앞으로 이동, 새것 2개는 뒤에", "amount": 280000}, {"id": "provided-vehicle-history-02", "date": "2018-03-01", "work": "앞뒤 타이어 교체", "km": 100000, "shop": "", "note": "4개 모두 교체", "amount": 560000}, {"id": "provided-vehicle-history-03", "date": "2019-07-01", "work": "엔진오일", "km": 104000, "shop": "", "note": "", "amount": null}, {"id": "provided-vehicle-history-04", "date": "2020-06-26", "work": "에어컨 필터 교체", "km": null, "shop": "", "note": "직접 교체", "amount": null}, {"id": "provided-vehicle-history-05", "date": "2020-10-14", "work": "전면 유리 교체, 선팅", "km": null, "shop": "자동차마을", "note": "", "amount": 500000}, {"id": "provided-vehicle-history-06", "date": "2021-01-20", "work": "엔진오일", "km": 132000, "shop": "", "note": "", "amount": 88000}, {"id": "provided-vehicle-history-07", "date": "2021-03-20", "work": "앞쪽 브레이크 라이닝 교체", "km": 134000, "shop": "", "note": "뒤쪽은 괜찮음", "amount": 88000}, {"id": "provided-vehicle-history-08", "date": "2021-12-26", "work": "엔진오일", "km": 146094, "shop": "", "note": "", "amount": 90000}, {"id": "provided-vehicle-history-09", "date": "2022-06-27", "work": "엔진오일", "km": 155000, "shop": "", "note": "", "amount": 91500}, {"id": "provided-vehicle-history-10", "date": "2022-06-27", "work": "에어컨 가스", "km": null, "shop": "", "note": "", "amount": 79200}, {"id": "provided-vehicle-history-11", "date": "2022-06-27", "work": "에어컨 호스", "km": null, "shop": "", "note": "", "amount": 57200}, {"id": "provided-vehicle-history-12", "date": "2022-12-09", "work": "타이어 4개 교체", "km": 160000, "shop": "한국타이어 총판", "note": "벤투스 V2, 개당 145,000원", "amount": 580000}, {"id": "provided-vehicle-history-13", "date": "2023-05-12", "work": "엔진오일 교체", "km": 171250, "shop": "", "note": "", "amount": 125000}, {"id": "provided-vehicle-history-14", "date": "2023-05-12", "work": "와이퍼 교체", "km": null, "shop": "", "note": "", "amount": 25000}, {"id": "provided-vehicle-history-15", "date": "2024-01-08", "work": "앞범퍼 교체", "km": null, "shop": "", "note": "상대편 보험", "amount": 558000}, {"id": "provided-vehicle-history-16", "date": "2024-02-03", "work": "배터리 교체", "km": null, "shop": "", "note": "", "amount": 120000}, {"id": "provided-vehicle-history-17", "date": "2024-02-03", "work": "엔진오일 교체", "km": 187128, "shop": "", "note": "", "amount": 120000}, {"id": "provided-vehicle-history-18", "date": "2024-08-24", "work": "엔진오일 교체", "km": 200478, "shop": "", "note": "", "amount": 115000}, {"id": "provided-vehicle-history-19", "date": "2024-11-12", "work": "범퍼 아래 휠가드 교체", "km": null, "shop": "", "note": "", "amount": 58200}, {"id": "provided-vehicle-history-20", "date": "2025-07-16", "work": "EGR, 크루즈, 악셜 속도 등", "km": null, "shop": "", "note": "", "amount": 1060000}, {"id": "provided-vehicle-history-21", "date": "2025-10-06", "work": "앞쪽 타이어 2개 교체", "km": 220746, "shop": "", "note": "금호, 개당 185,000원", "amount": 370000}, {"id": "provided-vehicle-history-22", "date": "2025-10-10", "work": "엔진오일 교체", "km": 221160, "shop": "", "note": "", "amount": 117000}]}</script>
 <template id="car-source"><textarea><!doctype html>
 <html lang="ko">
 <head>
@@ -263,14 +264,16 @@ dialog{border:0;border-radius:18px;padding:0;color:inherit;width:min(540px,calc(
       <div id="empty" class="empty"><strong id="empty-title"></strong><p id="empty-text"></p></div>
     </div>
   </section>
-  <div class="footer"><span id="storage-message">정비 기록은 이 브라우저에 저장됩니다.</span><button id="sample" class="ghost">예시 기록 보기</button></div>
+  <div class="footer"><span id="storage-message">정비 기록은 이 브라우저에 저장됩니다.</span><div><button id="import-history" class="ghost">정비 기록 불러오기</button>
+    <input id="history-file" type="file" accept=".json,application/json" hidden>
+    <button id="sample" class="ghost">예시 기록 보기</button></div></div>
 </main>
 <dialog id="editor" aria-labelledby="editor-title"><div class="dialog-inner">
   <div class="dialog-top"><h2 id="editor-title">정비 기록 추가</h2><button data-close class="close" aria-label="닫기">×</button></div>
   <form id="form">
     <div class="fields">
       <label class="field">정비 날짜<input name="date" type="date" required></label>
-      <label class="field">결제 금액 (원)<input name="amount" type="number" inputmode="numeric" min="0" max="9999999999" step="1" placeholder="85000" required></label>
+      <label class="field">결제 금액 (원)<input name="amount" type="number" inputmode="numeric" min="0" max="9999999999" step="1" placeholder="85000"></label>
       <label class="field wide">정비 항목<input name="work" maxlength="120" placeholder="예: 엔진오일, 오일필터 교체" required></label>
       <label class="field"><span>주행거리 (km) <em>선택</em></span><input name="km" type="number" inputmode="numeric" min="0" max="9999999" step="1" placeholder="62400"></label>
       <label class="field"><span>정비소 <em>선택</em></span><input name="shop" maxlength="80" placeholder="정비소 이름"></label>
@@ -304,6 +307,7 @@ const today = () => {
   return [date.getFullYear(), date.getMonth() + 1, date.getDate()]
     .map(value => String(value).padStart(2, "0")).join("-");
 };
+const amountLabel = amount => amount == null ? "미기록" : numbers.format(amount) + "원";
 const dateLabel = value => value.replaceAll("-", ".");
 
 let database;
@@ -320,8 +324,12 @@ let toastTimer;
 
 function connect() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("my-car-care-notebook", 1);
-    request.onupgradeneeded = () => request.result.createObjectStore("services", { keyPath: "id" });
+    const request = indexedDB.open("my-car-care-notebook", 2);
+    request.onupgradeneeded = () => {
+      const db=request.result;
+      if (!db.objectStoreNames.contains("services")) db.createObjectStore("services", { keyPath: "id" });
+      db.createObjectStore("imports", {keyPath:"id"});
+    };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
   });
@@ -365,11 +373,11 @@ function render(requestedYear = year.value) {
   const current = today().slice(0, 4);
   const years = [...new Set([current, ...source.map(record => record.date.slice(0, 4))])].sort().reverse();
   year.replaceChildren(...years.map(value => new Option(value + "년", value)));
-  year.value = years.includes(requestedYear) ? requestedYear : current;
+  year.value = years.includes(requestedYear) ? requestedYear : (source.length ? source.map(record=>record.date.slice(0,4)).sort().at(-1) : current);
 
   const annual = source.filter(record => record.date.startsWith(year.value + "-"))
     .sort((a, b) => b.date.localeCompare(a.date) || (b.createdAt || 0) - (a.createdAt || 0));
-  byId("sum").textContent = numbers.format(annual.reduce((total, record) => total + record.amount, 0)) + "원";
+  byId("sum").textContent = numbers.format(annual.reduce((total, record) => total + (record.amount ?? 0), 0)) + "원";
   byId("count").textContent = annual.length + "건";
   byId("last").textContent = annual.length ? dateLabel(annual[0].date) : "—";
 
@@ -394,7 +402,7 @@ function row(record) {
   work.append(make("strong", record.work));
   if (record.shop) work.append(make("small", record.shop));
   const distance = record.km == null ? "—" : numbers.format(record.km) + "km";
-  button.append(date, work, make("span", distance, "distance"), make("span", numbers.format(record.amount) + "원", "cost"));
+  button.append(date, work, make("span", distance, "distance"), make("span", amountLabel(record.amount), "cost"));
   button.addEventListener("click", () => showDetail(record));
   return button;
 }
@@ -405,7 +413,7 @@ function showDetail(record) {
   const data = [
     ["정비 날짜", dateLabel(record.date)],
     ["정비 항목", record.work],
-    ["결제 금액", numbers.format(record.amount) + "원"],
+    ["결제 금액", amountLabel(record.amount)],
     ["주행거리", record.km == null ? "" : numbers.format(record.km) + "km"],
     ["정비소", record.shop]
   ];
@@ -484,7 +492,7 @@ form.addEventListener("submit", async event => {
     createdAt: editedRecord?.createdAt ?? Date.now(),
     date: fields.date.value,
     work,
-    amount: fields.amount.valueAsNumber,
+    amount: fields.amount.value === "" ? null : fields.amount.valueAsNumber,
     km: fields.km.value === "" ? null : fields.km.valueAsNumber,
     shop: fields.shop.value.trim(),
     note: fields.note.value.trim(),
@@ -577,6 +585,49 @@ byId("sample").addEventListener("click", () => {
   render(sampleMode ? today().slice(0, 4) : previousYear);
 });
 
+async function importHistory(data) {
+  if (data?.version !== 1 || !Array.isArray(data.records) || !data.records.length ||
+      !data.records.every(record => record &amp;&amp; typeof record.id === "string" &amp;&amp;
+        /^\d{4}-\d{2}-\d{2}$/.test(record.date) &amp;&amp; typeof record.work === "string" &amp;&amp;
+        (record.amount === null || (Number.isSafeInteger(record.amount) &amp;&amp; record.amount >= 0)))) {
+    throw new Error("Invalid maintenance history");
+  }
+  const added = await new Promise((resolve,reject) => {
+    const tx=database.transaction(["services","imports"],"readwrite");
+    const services=tx.objectStore("services");
+    const imports=tx.objectStore("imports");
+    let count=0;
+    for(const record of data.records){
+      const receipt=imports.get(record.id);
+      receipt.onsuccess=()=>{
+        if(receipt.result)return;
+        const existing=services.get(record.id);
+        existing.onsuccess=()=>{
+          if(!existing.result){services.add(record);count++;}
+          imports.add({id:record.id});
+        };
+      };
+    }
+    tx.oncomplete=()=>resolve(count);
+    tx.onabort=()=>reject(tx.error);
+  });
+  records=await operate("readonly",store=>store.getAll());
+  render(added ? data.records.map(record=>record.date.slice(0,4)).sort().at(-1) : year.value);
+  return added;
+}
+
+byId("import-history").addEventListener("click",()=>byId("history-file").click());
+byId("history-file").addEventListener("change",async event=>{
+  const file=event.target.files[0];
+  event.target.value="";
+  if(!file)return;
+  try{
+    await ready;
+    const count=await importHistory(JSON.parse(await file.text()));
+    showToast(count ? count+"건을 불러왔습니다." : "이미 불러온 정비 기록입니다.");
+  }catch{showToast("정비 기록을 불러오지 못했습니다.");}
+});
+
 async function start() {
   byId("add").disabled = true;
   try {
@@ -590,10 +641,15 @@ async function start() {
   render();
 }
 const ready = start();
-window.addEventListener("new-maintenance", async () => {
+window.addEventListener("view-maintenance", async event => {
   await ready;
   if (sampleMode) byId("sample").click();
-  if (!editor.open &amp;&amp; !viewer.open &amp;&amp; !byId("add").disabled) openEditor();
+  if (editor.open) editor.close();
+  if (viewer.open) viewer.close();
+  if (event.detail) {
+    try { await importHistory(await event.detail); }
+    catch { showToast("정비 기록을 불러오지 못했습니다."); }
+  }
 });
 </script>
 </body>
@@ -2514,21 +2570,22 @@ function buildThemeGrid(){
   const farmCard=`<div class="theme-card farm-card" data-theme="__farm__">
       <span class="ic">🌙</span><div class="nm">달빛농장</div><div class="ct">농장 앱 열기</div></div>`;
   const carCard=`<button type="button" class="theme-card car-card" data-theme="__car__">
-    <span class="ic" aria-hidden="true">🚘</span><span class="nm">차계부</span><span class="ct">정비 기록 추가</span></button>`;
+    <span class="ic" aria-hidden="true">🚘</span><span class="nm">차계부</span><span class="ct">정비 이력 보기</span></button>`;
   return `<div class="grid">${farmCard}${carCard}${cards}<div class="add-card" id="btn-add-theme"><span style="font-size:24px">＋</span><span style="font-size:13px;font-weight:600">테마 추가</span></div></div>`;
 }
 
 function openCarApp(){
   const frame=document.getElementById("car-iframe");
   document.getElementById("car-overlay").classList.add("on");
-  const openEditor=()=>{
+  const openHistory=()=>{
     history.pushState({car:true},"");
-    frame.contentWindow.dispatchEvent(new Event("new-maintenance"));
+    const detail=JSON.parse(document.getElementById("initial-car-history").textContent);
+    frame.contentWindow.dispatchEvent(new CustomEvent("view-maintenance",{detail}));
   };
   if(!frame.hasAttribute("srcdoc")){
-    frame.addEventListener("load",openEditor,{once:true});
+    frame.addEventListener("load",openHistory,{once:true});
     frame.srcdoc=document.getElementById("car-source").content.firstElementChild.value;
-  }else if(frame.contentDocument?.readyState==="complete")openEditor();
+  }else if(frame.contentDocument?.readyState==="complete")openHistory();
 }
 
 function openFarmApp(){
