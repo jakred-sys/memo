@@ -372,17 +372,18 @@ function render(requestedYear = year.value) {
   const source = sampleMode ? samples() : records;
   const current = today().slice(0, 4);
   const years = [...new Set([current, ...source.map(record => record.date.slice(0, 4))])].sort().reverse();
-  year.replaceChildren(...years.map(value => new Option(value + "년", value)));
-  year.value = years.includes(requestedYear) ? requestedYear : (source.length ? source.map(record=>record.date.slice(0,4)).sort().at(-1) : current);
+  year.replaceChildren(new Option("전체 연도", "all"), ...years.map(value => new Option(value + "년", value)));
+  year.value = years.includes(requestedYear) ? requestedYear : "all";
+  byId("summary-title").textContent = year.value === "all" ? "전체 정비 내역" : "연도별 정비 내역";
 
-  const annual = source.filter(record => record.date.startsWith(year.value + "-"))
+  const visibleRecords = source.filter(record => year.value === "all" || record.date.startsWith(year.value + "-"))
     .sort((a, b) => b.date.localeCompare(a.date) || (b.createdAt || 0) - (a.createdAt || 0));
-  byId("sum").textContent = numbers.format(annual.reduce((total, record) => total + (record.amount ?? 0), 0)) + "원";
-  byId("count").textContent = annual.length + "건";
-  byId("last").textContent = annual.length ? dateLabel(annual[0].date) : "—";
+  byId("sum").textContent = numbers.format(visibleRecords.reduce((total, record) => total + (record.amount ?? 0), 0)) + "원";
+  byId("count").textContent = visibleRecords.length + "건";
+  byId("last").textContent = visibleRecords.length ? dateLabel(visibleRecords[0].date) : "—";
 
   const terms = search.value.toLocaleLowerCase("ko").trim().split(/\s+/u).filter(Boolean);
-  const matches = annual.filter(record => {
+  const matches = visibleRecords.filter(record => {
     const text = [record.work, record.shop, record.note].join(" ").toLocaleLowerCase("ko");
     return terms.every(term => text.includes(term));
   });
@@ -516,7 +517,7 @@ form.addEventListener("submit", async event => {
     records.push(record);
     editor.close();
     search.value = "";
-    render(record.date.slice(0, 4));
+    render(year.value === "all" ? "all" : record.date.slice(0, 4));
     showToast(message);
   } catch {
     showError("저장하지 못했습니다. 브라우저 저장공간을 확인한 뒤 다시 시도해 주세요.");
@@ -612,7 +613,7 @@ async function importHistory(data) {
     tx.onabort=()=>reject(tx.error);
   });
   records=await operate("readonly",store=>store.getAll());
-  render(added ? data.records.map(record=>record.date.slice(0,4)).sort().at(-1) : year.value);
+  render(added ? "all" : year.value);
   return added;
 }
 
