@@ -887,6 +887,58 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
 .flower-accent{color:var(--flower)!important}
 .flower-bg{background:var(--fl)!important}
 .flower-border{border-color:var(--flower)!important}
+#crop-grid .crop-card{padding:12px;min-width:0}
+.crop-summary{display:flex;flex-direction:column;gap:4px;text-align:left;width:100%;border:0;background:none;color:var(--tx);font:inherit;padding:4px 0;cursor:pointer;overflow-wrap:anywhere}
+.crop-summary strong{font-size:16px}.crop-summary small{font-size:13px;color:var(--tx3)}
+.crop-summary img{width:100%;height:88px;object-fit:cover;border-radius:8px}
+.crop-record-head,.crop-record-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.crop-record-head{margin:14px 0 8px}
+.crop-record-fields{display:grid;gap:6px;margin:8px 0}
+.crop-record-fields input,.crop-record-fields select,.crop-record-head select{font:inherit;border:1px solid var(--bdm);border-radius:8px;padding:7px 9px;background:var(--bg);color:var(--tx);width:100%}
+.crop-record-head select{width:auto;max-width:50%}
+.crop-record-actions{justify-content:flex-start}
+.memo-list { background: #fff; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.07); overflow: hidden; margin-bottom: 8px; }
+.mc { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border-bottom: .5px solid rgba(0,0,0,.06); }
+.mc:last-child { border-bottom: none; }
+.mc-info { flex: 1; min-width: 0; cursor: pointer; }
+.mc-title { font-size: 14px; font-weight: 500; color: #1a1a18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mc-date { font-size: 11px; color: #ccc; white-space: nowrap; flex-shrink: 0; }
+.mc-acts { display: flex; gap: 0; flex-shrink: 0; }
+.mc-acts button { background: none; border: none; cursor: pointer; font-size: 13px; padding: 3px 5px; color: #ccc; }
+.vm-title { font-size: 20px; font-weight: 800; color: #1a1a18; line-height: 1.3; flex: 1; }
+.vm-note-box { background: #f8f7f4; border-radius: 12px; padding: 13px 14px; margin-bottom: 16px; font-size: 14px; color: #333; line-height: 1.7; white-space: pre-wrap; word-break: break-word; min-height: 48px; }
+.vm-btns { display: flex; gap: 8px; }
+.vm-edit-btn { flex: 1; background: #4A90E2; color: #fff; border: none; border-radius: 11px; padding: 13px 0; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.vm-close-btn { background: #f0ede6; color: #555; border: none; border-radius: 11px; padding: 13px 20px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.mc-preview{margin-top:5px;color:#575952;font-size:14px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;white-space:pre-line;overflow-wrap:anywhere}
+.mc-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:13px;color:#4e5a52}
+.mc-meta span{background:#edf2ee;border-radius:12px;padding:2px 8px}
+.mc-photo{float:left;width:62px;height:62px;object-fit:cover;border-radius:8px;margin-right:9px}
+.board-photo{display:block;max-width:100%;max-height:380px;object-fit:contain;margin:10px auto;border-radius:8px}
+#entry-list .mc{align-items:flex-start}
+#entry-list .mc-info{display:block;text-align:left;border:0;background:none;padding:0;font:inherit;color:inherit}
+#entry-list .mc-date{display:block;margin-top:5px;color:#52645a}
+#entry-list .mc-acts button{min-width:36px;min-height:36px}
+#crop-record-dialog{width:min(100%,600px);max-width:none;max-height:90dvh;margin:auto auto 0;border:0;border-radius:20px 20px 0 0;padding:20px 18px 28px;background:white;overflow:auto}
+#crop-record-dialog::backdrop{background:#0007}
+#crop-record-dialog .vm-title{overflow-wrap:anywhere;margin-bottom:8px}
+#crop-record-dialog .vm-edit-btn{background:#355c43}
+#crop-record-dialog .mc-date{color:#52645a}
+#crop-entry-form .modal-ttl{ font-weight: 700; font-size: 17px; margin-bottom: 16px; }
+#crop-entry-form .f-row{ margin-bottom: 11px; }
+#crop-entry-form .f-lbl{ font-size: 12px; font-weight: 600; color: #888; display: block; margin-bottom: 5px; }
+#crop-entry-form .f-inp,#crop-entry-form .f-sel{ width: 100%; border: .5px solid rgba(0,0,0,.16); border-radius: 9px; padding: 11px 12px; font-size: 15px; font-family: inherit; outline: none; background: #f5f3ee; color: #1a1a18; -webkit-appearance: none; }
+#crop-entry-form .f-ta{ width: 100%; border: .5px solid rgba(0,0,0,.16); border-radius: 9px; padding: 11px 12px; font-size: 15px; font-family: inherit; outline: none; background: #f5f3ee; min-height: 74px; resize: vertical; color: #1a1a18; }
+#crop-entry-form .btn-ok{ color: #fff; border: none; border-radius: 11px; padding: 13px 0; width: 100%; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; font-family: inherit; }
+#crop-entry-form .btn-sec{ background: #f0ede6; color: #555; border: none; border-radius: 11px; padding: 12px 0; width: 100%; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: inherit; }
+#crop-entry-form{position:fixed;inset:auto 0 0;margin:0 auto;border:0;width:min(100%,600px);max-width:none;max-height:88dvh;overflow:auto;border-radius:20px 20px 0 0;padding:20px 18px calc(36px + env(safe-area-inset-bottom,0px));background:#fff;color:#1a1a18}
+#crop-entry-form::backdrop{background:#0006}
+#crop-entry-form .btn-ok{background:#2d5179}
+#crop-entry-form .btn-ok:disabled{opacity:.55}
+#crop-entry-form .f-lbl{color:#61615b}
+#crop-entry-form :is(input,select,textarea,button):focus-visible{outline:2px solid #2d5179;outline-offset:2px}
+#crop-entry-form #add-photos-col:empty{display:none}
+#crop-entry-form #crop-entry-error{color:#9b302a;margin-top:8px;font-size:14px}
 </style>
 </head>
 <body>
@@ -1069,7 +1121,6 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
     <div class="pg" id="detail-view" style="padding:14px">
       <div class="detail-panel">
         <div class="det-header">
-          <span class="det-emoji" id="d-emoji"></span>
           <div class="det-title"><h2 id="d-name"></h2><p id="d-planted"></p></div>
           <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
             <button class="back-btn" onclick="showPrev()">← 뒤로</button>
@@ -1081,19 +1132,11 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
           </div>
         </div>
         <div id="crop-tip-preview-area"></div>
-        <div class="slabel">날짜별 사진 &amp;amp; 메모</div>
-        <div class="entry-list" id="entry-list"></div>
-        <div class="add-entry-area">
-          <div class="add-entry-toolbar">
-            <span>새 기록 추가</span>
-            <input type="date" id="entry-date-sel" class="add-entry-date">
-            <label class="photo-upload-label" for="photo-input">📷 사진</label>
-            <input type="file" id="photo-input" accept="image/*" multiple class="hidden" onchange="previewPhotos(event)">
-          </div>
-          <div id="add-photos-col" class="preview-photos-strip"><div class="no-preview-placeholder">📷</div></div>
-          <textarea class="add-entry-memo" id="new-entry-memo" placeholder="이 날의 생육 상태를 메모하세요..." oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'">&lt;/textarea>
-          <button class="add-entry-save" onclick="saveEntry()">기록 저장</button>
+        <div class="crop-record-head"><strong>재배 기록</strong>
+          <select id="crop-record-filter" aria-label="작업 종류 필터" onchange="renderEntries(crops.find(c=>c.id===currentCropId))"></select>
+          <button type="button" class="tip-btn" onclick="showCropEntryForm()">＋ 기록 추가</button>
         </div>
+        <div class="memo-list" id="entry-list"></div>
       </div>
     </div>
   </div>
@@ -1120,27 +1163,27 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
 <div class="modal-bg hidden" id="add-modal">
   <div class="modal"><div class="modal-handle"></div><h3>새 작물 추가</h3>
     <select id="modal-emoji">
-      <option value="🍆|가지">🍆 가지</option>
-      <option value="🥔|감자">🥔 감자</option>
-      <option value="🍠|고구마">🍠 고구마</option>
-      <option value="🌶️|고추">🌶️ 고추</option>
-      <option value="🌿|당귀">🌿 당귀</option>
-      <option value="🥕|당근">🥕 당근</option>
-      <option value="🌿|대파">🌿 대파</option>
-      <option value="🧄|마늘">🧄 마늘</option>
-      <option value="🍃|머위">🍃 머위</option>
-      <option value="🌱|부추">🌱 부추</option>
-      <option value="🥬|상추">🥬 상추</option>
-      <option value="🍉|수박">🍉 수박</option>
-      <option value="🌱|아스파라거스">🌱 아스파라거스</option>
-      <option value="🧅|양파">🧅 양파</option>
-      <option value="🥒|오이">🥒 오이</option>
-      <option value="🌽|옥수수">🌽 옥수수</option>
-      <option value="🪴|쪽파">🪴 쪽파</option>
-      <option value="🍈|참외">🍈 참외</option>
-      <option value="🍅|토마토">🍅 토마토</option>
-      <option value="🎃|호박">🎃 호박</option>
-      <option value="🌾|기타">🌾 기타</option>
+      <option value="🍆|가지">가지</option>
+      <option value="🥔|감자">감자</option>
+      <option value="🍠|고구마">고구마</option>
+      <option value="🌶️|고추">고추</option>
+      <option value="🌿|당귀">당귀</option>
+      <option value="🥕|당근">당근</option>
+      <option value="🌿|대파">대파</option>
+      <option value="🧄|마늘">마늘</option>
+      <option value="🍃|머위">머위</option>
+      <option value="🌱|부추">부추</option>
+      <option value="🥬|상추">상추</option>
+      <option value="🍉|수박">수박</option>
+      <option value="🌱|아스파라거스">아스파라거스</option>
+      <option value="🧅|양파">양파</option>
+      <option value="🥒|오이">오이</option>
+      <option value="🌽|옥수수">옥수수</option>
+      <option value="🪴|쪽파">쪽파</option>
+      <option value="🍈|참외">참외</option>
+      <option value="🍅|토마토">토마토</option>
+      <option value="🎃|호박">호박</option>
+      <option value="🌾|기타">기타</option>
     </select>
     <input type="text" id="modal-name" placeholder="작물 이름 (예: 방울토마토)" maxlength="15">
     <div class="mlabel">심은 날짜</div><input type="date" id="modal-date">
@@ -1152,27 +1195,27 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
 <div class="modal-bg hidden" id="edit-crop-modal">
   <div class="modal"><div class="modal-handle"></div><h3>작물 정보 수정</h3>
     <select id="edit-crop-emoji">
-      <option value="🍆|가지">🍆 가지</option>
-      <option value="🥔|감자">🥔 감자</option>
-      <option value="🍠|고구마">🍠 고구마</option>
-      <option value="🌶️|고추">🌶️ 고추</option>
-      <option value="🌿|당귀">🌿 당귀</option>
-      <option value="🥕|당근">🥕 당근</option>
-      <option value="🌿|대파">🌿 대파</option>
-      <option value="🧄|마늘">🧄 마늘</option>
-      <option value="🍃|머위">🍃 머위</option>
-      <option value="🌱|부추">🌱 부추</option>
-      <option value="🥬|상추">🥬 상추</option>
-      <option value="🍉|수박">🍉 수박</option>
-      <option value="🌱|아스파라거스">🌱 아스파라거스</option>
-      <option value="🧅|양파">🧅 양파</option>
-      <option value="🥒|오이">🥒 오이</option>
-      <option value="🌽|옥수수">🌽 옥수수</option>
-      <option value="🪴|쪽파">🪴 쪽파</option>
-      <option value="🍈|참외">🍈 참외</option>
-      <option value="🍅|토마토">🍅 토마토</option>
-      <option value="🎃|호박">🎃 호박</option>
-      <option value="🌾|기타">🌾 기타</option>
+      <option value="🍆|가지">가지</option>
+      <option value="🥔|감자">감자</option>
+      <option value="🍠|고구마">고구마</option>
+      <option value="🌶️|고추">고추</option>
+      <option value="🌿|당귀">당귀</option>
+      <option value="🥕|당근">당근</option>
+      <option value="🌿|대파">대파</option>
+      <option value="🧄|마늘">마늘</option>
+      <option value="🍃|머위">머위</option>
+      <option value="🌱|부추">부추</option>
+      <option value="🥬|상추">상추</option>
+      <option value="🍉|수박">수박</option>
+      <option value="🌱|아스파라거스">아스파라거스</option>
+      <option value="🧅|양파">양파</option>
+      <option value="🥒|오이">오이</option>
+      <option value="🌽|옥수수">옥수수</option>
+      <option value="🪴|쪽파">쪽파</option>
+      <option value="🍈|참외">참외</option>
+      <option value="🍅|토마토">토마토</option>
+      <option value="🎃|호박">호박</option>
+      <option value="🌾|기타">기타</option>
     </select>
     <input type="text" id="edit-crop-name" placeholder="작물 이름" maxlength="15">
     <div class="mlabel">심은 날짜</div><input type="date" id="edit-crop-date">
@@ -1191,6 +1234,34 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
   </div>
 </div>
 
+<dialog id="crop-entry-form" aria-labelledby="crop-entry-title" oncancel="event.preventDefault();resetNewEntryForm()">
+  <div class="modal-handle" aria-hidden="true"></div>
+  <h2 class="modal-ttl" id="crop-entry-title">새 재배 기록</h2>
+  <div class="f-row"><label class="f-lbl" for="new-entry-title">제목</label>
+    <input class="f-inp" id="new-entry-title" maxlength="100" placeholder="예: 첫 수확"></div>
+  <div class="f-row"><label class="f-lbl" for="new-entry-memo">내용</label>
+    <textarea class="f-ta" id="new-entry-memo">&lt;/textarea></div>
+  <div class="f-row"><label class="f-lbl" for="new-entry-type">작업 종류</label>
+    <select class="f-sel" id="new-entry-type"></select></div>
+  <div class="f-row"><label class="f-lbl" for="photo-input">첨부 사진</label>
+    <input type="file" id="photo-input" accept="image/*" multiple onchange="previewPhotos(event)">
+    <div id="add-photos-col" class="preview-photos-strip"></div></div>
+  <div class="f-row"><label class="f-lbl" for="entry-date-sel">날짜</label>
+    <input type="date" id="entry-date-sel" class="f-inp"></div>
+  <p id="crop-entry-error" role="alert" hidden></p>
+  <button type="button" id="crop-entry-save" class="btn-ok" onclick="saveEntry()">저장</button>
+  <button type="button" class="btn-sec" onclick="resetNewEntryForm()">취소</button>
+</dialog>
+
+<dialog id="crop-record-dialog" aria-labelledby="crop-record-dialog-title">
+  <h2 class="vm-title" id="crop-record-dialog-title"></h2>
+  <div id="crop-record-dialog-content"></div>
+  <div class="vm-btns">
+    <button class="vm-close-btn" type="button" onclick="this.closest('dialog').close()">닫기</button>
+    <button class="vm-edit-btn" type="button" id="crop-record-dialog-edit">수정</button>
+  </div>
+</dialog>
+
 <!-- 기록 수정 모달 -->
 <div class="modal-bg hidden" id="edit-entry-modal">
   <div class="modal"><div class="modal-handle"></div><h3 id="edit-modal-title">기록 수정</h3>
@@ -1201,8 +1272,10 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',-apple-system,sans-serif;b
     <label class="add-more-photo-label" for="edit-add-photo-input" style="margin-bottom:14px"><span class="add-more-photo-icon">+📷</span><span style="font-size:11px">사진 추가</span></label>
     <input type="file" id="edit-add-photo-input" accept="image/*" multiple class="hidden" onchange="editAddPhotos(event)">
     <div class="mlabel">메모</div>
+    <div class="crop-record-fields"><label>제목<input id="edit-entry-title" maxlength="100"></label><label>작업 종류<select id="edit-entry-type"></select></label></div>
+    <p id="crop-edit-error" role="alert" hidden></p>
     <textarea id="edit-modal-memo" placeholder="메모를 입력하세요..." oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'">&lt;/textarea>
-    <div class="modal-btns"><button class="btn-cancel" onclick="closeModal('edit-entry-modal')">취소</button><button class="btn-ok" onclick="saveEditEntry()">저장</button></div>
+    <div class="modal-btns"><button class="btn-cancel" onclick="closeModal('edit-entry-modal')">취소</button><button class="btn-ok" id="crop-edit-save" onclick="saveEditEntry()">저장</button></div>
   </div>
 </div>
 
@@ -1413,7 +1486,7 @@ const MAX=10;
 let crops=[],todos=[],settings={bgColor:''},boardPosts=[];
 let currentCropId=null,prevTab='timeline',harvestPendingId=null;
 let pendingPhotos=[];
-let editingEntryDate=null,editingEntryIdx=null;
+let editingEntryIdx=null,editCropPhotos=[];
 let showAllPending=false,showAllDone=false;
 function getTodayKST(){const now=new Date();const kst=new Date(now.getTime()+9*60*60*1000);return kst.toISOString().slice(0,10);}
 let globalDate=getTodayKST();
@@ -1572,7 +1645,7 @@ function openTipModalForCrop(cropId){
   const c=crops.find(c=>c.id===cropId);if(!c)return;
   const kindName=c.kind||emojiLabel(c.emoji)||c.name;
   currentTipKey=kindName;currentTipType='crop';
-  document.getElementById('tip-modal-emoji').textContent=c.emoji;
+  document.getElementById('tip-modal-emoji').textContent='';
   document.getElementById('tip-modal-kind').textContent=kindName+' 키우기 팁';
   document.getElementById('tip-modal-sub').textContent='이 종류 작물 공통 키우기 팁 (같은 종류면 공유됩니다)';
   document.getElementById('tip-modal-textarea').value=cropTips[kindName]||'';
@@ -1676,24 +1749,23 @@ function renderList(){
   sorted.forEach(c=>{
     const kindName=c.kind||emojiLabel(c.emoji)||c.name;
     const hasTip=!!cropTips[kindName];
-    const allPhotos=(c.entries||[]).flatMap(e=>e.photos||[]);
-    const imgH=allPhotos.length>0
-      ?`<div style="position:relative;width:100%;height:100%"><img src="${allPhotos[allPhotos.length-1]}" alt="" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.65));padding:5px 6px 7px;text-align:center"><div style="font-size:12px;font-weight:700;color:#fff">${c.emoji} ${kindName}</div><div style="font-size:10px;color:rgba(255,255,255,.8);margin-top:1px">${c.name}</div></div></div>`
-      :`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:0 4px"><span style="font-size:36px">${c.emoji}</span><span style="font-size:12px;font-weight:700;color:var(--tx);text-align:center">${kindName}</span><span style="font-size:10px;color:var(--tx3);text-align:center">${c.name}</span></div>`;
+    const entries=[...(c.entries||[])].sort((a,b)=>b.date.localeCompare(a.date));
+    const last=entries[0];
+    const photo=entries.find(e=>e.photos?.length)?.photos.at(-1);
     const card=document.createElement('div');
     card.className='crop-card'+(c.harvested?' harvested':'');
-    card.innerHTML=`${c.harvested?'<span class="hvbadge">수확 완료</span>':''}
-      <div class="crop-img" onclick="showDetail(${c.id})">${imgH}</div>
-      <div class="crop-info">
-        <div class="crop-row"><div class="hvcb${c.harvested?' done':''}" onclick="toggleHarvest(event,${c.id})"></div><span class="cname" onclick="showDetail(${c.id})">${c.emoji} ${kindName}</span></div>
-        <div style="font-size:11px;color:var(--tx3);margin-top:1px;padding-left:25px;font-style:italic">${c.name}</div>
-        <div class="csub" style="margin-top:3px">${c.harvested?fmtDate(c.harvestDate)+' 수확':daysSince(c.planted)}</div>
-        ${c.yieldNote?`<div class="cyield">수확량: ${c.yieldNote}</div>`:''}
-        <div style="padding-top:5px;padding-left:25px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <button onclick="openEditCrop(event,${c.id})" style="background:none;border:none;font-size:11px;color:var(--tx3);cursor:pointer;font-family:inherit;padding:0">✎ 정보 수정</button>
-          <button onclick="event.stopPropagation();openTipModalForCrop(${c.id})" class="tip-btn${hasTip?' has-tip':''}">🌱 팁${hasTip?' ✓':''}</button>
-        </div>
-      </div>`;
+    card.innerHTML=`<button type="button" class="crop-summary" onclick="showDetail(${c.id})">
+      ${photo?`<img src="${cropText(photo)}" alt="" loading="lazy">`:''}
+      <strong>${cropText(c.name)}</strong>
+      <small>심은 날 · ${cropText(fmtDate(c.planted))}</small>
+      <small>${last?`최근 기록 · ${cropText(fmtDate(last.date))} · ${cropText(cropEntryTitle(last))}`:'아직 기록 없음'}</small>
+      </button>
+      <div class="crop-record-actions">
+        <button type="button" class="tip-btn" onclick="toggleHarvest(event,${c.id})">${c.harvested?'수확 완료':'수확 기록'}</button>
+        <button type="button" class="tip-btn" onclick="openEditCrop(event,${c.id})">정보 수정</button>
+        <button type="button" class="tip-btn${hasTip?' has-tip':''}" onclick="openTipModalForCrop(${c.id})">팁</button>
+      </div>
+      ${c.yieldNote?`<div class="cyield">수확량: ${cropText(c.yieldNote)}</div>`:''}`;
     grid.appendChild(card);
   });
   const ab=document.createElement('div');ab.className='add-crop-btn';
@@ -1705,7 +1777,7 @@ function renderList(){
 function toggleHarvest(e,id){
   e.stopPropagation();const c=crops.find(c=>c.id===id);if(!c)return;
   if(!c.harvested){
-    harvestPendingId=id;document.getElementById('harvest-info').textContent=`${c.emoji} ${c.name}의 최종 수확 정보를 기록해주세요.`;
+    harvestPendingId=id;document.getElementById('harvest-info').textContent=`${c.name}의 최종 수확 정보를 기록해주세요.`;
     document.getElementById('harvest-yield').value=c.yieldNote||'';document.getElementById('harvest-date').value=globalDate;
     document.getElementById('harvest-modal').classList.remove('hidden');
   } else {c.harvested=false;c.harvestDate='';c.yieldNote='';save();renderList()}
@@ -1720,9 +1792,10 @@ function confirmHarvest(){
 
 function showDetail(id){
   currentCropId=id;const c=crops.find(c=>c.id===id);
-  document.getElementById('d-emoji').textContent=c.emoji;document.getElementById('d-name').textContent=c.name;
+  document.getElementById('d-name').textContent=c.name;
   document.getElementById('d-planted').textContent=`심은 날: ${fmtDate(c.planted)} · ${daysSince(c.planted)}`;
   document.getElementById('entry-date-sel').value=globalDate;
+  setCropEntryOptions('crop-record-filter','전체 작업');
   resetNewEntryForm();renderCropTipPreview(c);renderEntries(c);
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
   document.getElementById('detail-view').classList.add('active');
@@ -1732,21 +1805,62 @@ function showDetail(id){
 }
 function showPrev(){document.getElementById('detail-view').classList.remove('active');document.getElementById('topbar-title').textContent='🌙 달빛 농장';switchTab(prevTab);}
 
+const CROP_ENTRY_TYPES=['심기','물주기','비료','관찰','수확','기타'];
+function cropText(value){
+  return String(value??'').replace(/[&amp;<>"]/g,char=>({'&amp;':'&amp;amp;','<':'&amp;lt;','>':'&amp;gt;','"':'&amp;quot;'}[char]));
+}
+function cropEntryTitle(entry){
+  return entry.title||String(entry.memo||'').trim().split('\n')[0].slice(0,48)||entry.type||'재배 기록';
+}
+function setCropEntryOptions(id,empty,current=''){
+  const select=document.getElementById(id);
+  select.replaceChildren(new Option(empty,''),...CROP_ENTRY_TYPES.map(type=>new Option(type,type)));
+  select.value=current;
+}
+function showCropEntryForm(){
+  resetNewEntryForm();
+  const crop=crops.find(c=>c.id===currentCropId);
+  document.getElementById('crop-entry-title').textContent=`새 ${crop.name} 기록`;
+  document.getElementById('crop-entry-form').showModal();
+}
 function renderEntries(c){
+  if(!c)return;
   const list=document.getElementById('entry-list');
-  const sorted=[...(c.entries||[])].sort((a,b)=>b.date.localeCompare(a.date));
-  if(!sorted.length){list.innerHTML='<div style="font-size:13px;color:var(--tx3);padding:4px 0 10px">아직 기록이 없어요.</div>';return;}
-  list.innerHTML=sorted.map(entry=>{
-    const oi=c.entries.findIndex(e=>e.date===entry.date);
+  const type=document.getElementById('crop-record-filter').value;
+  const sorted=(c.entries||[]).map((entry,index)=>({entry,index}))
+    .filter(({entry})=>!type||entry.type===type).sort((a,b)=>b.entry.date.localeCompare(a.entry.date)||b.index-a.index);
+  if(!sorted.length){list.innerHTML=type?'<div class="mc">선택한 작업의 기록이 없어요.</div>':'<div class="mc">아직 기록이 없어요.</div>';return;}
+  list.innerHTML=sorted.map(({entry,index})=>{
     const photos=entry.photos||[];
-    const strip=photos.length?'<div class="entry-photos-col">'+photos.map((ph,pi)=>`<div class="ephoto-wrap"><img src="${ph}" alt="" onclick="openLightboxDetail(${oi},${pi})"><button class="ephoto-del" onclick="deleteEntryPhoto(${oi},${pi})">✕</button></div>`).join('')+'</div>':'<div class="no-photo-strip">사진 없음</div>';
-    const memoH=entry.memo?entry.memo.replace(/</g,'&amp;lt;').replace(/\n/g,'<br>'):'';
-    return`<div class="entry-slot"><div class="entry-slot-header"><span class="edate">${fmtDate(entry.date)}<span class="ecount">사진 ${photos.length}장</span></span><button class="edelete-all" onclick="deleteEntry(${oi})">삭제</button></div>${strip}<div class="entry-memo-col">${memoH?`<div class="ememo-text">${memoH}</div>`:'<div class="ememo-empty">메모 없음</div>'}<button class="entry-edit-btn" onclick="openEditEntry(${oi})">✎ 날짜·사진·메모 수정</button></div></div>`;
+    return `<article class="mc">
+      <button type="button" class="mc-info" onclick="viewCropEntry(${index})">
+        ${photos.length?`<img class="mc-photo" src="${cropText(photos[0])}" alt="" loading="lazy">`:''}
+        <div class="mc-title">${cropText(cropEntryTitle(entry))}</div>
+        ${entry.memo?`<div class="mc-preview">${cropText(entry.memo)}</div>`:''}
+        ${entry.type?`<div class="mc-meta"><span>${cropText(entry.type)}</span></div>`:''}
+        <span class="mc-date">${cropText(fmtDate(entry.date))}</span>
+      </button>
+      <div class="mc-acts"><button type="button" aria-label="수정" onclick="openEditEntry(${index})">✏️</button><button type="button" aria-label="삭제" onclick="deleteEntry(${index})">🗑️</button></div>
+    </article>`;
   }).join('');
 }
-function deleteEntryPhoto(oi,pi){showConfirm('사진 삭제','이 사진을 삭제할까요?',()=>{const c=crops.find(c=>c.id===currentCropId);c.entries[oi].photos.splice(pi,1);save();renderEntries(c);});}
+function viewCropEntry(index){
+  const entry=crops.find(c=>c.id===currentCropId)?.entries[index];
+  if(!entry)return;
+  const dialog=document.getElementById('crop-record-dialog');
+  document.getElementById('crop-record-dialog-title').textContent=cropEntryTitle(entry);
+  document.getElementById('crop-record-dialog-content').innerHTML=`
+    ${entry.type?`<div class="mc-meta"><span>${cropText(entry.type)}</span></div>`:''}
+    <p class="mc-date">${cropText(fmtDate(entry.date))}</p>
+    ${entry.memo?`<div class="vm-note-box">${cropText(entry.memo)}</div>`:''}
+    ${(entry.photos||[]).map(photo=>`<img class="board-photo" src="${cropText(photo)}" alt="첨부 사진" loading="lazy">`).join('')}`;
+  document.getElementById('crop-record-dialog-edit').onclick=()=>{
+    dialog.close();
+    openEditEntry(index);
+  };
+  dialog.showModal();
+}
 function deleteEntry(idx){showConfirm('기록 삭제','이 날의 사진과 메모를 모두 삭제할까요?',()=>{const c=crops.find(c=>c.id===currentCropId);c.entries.splice(idx,1);save();renderEntries(c);});}
-function openLightboxDetail(oi,pi){const c=crops.find(c=>c.id===currentCropId);const e=c.entries[oi];openLightboxDirect(e.photos[pi],e.date,e.memo,pi,e.photos.length);}
 function openLightboxDirect(src,date,memo,idx,total){
   document.getElementById('lb-img').src=src;
   document.getElementById('lb-date-info').textContent=`${fmtDate(date)} (${idx+1}/${total}장)`;
@@ -1755,42 +1869,157 @@ function openLightboxDirect(src,date,memo,idx,total){
 }
 function closeLightbox(){document.getElementById('lightbox').classList.add('hidden')}
 
-function previewPhotos(e){const files=Array.from(e.target.files);if(!files.length)return;let n=0;files.forEach(f=>{const r=new FileReader();r.onload=ev=>{pendingPhotos.push(ev.target.result);n++;if(n===files.length)renderPreviewArea();};r.readAsDataURL(f);});e.target.value='';}
-function renderPreviewArea(){const a=document.getElementById('add-photos-col');if(!pendingPhotos.length){a.innerHTML='<div class="no-preview-placeholder">📷</div>';return;}a.innerHTML=pendingPhotos.map((ph,i)=>`<div class="preview-wrap"><img src="${ph}" alt=""><button class="preview-del" onclick="removePendingPhoto(${i})">✕</button></div>`).join('');}
-function removePendingPhoto(i){pendingPhotos.splice(i,1);renderPreviewArea()}
-function resetNewEntryForm(){pendingPhotos=[];renderPreviewArea();document.getElementById('new-entry-memo').value=''}
-function saveEntry(){
-  const date=document.getElementById('entry-date-sel').value||globalDate;const memo=document.getElementById('new-entry-memo').value.trim();
-  if(!pendingPhotos.length&amp;&amp;!memo){showConfirm('입력 필요','사진이나 메모 중 하나 이상 입력해주세요.',()=>{},'확인','var(--green)');return;}
-  const c=crops.find(c=>c.id===currentCropId);const ei=c.entries.findIndex(e=>e.date===date);
-  if(ei>=0){showConfirm('기록 추가',`${fmtDate(date)}에 이미 기록이 있습니다. 추가할까요?`,()=>{c.entries[ei].photos.push(...pendingPhotos);if(memo)c.entries[ei].memo=memo;save();resetNewEntryForm();renderEntries(c);document.getElementById('scroll-area').scrollTop=0;},'추가','var(--green)');}
-  else{c.entries.push({date,photos:[...pendingPhotos],memo});save();resetNewEntryForm();renderEntries(c);document.getElementById('scroll-area').scrollTop=0;}
+async function compressCropPhoto(file){
+  const url=URL.createObjectURL(file);
+  try{
+    const image=new Image();
+    image.src=url;
+    await image.decode();
+    const scale=Math.min(1,1000/Math.max(image.naturalWidth,image.naturalHeight));
+    const canvas=document.createElement("canvas");
+    canvas.width=Math.max(1,Math.round(image.naturalWidth*scale));
+    canvas.height=Math.max(1,Math.round(image.naturalHeight*scale));
+    const ctx=canvas.getContext("2d",{alpha:false});
+    ctx.fillStyle="#fff";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(image,0,0,canvas.width,canvas.height);
+    return canvas.toDataURL("image/jpeg",0.76);
+  }finally{URL.revokeObjectURL(url);}
 }
+
+async function compressCropPhotos(files){
+  const photos=[];
+  for(const file of files) photos.push(await compressCropPhoto(file));
+  return photos;
+}
+
+async function previewPhotos(event){
+  const files=[...event.target.files];
+  if(!files.length)return;
+  const draft=pendingPhotos;
+  const button=document.getElementById('crop-entry-save');
+  button.disabled=true;
+  event.target.disabled=true;
+  try{
+    const photos=await compressCropPhotos(files);
+    if(draft!==pendingPhotos)return;
+    draft.push(...photos);
+    renderPreviewArea();
+  }catch{
+    if(draft!==pendingPhotos)return;
+    const error=document.getElementById('crop-entry-error');
+    error.textContent='사진을 읽지 못했습니다.';
+    error.hidden=false;
+  }finally{
+    if(draft===pendingPhotos){button.disabled=false;event.target.disabled=false;event.target.value="";}
+  }
+}
+function renderPreviewArea(){const a=document.getElementById('add-photos-col');if(!pendingPhotos.length){a.replaceChildren();return;}a.innerHTML=pendingPhotos.map((ph,i)=>`<div class="preview-wrap"><img src="${ph}" alt=""><button class="preview-del" onclick="removePendingPhoto(${i})">✕</button></div>`).join('');}
+function removePendingPhoto(i){pendingPhotos.splice(i,1);renderPreviewArea()}
+function resetNewEntryForm(){
+  pendingPhotos=[];renderPreviewArea();
+  document.getElementById('crop-entry-save').disabled=false;
+  document.getElementById('new-entry-memo').value='';
+  document.getElementById('new-entry-title').value='';
+  document.getElementById('entry-date-sel').value=globalDate;
+  setCropEntryOptions('new-entry-type','선택 안 함');
+  document.getElementById('crop-entry-error').hidden=true;
+  document.getElementById('photo-input').value='';
+  document.getElementById('photo-input').disabled=false;
+  const dialog=document.getElementById('crop-entry-form');
+  if(dialog.open)dialog.close();
+}
+function saveEntry(){
+  const date=document.getElementById('entry-date-sel').value||globalDate;
+  const memo=document.getElementById('new-entry-memo').value.trim();
+  const title=document.getElementById('new-entry-title').value.trim();
+  const type=document.getElementById('new-entry-type').value;
+  if(!pendingPhotos.length&amp;&amp;!memo&amp;&amp;!title){const error=document.getElementById('crop-entry-error');error.textContent='제목, 내용, 사진 중 하나 이상을 입력해 주세요.';error.hidden=false;return;}
+  const c=crops.find(c=>c.id===currentCropId);
+  const entries=[...(c.entries||[]),{date,photos:[...pendingPhotos],memo,title,type}];
+  if(!persistCropEntries(c,entries,'crop-entry-error'))return;
+  resetNewEntryForm();
+  document.getElementById('crop-record-filter').value='';
+  renderEntries(c);
+}
+function persistCropEntries(crop,entries,errorId){
+  try{
+    localStorage.setItem('gv7_crops',JSON.stringify(crops.map(item=>item===crop?{...item,entries}:item)));
+    crop.entries=entries;
+    return true;
+  }catch{
+    const error=document.getElementById(errorId);
+    error.textContent='저장하지 못했습니다. 저장공간을 확인하거나 첨부 사진 수를 줄여 주세요.';
+    error.hidden=false;
+    return false;
+  }
+}
+
 function openEditEntry(idx){
   const c=crops.find(c=>c.id===currentCropId);const e=c.entries[idx];
-  editingEntryDate=e.date;editingEntryIdx=idx;
+  editingEntryIdx=idx;
+  document.getElementById('edit-entry-title').value=e.title||'';
+  setCropEntryOptions('edit-entry-type','선택 안 함',e.type||'');
   document.getElementById('edit-modal-title').textContent='기록 수정';
   document.getElementById('edit-entry-date-input').value=e.date;
-  renderEditPhotosGrid(e.photos||[]);document.getElementById('edit-modal-memo').value=e.memo||'';
+  editCropPhotos=[...(e.photos||[])];
+  document.getElementById('crop-edit-save').disabled=false;
+  document.getElementById('crop-edit-error').hidden=true;
+  renderEditPhotosGrid(editCropPhotos);document.getElementById('edit-modal-memo').value=e.memo||'';
   document.getElementById('edit-entry-modal').classList.remove('hidden');
 }
 function renderEditPhotosGrid(photos){document.getElementById('edit-photos-grid').innerHTML=photos.map((ph,i)=>`<div class="edit-photo-thumb"><img src="${ph}" alt=""><button class="edit-photo-del" onclick="editDeletePhoto(${i})">✕</button></div>`).join('');}
-function editDeletePhoto(pi){const c=crops.find(c=>c.id===currentCropId);const e=c.entries.find(e=>e.date===editingEntryDate);if(!e)return;e.photos.splice(pi,1);save();renderEditPhotosGrid(e.photos);}
-function editAddPhotos(ev){const files=Array.from(ev.target.files);if(!files.length)return;let n=0;const c=crops.find(c=>c.id===currentCropId);const e=c.entries.find(e=>e.date===editingEntryDate);files.forEach(f=>{const r=new FileReader();r.onload=x=>{if(e)e.photos.push(x.target.result);n++;if(n===files.length){save();renderEditPhotosGrid(e?e.photos:[]);}};r.readAsDataURL(f);});ev.target.value='';}
+function editDeletePhoto(pi){
+  editCropPhotos.splice(pi,1);
+  renderEditPhotosGrid(editCropPhotos);
+}
+async function editAddPhotos(event){
+  const files=[...event.target.files];
+  if(!files.length)return;
+  const draft=editCropPhotos;
+  const button=document.getElementById('crop-edit-save');
+  const error=document.getElementById('crop-edit-error');
+  button.disabled=true;
+  event.target.disabled=true;
+  error.hidden=true;
+  try{
+    const photos=await compressCropPhotos(files);
+    if(draft!==editCropPhotos)return;
+    draft.push(...photos);
+    renderEditPhotosGrid(draft);
+  }catch{
+    if(draft!==editCropPhotos)return;
+    error.textContent='사진을 읽지 못했습니다.';
+    error.hidden=false;
+  }finally{
+    if(draft===editCropPhotos)button.disabled=false;
+    event.target.disabled=false;
+    event.target.value='';
+  }
+}
 function saveEditEntry(){
-  const c=crops.find(c=>c.id===currentCropId);const e=c.entries.find(e=>e.date===editingEntryDate);if(!e)return;
-  const newDate=document.getElementById('edit-entry-date-input').value;
-  if(newDate&amp;&amp;newDate!==editingEntryDate){const conflict=c.entries.find(en=>en.date===newDate);if(conflict){showConfirm('날짜 중복',`${fmtDate(newDate)}에 이미 기록이 있어요.`,()=>{},'확인','var(--amber)');return;}e.date=newDate;editingEntryDate=newDate;}
-  e.memo=document.getElementById('edit-modal-memo').value.trim();
-  save();closeModal('edit-entry-modal');renderEntries(c);
+  const crop=crops.find(c=>c.id===currentCropId);
+  const entry=crop?.entries[editingEntryIdx];
+  if(!entry)return;
+  const entries=[...crop.entries];
+  entries[editingEntryIdx]={
+    ...entry,
+    date:document.getElementById('edit-entry-date-input').value||entry.date,
+    title:document.getElementById('edit-entry-title').value.trim(),
+    type:document.getElementById('edit-entry-type').value,
+    memo:document.getElementById('edit-modal-memo').value.trim(),
+    photos:[...editCropPhotos]
+  };
+  if(!persistCropEntries(crop,entries,'crop-edit-error'))return;
+  closeModal('edit-entry-modal');renderEntries(crop);
 }
 
 // ════ 타임라인 ════
 function renderTimeline(){
   const all=[];
   crops.forEach(c=>{
-    (c.entries||[]).forEach(e=>{if((e.photos&amp;&amp;e.photos.length)||e.memo)all.push({date:e.date,type:'entry',cropName:c.name,cropEmoji:c.emoji,photos:e.photos||[],memo:e.memo,cropId:c.id});});
-    if(c.harvested&amp;&amp;c.harvestDate)all.push({date:c.harvestDate,type:'harvest',cropName:c.name,cropEmoji:c.emoji,yieldNote:c.yieldNote});
+    (c.entries||[]).forEach(e=>{if((e.photos&amp;&amp;e.photos.length)||e.memo||e.title)all.push({date:e.date,type:'entry',cropName:c.name,cropEmoji:'',photos:e.photos||[],memo:e.memo||e.title,cropId:c.id});});
+    if(c.harvested&amp;&amp;c.harvestDate)all.push({date:c.harvestDate,type:'harvest',cropName:c.name,cropEmoji:'',yieldNote:c.yieldNote});
   });
   trees.forEach(t=>{(t.entries||[]).forEach(e=>{if((e.photos&amp;&amp;e.photos.length)||e.memo)all.push({date:e.date,type:'tree-entry',cropName:t.name,cropEmoji:t.emoji,photos:e.photos||[],memo:e.memo,cropId:t.id});});});
   flowers.forEach(f=>{(f.entries||[]).forEach(e=>{if((e.photos&amp;&amp;e.photos.length)||e.memo)all.push({date:e.date,type:'flower-entry',cropName:f.name,cropEmoji:f.emoji,photos:e.photos||[],memo:e.memo,cropId:f.id});});});
@@ -1821,7 +2050,7 @@ function renderYearly(){
   if(!years.length){cont.innerHTML='<div style="font-size:13px;color:var(--tx3);text-align:center;padding:1rem">아직 기록된 작물이 없어요.</div>';return;}
   cont.innerHTML=years.map(year=>{
     const yc=crops.filter(c=>c.harvested&amp;&amp;c.harvestDate?getYear(c.harvestDate)===year:getYear(c.planted)===year);const hc=yc.filter(c=>c.harvested);
-    const rows=yc.map(c=>`<div class="ycrow"><span class="ycem">${c.emoji}</span><div class="ycinfo"><div class="ycname">${c.name}</div><div class="ycdates">심은 날: ${fmtDate(c.planted)}${c.harvested&amp;&amp;c.harvestDate?' · 수확: '+fmtDate(c.harvestDate):''}</div></div><div class="ycright">${c.harvested?`<span class="yield-tag">${c.yieldNote||'수확 완료'}</span>`:'<span class="growing-tag">재배중</span>'}</div></div>`).join('');
+    const rows=yc.map(c=>`<div class="ycrow"><div class="ycinfo"><div class="ycname">${c.name}</div><div class="ycdates">심은 날: ${fmtDate(c.planted)}${c.harvested&amp;&amp;c.harvestDate?' · 수확: '+fmtDate(c.harvestDate):''}</div></div><div class="ycright">${c.harvested?`<span class="yield-tag">${c.yieldNote||'수확 완료'}</span>`:'<span class="growing-tag">재배중</span>'}</div></div>`).join('');
     return`<div class="year-block"><div class="year-header" onclick="this.nextElementSibling.classList.toggle('hidden')"><span class="year-title">${year}년</span><span class="year-sum">작물 ${yc.length}종 · 수확 ${hc.length}종</span></div><div class="year-body"><div class="year-stats"><div class="ystat"><div class="ystat-num">${yc.length}</div><div class="ystat-lbl">심은 작물</div></div><div class="ystat"><div class="ystat-num" style="color:var(--green)">${hc.length}</div><div class="ystat-lbl">수확 완료</div></div><div class="ystat"><div class="ystat-num" style="color:var(--amber)">${yc.length-hc.length}</div><div class="ystat-lbl">재배중</div></div></div>${rows}</div></div>`;
   }).join('');
 }
@@ -1899,11 +2128,11 @@ function saveEditCrop(){
   if(!name){showConfirm('입력 필요','작물 이름을 입력해주세요.',()=>{},'확인','var(--green)');return;}
   const ev=document.getElementById('edit-crop-emoji').value;const [ce,ck]=ev.includes('|')?ev.split('|'):[ev,ev];c.emoji=ce;c.kind=ck;c.name=name;c.planted=document.getElementById('edit-crop-date').value||c.planted;
   save();closeModal('edit-crop-modal');
-  if(currentCropId===editCropId){document.getElementById('d-emoji').textContent=c.emoji;document.getElementById('d-name').textContent=c.name;document.getElementById('d-planted').textContent=`심은 날: ${fmtDate(c.planted)} · ${daysSince(c.planted)}`;}
+  if(currentCropId===editCropId){document.getElementById('d-name').textContent=c.name;document.getElementById('d-planted').textContent=`심은 날: ${fmtDate(c.planted)} · ${daysSince(c.planted)}`;}
   editCropId=null;renderList();
 }
-function openEditCropFromDetail(){const c=crops.find(c=>c.id===currentCropId);if(!c)return;editCropId=currentCropId;document.getElementById('edit-crop-emoji').value=c.emoji;document.getElementById('edit-crop-name').value=c.name;document.getElementById('edit-crop-date').value=c.planted;document.getElementById('edit-crop-modal').classList.remove('hidden');}
-function deleteCrop(){const c=crops.find(c=>c.id===currentCropId);if(!c)return;showConfirm('작물 삭제',`"${c.emoji} ${c.name}" 작물을 삭제할까요?`,()=>{crops=crops.filter(c=>c.id!==currentCropId);save();showPrev();});}
+function openEditCropFromDetail(){const c=crops.find(c=>c.id===currentCropId);if(!c)return;editCropId=currentCropId;document.getElementById('edit-crop-emoji').value=c.kind?c.emoji+'|'+c.kind:c.emoji;document.getElementById('edit-crop-name').value=c.name;document.getElementById('edit-crop-date').value=c.planted;document.getElementById('edit-crop-modal').classList.remove('hidden');}
+function deleteCrop(){const c=crops.find(c=>c.id===currentCropId);if(!c)return;showConfirm('작물 삭제',`"${c.name}" 작물을 삭제할까요?`,()=>{crops=crops.filter(c=>c.id!==currentCropId);save();showPrev();});}
 function addCrop(){
   const name=document.getElementById('modal-name').value.trim();
   const val=document.getElementById('modal-emoji').value;
