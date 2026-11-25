@@ -208,6 +208,9 @@ button.theme-card .ct { display:block; color:#555c56; }
 .theme-order-btn:disabled{opacity:.35;cursor:default}
 .global-result{display:block;width:100%;padding:12px 14px;border:0;border-bottom:1px solid #eee;background:white;text-align:left;font:inherit;cursor:pointer}
 .global-result .mc-title{display:block}
+.memo-photo-draft-item{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;font-size:14px;overflow-wrap:anywhere}
+.memo-photo-draft-item img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+.memo-photo-draft-item button{padding:6px 10px;border:0;border-radius:6px;background:#f0ede6;color:#433;cursor:pointer;flex:none}
 .photo-file-option{display:inline-block;width:auto;padding:6px 10px;font-size:13px;cursor:pointer}
 .photo-file-input{position:absolute;width:1px;height:1px;opacity:0}
 .photo-file-option:has(+ .photo-file-input:focus-visible){outline:2px solid #355c43}
@@ -2689,8 +2692,19 @@ function isMemoBoard(theme){
     !["travel","restaurant","movie"].includes(theme.id);
 }
 
-function memoPhoto(m){
-  return typeof m.photo === "string" && /^data:image\/jpeg;base64,[a-z0-9+/=]+$/i.test(m.photo) ? m.photo : "";
+let memoPhotoDraft=[];
+function memoPhotos(m){
+  const photos=Array.isArray(m.photos)?m.photos:[m.photo];
+  return photos.filter(photo=>typeof photo==="string"&&/^data:image\/jpeg;base64,[a-z0-9+/=]+$/i.test(photo));
+}
+
+function renderMemoPhotoDraft(){
+  const list=document.getElementById("mm-photo-list");
+  list.innerHTML=memoPhotoDraft.map((photo,i)=>`<div class="memo-photo-draft-item">
+    ${typeof photo==="string"?`<img src="${photo}" alt="첨부 사진 ${i+1}">`:`<span>${esc(photo.name)}</span>`}
+    <button type="button" data-remove-memo-photo="${i}" aria-label="첨부 사진 ${i+1} 삭제">삭제</button>
+  </div>`).join("");
+  document.getElementById("mm-photo-name").textContent=memoPhotoDraft.length?`사진 ${memoPhotoDraft.length}장`:"사진을 여러 장 첨부할 수 있습니다.";
 }
 
 function boardMetadata(m){
@@ -2917,7 +2931,7 @@ function buildDetailView(){
 
 function buildMemoItem(m, theme) {
   if(isMemoBoard(theme)){
-    const photo=memoPhoto(m);
+    const [photo]=memoPhotos(m);
     return `<div class="mc mc-board${m.pinned?" mc-pinned":""}">
       <div class="mc-info" data-view="${esc(m.id)}">
         ${photo?`<img class="mc-photo" src="${photo}" alt="첨부 사진" loading="lazy">`:""}
@@ -2929,7 +2943,7 @@ function buildMemoItem(m, theme) {
       <div class="mc-acts"><button data-edit="${esc(m.id)}" aria-label="수정">✏️</button><button data-delete="${esc(m.id)}" aria-label="삭제">🗑️</button></div>
     </div>`;
   }
-  const photo=memoPhoto(m);
+  const [photo]=memoPhotos(m);
   const isWatchedTheme = activeTheme === "movie";
   const watched = isWatchedTheme && m.status === "봤다";
   const hasStar = shouldShowStar(activeTheme, m.status) && parseInt(m.rating||0) > 0;
@@ -2996,7 +3010,7 @@ function buildViewModal(){
     </div>
     ${fieldsHtml?`<div class="vm-field-list">${fieldsHtml}</div>`:""}
     ${isMemoBoard(theme)?boardMetadata(m):""}
-    ${memoPhoto(m)?`<img class="board-photo" src="${memoPhoto(m)}" alt="첨부 사진">`:""}
+    ${memoPhotos(m).map((photo,i)=>`<img class="board-photo" src="${photo}" alt="첨부 사진 ${i+1}" loading="lazy">`).join("")}
     ${noteHtml}
     <div class="vm-btns">
       <button class="vm-close-btn" id="btn-vm-close">닫기</button>
@@ -3106,11 +3120,13 @@ function buildMemoModal(){
       <label><input id="mm-important" type="checkbox" ${m.important?"checked":""}> 중요 메모</label>
     </div>` : "";
   const photoFields = `
-    <div class="f-row"><label class="f-lbl" for="mm-photo">첨부 사진</label><input id="mm-photo" type="file" accept="image/*">
+    <div class="f-row"><span class="f-lbl">첨부 사진</span>
+    <input id="mm-photo" type="file" accept="image/*" multiple hidden>
+    <button type="button" class="btn-sec photo-file-option" id="mm-gallery-btn">갤러리에서 사진 선택</button>
     <label class="btn-sec photo-file-option" for="mm-photo-file">파일 앱에서 선택</label>
-    <input id="mm-photo-file" type="file" class="photo-file-input" aria-label="파일 앱에서 사진 선택">
-    <span id="mm-photo-name" aria-live="polite"></span>
-    ${memoPhoto(m)?`<img class="board-photo" src="${memoPhoto(m)}" alt="기존 첨부 사진"><label><input id="mm-remove-photo" type="checkbox"> 기존 사진 삭제</label>`:""}</div>
+    <input id="mm-photo-file" type="file" multiple class="photo-file-input" aria-label="파일 앱에서 사진 선택">
+    <div id="mm-photo-name" class="f-lbl" aria-live="polite"></div>
+    <div id="mm-photo-list"></div></div>
     <p id="mm-board-error" role="alert" hidden></p>`;
   const noteStyle = isRecipe ? 'min-height:160px' : '';
   return `<div class="modal-bg" id="modal-bg-memo"><div class="modal-box"><div class="modal-handle"></div>
@@ -3252,7 +3268,7 @@ async function saveMemoModal(){
   const button=get("btn-save-modal"), error=get("mm-board-error");
   if(button.disabled)return;
   const themeId=activeTheme, editId=modalEditId;
-  const file=get("mm-photo").files[0]||get("mm-photo-file").files[0];
+  const draft=[...memoPhotoDraft];
   const targetId=get("mm-move")?.value||themeId;
   const target=themes.find(t=>t.id===targetId);
   if(!target || (targetId!==themeId && themeIsLocked(targetId))){
@@ -3263,17 +3279,20 @@ async function saveMemoModal(){
     m.pinned=get("mm-pin").checked;
     m.important=get("mm-important").checked;
   }
-  m.photo=get("mm-remove-photo")?.checked?"":memoPhoto(modalMemo);
+  m.photo=undefined;
+  m.photos=[];
   button.disabled=true;
   error.hidden=true;
   try{
-    if(file){
-      try{m.photo=await compressBoardPhoto(file);}
-      catch{
-        error.textContent="사진을 읽지 못했습니다. JPG 또는 PNG 사진으로 다시 시도해 주세요.";
-        error.hidden=false;
-        return;
+    try{
+      for(const photo of draft){
+        if(!button.isConnected)return;
+        m.photos.push(typeof photo==="string"?photo:await compressBoardPhoto(photo));
       }
+    }catch{
+      error.textContent="사진을 읽지 못했습니다. JPG 또는 PNG 사진으로 다시 시도해 주세요.";
+      error.hidden=false;
+      return;
     }
     if(!button.isConnected)return;
     const current=memos[themeId]||[];
@@ -3417,13 +3436,28 @@ function bind(){
     const result=e.target.closest("[data-search-memo]");
     if(result)openTheme(result.dataset.searchTheme,result.dataset.searchMemo);
   });
-  for(const [id,other] of [["mm-photo","mm-photo-file"],["mm-photo-file","mm-photo"]]){
-    $(id)?.addEventListener("change",e=>{
-      if(!e.target.files.length)return;
-      $(other).value="";
-      $("mm-photo-name").textContent=e.target.files[0].name;
+  $("mm-gallery-btn")?.addEventListener("click",()=>$("mm-photo").click());
+  if($("mm-photo-list")){
+    memoPhotoDraft=memoPhotos(modalMemo);
+    renderMemoPhotoDraft();
+    for(const id of ["mm-photo","mm-photo-file"]){
+      $(id).addEventListener("change",e=>{
+        const files=[...e.target.files];
+        e.target.value="";
+        if(!files.length||$("btn-save-modal").disabled)return;
+        memoPhotoDraft.push(...files);
+        $("mm-board-error").hidden=true;
+        renderMemoPhotoDraft();
+      });
+    }
+    $("mm-photo-list").addEventListener("click",e=>{
+      const button=e.target.closest("[data-remove-memo-photo]");
+      if(!button||$("btn-save-modal").disabled)return;
+      memoPhotoDraft.splice(Number(button.dataset.removeMemoPhoto),1);
+      $("mm-board-error").hidden=true;
+      renderMemoPhotoDraft();
     });
-  }
+  }else memoPhotoDraft=[];
   $("btn-srch")?.addEventListener("click",()=>{showSearch=!showSearch;if(!showSearch)searchText="";render();if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50);});
   const srchInp=$("srch-inp");
   if(srchInp){
