@@ -204,6 +204,8 @@ button.theme-card .ct { display:block; color:#555c56; }
 .theme-palette input:checked::after{content:"✓";font-size:20px;font-weight:700}
 .theme-palette input:focus-visible{outline:2px solid #294c37;outline-offset:2px}
 .pin-input{-webkit-text-security:disc}
+.theme-order-hint{margin:0;padding:8px 12px;color:#52645a;font-size:13px}
+.theme-order-btn:disabled{opacity:.35;cursor:default}
 .global-result{display:block;width:100%;padding:12px 14px;border:0;border-bottom:1px solid #eee;background:white;text-align:left;font:inherit;cursor:pointer}
 .global-result .mc-title{display:block}
 .photo-file-option{display:inline-block;width:auto;padding:6px 10px;font-size:13px;cursor:pointer}
@@ -2476,7 +2478,7 @@ const DEFAULT_THEMES = [
   { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[], statusOptions:["해보고싶다","해봤다","자주해먹는다"], defaultStatus:"해보고싶다" },
 ];
 const TODAY = new Date().toISOString().split("T")[0];
-const SHOW_MAX = 8, REGION_MAX = 10, LIST_MAX = 10;
+const SHOW_MAX = 8, LIST_MAX = 50;
 const REGION_THEMES = ["travel","restaurant"];
 const APP_VER = "v1.4";
 // 별점 활성화: 테마ID -> 별점 표시 트리거 상태 목록
@@ -2560,8 +2562,6 @@ let editingThemeId= null;
 let editThemeName = "";
 let pinModal      = null;
 let pinError      = "";
-let expandedRegions = {};
-let showAllList     = false;
 // 뷰 모달 (읽기 전용)
 let showViewModal  = false;
 let viewMemoData   = null;
@@ -2655,8 +2655,8 @@ window.addEventListener("popstate",()=>{
   if(showAddTheme){showAddTheme=false;render();history.pushState({},""  );return;}
   if(pinModal){pinModal=null;pinError="";render();history.pushState({},""  );return;}
   if(pendingDelete||pendingThemeDelete){pendingThemeDelete=null;pendingDelete=null;render();history.pushState({},""  );return;}
-  if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};saveViewState();render();history.pushState({},""  );return;}
-  if(view==="themes"){view="home";saveViewState();render();history.pushState({},""  );return;}
+  if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";saveViewState();render();history.pushState({},""  );return;}
+  if(view==="themes"){clearGlobalSearch();view="home";saveViewState();render();history.pushState({},""  );return;}
   if(view==="settings"){view="themes";saveViewState();render();history.pushState({},""  );return;}
 });
 
@@ -2749,6 +2749,11 @@ function buildGlobalResults(){
   </button>`).join("")}</div>`;
 }
 
+function clearGlobalSearch(){
+  showGlobalSearch=false;
+  globalQuery="";
+}
+
 function openTheme(id,memoId){
   if(themeIsLocked(id)){
     pinModal={action:"enter",themeId:id,memoId};
@@ -2757,7 +2762,7 @@ function openTheme(id,memoId){
     return;
   }
   activeTheme=id;view="detail";filterStatus="전체";showSearch=false;searchText="";
-  importantOnly=false;showAllList=false;expandedRegions={};
+  importantOnly=false;
   const match=(memos[id]||[]).find(m=>String(m.id)===memoId);
   if(match){viewMemoData={...match};showViewModal=true;}
   saveViewState();render();history.pushState({},"");
@@ -2812,8 +2817,8 @@ function buildHome(){
   html+=`<div class="todo-board">`;
   html+=`<div class="board-head"><span class="board-title">${esc(themes.find(t=>t.id==="daily")?.name||"할 일")}</span><span class="board-count">미완료 ${pend.length}개</span></div>`;
   const available=themes.filter(t=>!themeIsLocked(t.id));
-  const catOpts=available.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join("");
-  const defT=available[0];
+  const defT=available.find(t=>t.id==="daily")||available[0];
+  const catOpts=available.map(t=>`<option value="${esc(t.id)}" ${t===defT?"selected":""}>${esc(t.name)}</option>`).join("");
   if(!defT)return html+`<div class="no-todo">테마 탭에서 게시판을 열어 주세요.</div></div>`;
   html+=`<div class="todo-input-row"><input type="text" id="todo-inp" placeholder="할 일을 입력하세요..." maxlength="80" autocomplete="off"><button class="btn-tadd" id="btn-tadd">추가</button></div>
     <div class="todo-cat-row">
@@ -2942,35 +2947,25 @@ function buildMemoItem(m, theme) {
 
 function buildMemoListHTML(filtered,theme){
   if(!filtered.length) return `<div class="empty"><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
-  const show=showAllList?filtered:filtered.slice(0,LIST_MAX);
-  let html=`<div class="memo-list">${show.map(m=>buildMemoItem(m,theme)).join("")}</div>`;
-  if(filtered.length>LIST_MAX){
-    html+=`<button class="list-more-btn" id="btn-list-more">${showAllList?"▲ 접기":`▼ 더보기 (${filtered.length-LIST_MAX}개 더)`}</button>`;
-  }
-  return html;
+  return `<div class="memo-list">${filtered.slice(0,LIST_MAX).map(m=>buildMemoItem(m,theme)).join("")}</div>`;
 }
 
 function buildRegionGroups(filtered,theme){
   if(!filtered.length) return `<div class="empty"><div class="et">아직 메모가 없어요</div><div class="es">+ 추가 버튼으로 등록하세요</div></div>`;
   const ro=regionOrders[activeTheme]||{};
-  const groups={};
-  filtered.forEach(m=>{const r=(m.region||"지역 미입력").trim()||"지역 미입력";if(!groups[r])groups[r]=[];groups[r].push(m);});
+  const groups=Object.create(null);
+  filtered.slice(0,LIST_MAX).forEach(m=>{const r=(m.region||"지역 미입력").trim()||"지역 미입력";if(!groups[r])groups[r]=[];groups[r].push(m);});
   const keys=Object.keys(groups).sort((a,b)=>{
     if(a==="지역 미입력")return 1;if(b==="지역 미입력")return -1;
     const oa=ro[a]!==undefined?ro[a]:9999,ob=ro[b]!==undefined?ro[b]:9999;
     return oa!==ob?oa-ob:a.localeCompare(b,"ko");
   });
-  const expSet=expandedRegions[activeTheme]||new Set();
   let html=`<div class="region-group">`;
   keys.forEach(r=>{
-    const items=groups[r],isExp=expSet.has(r);
+    const items=groups[r];
     const orderLabel=ro[r]!==undefined?` <span style="font-size:10px;color:#bbb;background:#f0ede6;padding:1px 6px;border-radius:8px">No.${ro[r]}</span>`:"";
     html+=`<div class="region-hdr"><span>📍</span><span class="region-hdr-name">${esc(r)}${orderLabel}</span><span class="region-hdr-count">${items.length}곳</span><div class="region-divider"></div></div>`;
-    const show=isExp?items:items.slice(0,REGION_MAX);
-    html+=`<div class="memo-list">${show.map(m=>buildMemoItem(m,theme)).join("")}`;
-    if(items.length>REGION_MAX){
-      html+=`<button class="region-more-btn" data-region-more="${esc(r)}">${isExp?"▲ 접기":`▼ 더보기 (${items.length-REGION_MAX}개 더)`}</button>`;
-    }
+    html+=`<div class="memo-list">${items.map(m=>buildMemoItem(m,theme)).join("")}`;
     html+=`</div>`;
   });
   html+=`</div>`;
@@ -3012,11 +3007,14 @@ function buildViewModal(){
 
 function buildSettings(){
   let html=`<div class="settings-page"><div class="ss-section"><div class="ss-section-title">테마 관리</div>`;
-  themes.forEach(t=>{
+  if(themes.length>1)html+=`<p class="theme-order-hint">↑ ↓로 순서를 바꾸면 카드가 왼쪽부터 차례로 배치됩니다.</p>`;
+  themes.forEach((t,index)=>{
     const cnt=(memos[t.id]||[]).length,isLocked=!!locks[t.id],isEditing=editingThemeId===t.id;
     html+=`<div class="st-row"><div class="st-main">
       <div class="st-info"><div class="st-name">${esc(t.name)}</div><div class="st-sub">메모 ${cnt}개${isMemoBoard(t)?" · 일반형":" · 후기형"}${isLocked?" · 🔒":""}</div></div>
       <div class="st-btns">
+        <button type="button" class="st-btn theme-order-btn" data-order-id="${esc(t.id)}" data-order-step="-1" aria-label="${esc(t.name)} 위로" ${index===0?"disabled":""}>↑</button>
+        <button type="button" class="st-btn theme-order-btn" data-order-id="${esc(t.id)}" data-order-step="1" aria-label="${esc(t.name)} 아래로" ${index===themes.length-1?"disabled":""}>↓</button>
         <button class="st-btn st-btn-edit" data-edit-theme="${t.id}">✎</button>
         <button class="st-btn ${isLocked?"st-btn-lock-on":"st-btn-lock-off"}" data-lock-theme="${t.id}">${isLocked?"🔒":"🔓"}</button>
         <button class="st-btn st-btn-del" data-del-theme="${t.id}">삭제</button>
@@ -3306,17 +3304,17 @@ function bind(){
   const $=id=>document.getElementById(id);
 
   $("btn-save-data")?.addEventListener("click",saveData);
-  $("btn-go-themes")?.addEventListener("click",()=>{view="themes";saveViewState();render();history.pushState({},""  );});
+  $("btn-go-themes")?.addEventListener("click",()=>{clearGlobalSearch();view="themes";saveViewState();render();history.pushState({},""  );});
   $("btn-go-farm")?.addEventListener("click",openFarmApp);
   $("btn-go-settings")?.addEventListener("click",()=>{view="settings";editingThemeId=null;saveViewState();render();history.pushState({},""  );});
   $("btn-go-home")?.addEventListener("click",()=>{
-    view="home";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};
+    view="home";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";
     saveViewState();render();history.pushState({},""  );
   });
 
   $("btn-back")?.addEventListener("click",()=>{
-    if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};}
-    else if(view==="themes"){view="home";}
+    if(view==="detail"){view="themes";activeTheme=null;filterStatus="전체";showSearch=false;searchText="";}
+    else if(view==="themes"){clearGlobalSearch();view="home";}
     else if(view==="settings"){view="themes";}
     saveViewState();render();history.pushState({},""  );
   });
@@ -3355,6 +3353,22 @@ function bind(){
     showAddTheme=false;save();render();
   });
 
+  document.querySelectorAll("[data-order-id]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const {orderId,orderStep}=button.dataset;
+      const index=themes.findIndex(t=>t.id===orderId);
+      const target=index+Number(orderStep);
+      if(index<0 || target<0 || target>=themes.length)return;
+      const next=[...themes];
+      [next[index],next[target]]=[next[target],next[index]];
+      try{localStorage.setItem("jaks_themes",JSON.stringify(next));}
+      catch{showToast("테마 순서를 저장하지 못했습니다.");return;}
+      themes=next;
+      render();
+      const controls=[...document.querySelectorAll("[data-order-id]")].filter(item=>item.dataset.orderId===orderId);
+      (controls.find(item=>item.dataset.orderStep===orderStep&&!item.disabled)||controls.find(item=>!item.disabled))?.focus();
+    });
+  });
   document.querySelectorAll("[data-edit-theme]").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const tid=btn.dataset.editTheme,t=themes.find(t=>t.id===tid);
@@ -3394,7 +3408,7 @@ function bind(){
   $("pin-modal-bg")?.addEventListener("click",e=>{if(e.target.id==="pin-modal-bg"){pinModal=null;pinError="";render();}});
   $("pin-inp")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitPin();});
 
-  $("btn-important")?.addEventListener("click",()=>{importantOnly=!importantOnly;showAllList=false;render();});
+  $("btn-important")?.addEventListener("click",()=>{importantOnly=!importantOnly;render();});
   $("btn-global-search")?.addEventListener("click",()=>{
     showGlobalSearch=!showGlobalSearch;globalQuery="";render();$("global-search")?.focus();
   });
@@ -3419,7 +3433,7 @@ function bind(){
     srchInp.addEventListener("input",e=>{if(!composing){searchText=e.target.value;renderListOnly();}});
   }
 
-  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;showAllList=false;saveViewState();render();});});
+  document.querySelectorAll("[data-tab]").forEach(btn=>{btn.addEventListener("click",()=>{filterStatus=btn.dataset.tab;saveViewState();render();});});
 
   $("f-region")?.addEventListener("input",e=>{
     const rv=e.target.value.trim(),oi=$("f-region-order");if(!oi)return;
@@ -3502,16 +3516,7 @@ function bindListBtns(){
     });
   });
   document.querySelectorAll("[data-delete]").forEach(btn=>{btn.addEventListener("click",()=>{pendingDelete=btn.dataset.delete;render();});});
-  document.getElementById("btn-list-more")?.addEventListener("click",()=>{showAllList=!showAllList;renderListOnly();});
-  document.querySelectorAll("[data-region-more]").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const r=btn.dataset.regionMore;
-      if(!expandedRegions[activeTheme])expandedRegions[activeTheme]=new Set();
-      if(expandedRegions[activeTheme].has(r))expandedRegions[activeTheme].delete(r);
-      else expandedRegions[activeTheme].add(r);
-      renderListOnly();
-    });
-  });
+
 }
 
 function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
