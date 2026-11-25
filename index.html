@@ -2609,24 +2609,155 @@ function scheduleMidnightSave(){
 }
 scheduleMidnightSave();
 
-function saveData(){
-  try{
-    const data={version:APP_VER,savedAt:new Date().toISOString(),themes,memos,stickyNotes,regionOrders};
-    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-    const url=URL.createObjectURL(blob);const a=document.createElement("a");
-    a.href=url;a.download=`jaks메모_${TODAY}.json`;a.click();URL.revokeObjectURL(url);
-    showToast("💾 저장 완료!");
-  }catch(e){showToast("저장 실패");}
+const FARM_BACKUP_KEYS={
+  crops:"gv7_crops",todos:"gv7_todos",settings:"gv7_settings",trees:"gv7_trees",
+  flowers:"gv8_flowers",boardPosts:"gv8_board",cropTips:"gv_crop_tips",
+  treeTips:"gv_tree_tips",flowerTips:"gv_flower_tips"
+};
+const CAR_BACKUP_STORES=["services","imports"];
+let backupBusy=false;
+
+function openBackupCarDB(){
+  return new Promise((resolve,reject)=>{
+    const request=indexedDB.open("my-car-care-notebook",2);
+    request.onupgradeneeded=()=>{
+      const db=request.result;
+      for(const name of CAR_BACKUP_STORES){
+        if(!db.objectStoreNames.contains(name))db.createObjectStore(name,{keyPath:"id"});
+      }
+    };
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error);
+  });
 }
-function importData(e){
-  const file=e.target.files[0];if(!file)return;
-  const r=new FileReader();
-  r.onload=ev=>{try{const d=JSON.parse(ev.target.result);
-    if(d.themes)themes=d.themes;if(d.memos)memos=d.memos;
-    if(d.stickyNotes)stickyNotes=d.stickyNotes;if(d.regionOrders)regionOrders=d.regionOrders;
-    save();saveSticky();saveRegOrd();showToast("📤 불러오기 완료!");render();
-  }catch(err){showToast("파일 읽기 실패");}};
-  r.readAsText(file);e.target.value="";
+
+async function carBackupTransaction(mode, callback){
+  const db=await openBackupCarDB();
+  try{
+    return await new Promise((resolve,reject)=>{
+      const tx=db.transaction(CAR_BACKUP_STORES,mode);
+      tx.onabort=()=>reject(tx.error);
+      let result;
+      tx.oncomplete=()=>resolve(result());
+      try{result=callback(tx);}
+      catch(error){tx.abort();reject(error);}
+    });
+  }finally{db.close();}
+}
+
+function backupReceipt(blob){
+  if(!blob)return Promise.resolve(null);
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=()=>reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+function restoreReceipt(value){
+  if(value==null)return null;
+  const parts=typeof value==="string" && /^data:(image\/(?:jpeg|png|webp|gif));base64,([a-z0-9+/=]+)$/i.exec(value);
+  if(!parts)throw new Error("Invalid receipt");
+  return new Blob([Uint8Array.from(atob(parts[2]),char=>char.charCodeAt(0))],{type:parts[1]});
+}
+
+async function saveData(){
+  if(backupBusy)return;
+  backupBusy=true;
+  showToast("전체 백업을 만드는 중…");
+  try{
+    const stored=await carBackupTransaction("readonly",tx=>{
+      const records=tx.objectStore("services").getAll();
+      const imports=tx.objectStore("imports").getAll();
+      return ()=>({records:records.result,imports:imports.result});
+    });
+    const records=await Promise.all(stored.records.map(async record=>({...record,receipt:await backupReceipt(record.receipt)})));
+    const farm=Object.fromEntries(Object.entries(FARM_BACKUP_KEYS).map(([name,key])=>[name,JSON.parse(localStorage.getItem(key))]));
+    const data={format:"jaks-full-backup",backupVersion:1,version:APP_VER,savedAt:new Date().toISOString(),
+      themes,memos,stickyNotes,regionOrders,farm,car:{records,imports:stored.imports}};
+    const blob=new Blob([JSON.stringify(data)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;a.download=`jaks_전체백업_${TODAY}.json`;a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+    showToast("전체 백업 다운로드 완료");
+  }catch{showToast("전체 백업을 만들지 못했습니다.");}
+  finally{backupBusy=false;}
+}
+
+function backupObject(value){
+  return value!==null && typeof value==="object" && !Array.isArray(value);
+}
+
+async function importData(event){
+  const file=event.target.files[0];
+  event.target.value="";
+  if(!file||backupBusy)return;
+  backupBusy=true;
+  const prior=new Map();
+  let changed=false;
+  try{
+    const data=JSON.parse(await file.text());
+    const full=data?.format==="jaks-full-backup";
+    if(!backupObject(data)||!Array.isArray(data.themes)||!data.themes.every(t=>backupObject(t)&&typeof t.id==="string"&&Array.isArray(t.statusOptions))||
+       !backupObject(data.memos)||!Object.values(data.memos).every(Array.isArray))throw new Error("Invalid memo backup");
+    const replacements=new Map([["jaks_themes",JSON.stringify(data.themes)],["jaks_memos",JSON.stringify(data.memos)]]);
+    for(const [field,key] of [["stickyNotes","jaks_sticky"],["regionOrders","jaks_regord"]]){
+      if(data[field]!==undefined){
+        if(!backupObject(data[field]))throw new Error("Invalid memo settings");
+        replacements.set(key,JSON.stringify(data[field]));
+      }
+    }
+    let records,imports;
+    if(full){
+      if(data.backupVersion!==1||!backupObject(data.farm)||!Array.isArray(data.car?.records)||!Array.isArray(data.car?.imports))throw new Error("Invalid full backup");
+      for(const [field,key] of Object.entries(FARM_BACKUP_KEYS)){
+        if(!Object.hasOwn(data.farm,field))throw new Error("Invalid farm backup");
+        const value=data.farm[field];
+        const isList=["crops","todos","trees","flowers","boardPosts"].includes(field);
+        if(value!==null && !(isList?Array.isArray(value):backupObject(value)))throw new Error("Invalid farm data");
+        replacements.set(key,value===null?null:JSON.stringify(value));
+      }
+      records=data.car.records.map(record=>{
+        if(!backupObject(record)||typeof record.id!=="string"||typeof record.date!=="string"||typeof record.work!=="string")throw new Error("Invalid car record");
+        return {...record,receipt:restoreReceipt(record.receipt)};
+      });
+      imports=data.car.imports.map(record=>{
+        if(!backupObject(record)||typeof record.id!=="string")throw new Error("Invalid car import");
+        return {id:record.id};
+      });
+    }
+    if(!confirm(full?"메모·달빛농장·차계부 기록을 이 백업으로 교체할까요?":"현재 테마와 메모를 이 백업으로 교체할까요?"))return;
+    for(const key of replacements.keys())prior.set(key,localStorage.getItem(key));
+    changed=true;
+    for(const [key,value] of replacements){
+      if(value===null)localStorage.removeItem(key);
+      else localStorage.setItem(key,value);
+    }
+    if(full)await carBackupTransaction("readwrite",tx=>{
+      for(const [name,items] of [["services",records],["imports",imports]]){
+        const store=tx.objectStore(name);
+        store.clear();
+        for(const item of items)store.add(item);
+      }
+      return ()=>undefined;
+    });
+    changed=false;
+    themes=data.themes;memos=data.memos;
+    if(data.stickyNotes)stickyNotes=data.stickyNotes;
+    if(data.regionOrders)regionOrders=data.regionOrders;
+    if(full)for(const id of ["farm-iframe","car-iframe"])document.getElementById(id).removeAttribute("srcdoc");
+    editingThemeId=null;
+    showToast(full?"전체 백업을 복원했습니다.":"메모 백업을 불러왔습니다.");
+    render();
+  }catch{
+    if(changed){
+      for(const key of prior.keys())localStorage.removeItem(key);
+      for(const [key,value] of prior)if(value!==null)localStorage.setItem(key,value);
+    }
+    showToast("백업을 불러오지 못했습니다. 파일과 저장공간을 확인해 주세요.");
+  }finally{backupBusy=false;}
 }
 
 function getRegionOrder(tid,r){const ro=regionOrders[tid]||{};return ro[r.trim()]!==undefined?ro[r.trim()]:null;}
@@ -3046,9 +3177,10 @@ function buildSettings(){
   });
   html+=`<div class="ss-btn-row" id="btn-add-theme-s"><span class="ss-row-icon">➕</span><span class="ss-row-text">새 테마 추가</span><span class="ss-row-arrow">›</span></div></div>`;
   html+=`<div class="ss-section"><div class="ss-section-title">데이터</div>
-    <div class="ss-btn-row" id="btn-export"><span class="ss-row-icon">💾</span><span class="ss-row-text">JSON 파일로 저장</span><span class="ss-row-arrow">›</span></div>
-    <label class="ss-btn-row" for="import-inp" style="cursor:pointer"><span class="ss-row-icon">📤</span><span class="ss-row-text">JSON 파일 불러오기</span><span class="ss-row-arrow">›</span></label>
+    <div class="ss-btn-row" id="btn-export"><span class="ss-row-icon">💾</span><span class="ss-row-text">전체 백업 JSON 저장</span><span class="ss-row-arrow">›</span></div>
+    <label class="ss-btn-row" for="import-inp" style="cursor:pointer"><span class="ss-row-icon">📤</span><span class="ss-row-text">백업 JSON 불러오기</span><span class="ss-row-arrow">›</span></label>
     <input type="file" id="import-inp" accept=".json" style="display:none" onchange="importData(event)">
+    <p class="ss-info-text">전체 백업에는 메모·달빛농장·차계부와 첨부 사진이 포함됩니다.</p>
     <div class="ss-btn-row ss-danger" id="btn-reset-all"><span class="ss-row-icon">⚠️</span><span class="ss-row-text">전체 데이터 초기화</span><span class="ss-row-arrow">›</span></div>
   </div>`;
   html+=`<div class="ss-section"><div class="ss-section-title">앱 정보</div>
