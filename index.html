@@ -3141,7 +3141,7 @@ function buildViewModal(){
     </div>
     ${fieldsHtml?`<div class="vm-field-list">${fieldsHtml}</div>`:""}
     ${isMemoBoard(theme)?boardMetadata(m):""}
-    ${memoPhotos(m).map((photo,i)=>`<img class="board-photo" src="${photo}" alt="첨부 사진 ${i+1}" loading="lazy">`).join("")}
+    ${memoPhotos(m).map((photo,i)=>`<img class="board-photo" src="${photo}" alt="첨부 사진 ${i+1}" loading="eager">`).join("")}
     ${noteHtml}
     <div class="vm-btns">
       <button class="vm-close-btn" id="btn-vm-close">닫기</button>
