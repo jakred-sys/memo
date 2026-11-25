@@ -203,6 +203,12 @@ button.theme-card .ct { display:block; color:#555c56; }
 .theme-palette input:checked{border:2px solid currentColor}
 .theme-palette input:checked::after{content:"✓";font-size:20px;font-weight:700}
 .theme-palette input:focus-visible{outline:2px solid #294c37;outline-offset:2px}
+.pin-input{-webkit-text-security:disc}
+.global-result{display:block;width:100%;padding:12px 14px;border:0;border-bottom:1px solid #eee;background:white;text-align:left;font:inherit;cursor:pointer}
+.global-result .mc-title{display:block}
+.photo-file-option{display:inline-block;width:auto;padding:6px 10px;font-size:13px;cursor:pointer}
+.photo-file-input{position:absolute;width:1px;height:1px;opacity:0}
+.photo-file-option:has(+ .photo-file-input:focus-visible){outline:2px solid #355c43}
 .mc-preview{margin-top:5px;color:#575952;font-size:14px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;white-space:pre-line;overflow-wrap:anywhere}
 .mc-board{align-items:flex-start}.mc-board .mc-info{min-width:0;overflow-wrap:anywhere}.mc-board.mc-pinned{border-color:#91a89a}
 .mc-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:13px;color:#4e5a52}
@@ -2470,7 +2476,7 @@ const DEFAULT_THEMES = [
   { id:"recipe",     name:"요리 레시피", icon:"👨‍🍳", color:"#C97A1E", bg:"#FFF8EC", fields:[], statusOptions:["해보고싶다","해봤다","자주해먹는다"], defaultStatus:"해보고싶다" },
 ];
 const TODAY = new Date().toISOString().split("T")[0];
-const SHOW_MAX = 8, REGION_MAX = 5, LIST_MAX = 5;
+const SHOW_MAX = 8, REGION_MAX = 10, LIST_MAX = 10;
 const REGION_THEMES = ["travel","restaurant"];
 const APP_VER = "v1.4";
 // 별점 활성화: 테마ID -> 별점 표시 트리거 상태 목록
@@ -2500,6 +2506,27 @@ let activeTheme   = null;
 let filterStatus  = "전체";
 let showSearch    = false;
 let searchText    = "";
+let showGlobalSearch=false, globalQuery="", importantOnly=false;
+const unlockExpires=new Map();
+try{
+  for(const [id,expires] of JSON.parse(sessionStorage.getItem("jaks_unlock_expiries")||"[]")){
+    if(expires>Date.now())unlockExpires.set(id,expires);
+  }
+}catch{}
+function saveUnlocks(){
+  try{sessionStorage.setItem("jaks_unlock_expiries",JSON.stringify([...unlockExpires]));}catch{}
+}
+function forgetUnlock(id){
+  unlockExpires.delete(id);
+  saveUnlocks();
+}
+function themeIsLocked(id){
+  return !!locks[id] && (unlockExpires.get(id)||0)<=Date.now();
+}
+function rememberUnlock(id){
+  unlockExpires.set(id,Date.now()+10*60*1000);
+  saveUnlocks();
+}
 let showAddTheme  = false;
 let showModal     = false;
 let modalMemo     = {};
@@ -2556,7 +2583,8 @@ function restoreViewState() {
     const s = JSON.parse(localStorage.getItem("jaks_viewstate") || "{}");
     if (s.view) view = s.view;
     if (s.activeTheme && themes.find(t => t.id === s.activeTheme)) {
-      activeTheme = s.activeTheme;
+      if(s.view==="detail" && themeIsLocked(s.activeTheme))view="themes";
+      else activeTheme = s.activeTheme;
     } else if (s.view === "detail") {
       view = "home";
     }
@@ -2669,7 +2697,6 @@ function boardMetadata(m){
   const labels = [
     m.pinned ? "📌 상단 고정" : "",
     m.important ? "★ 중요" : "",
-    m.category,
     ...(Array.isArray(m.tags) ? m.tags.map(tag => "#" + tag) : [])
   ].filter(Boolean);
   return labels.length ? `<div class="mc-meta">${labels.map(label=>`<span>${esc(label)}</span>`).join("")}</div>` : "";
@@ -2682,8 +2709,9 @@ function getFiltered(){
     const ms=filterStatus==="전체"||(m.status||"")===filterStatus;
     const mt=!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText);
     if(board){
+      if(importantOnly&&!m.important)return false;
       const tags=Array.isArray(m.tags)?m.tags:[];
-      return [m.title,m.note,m.category,...tags].some(value=>String(value||"").toLocaleLowerCase("ko").includes(query));
+      return [m.title,m.note,...tags].some(value=>String(value||"").toLocaleLowerCase("ko").includes(query));
     }
     return ms&&mt;
   });
@@ -2694,7 +2722,9 @@ function getFiltered(){
 function buildApp(){
   let body="";
   if(view==="home")     body=buildHome();
-  if(view==="themes")   body=buildThemeGrid();
+  if(view==="themes") body=showGlobalSearch
+    ? `<div class="memo-view"><div id="global-results">${buildGlobalResults()}</div></div>`
+    : buildThemeGrid();
   if(view==="detail")   body=buildDetailView();
   if(view==="settings") body=buildSettings();
   return buildHeader()+body
@@ -2703,6 +2733,34 @@ function buildApp(){
     +(showViewModal&&viewMemoData?buildViewModal():"")
     +(pendingDelete||pendingThemeDelete?buildConfirm():"")
     +(pinModal?buildPinModal():"");
+}
+
+function buildGlobalResults(){
+  const terms=globalQuery.trim().toLocaleLowerCase("ko").split(/\s+/).filter(Boolean);
+  if(!terms.length)return '<p class="no-todo">제목, 내용, 태그를 검색하세요.</p>';
+  const results=themes.filter(t=>!themeIsLocked(t.id)).flatMap(t=>(memos[t.id]||[]).filter(m=>{
+    const text=[m.title,m.note,...(Array.isArray(m.tags)?m.tags:[])].join(" ").toLocaleLowerCase("ko");
+    return terms.every(term=>text.includes(term));
+  }).map(m=>({t,m})));
+  if(!results.length)return '<p class="no-todo">검색 결과가 없습니다.</p>';
+  return `<div class="memo-list">${results.map(({t,m})=>`<button type="button" class="global-result" data-search-theme="${esc(t.id)}" data-search-memo="${esc(m.id)}">
+    <span class="mc-title">${esc(m.title)}</span><span class="mc-meta">${esc(t.name)} · ${esc(m.date)}</span>
+    ${m.note?`<span class="mc-preview">${esc(m.note)}</span>`:""}
+  </button>`).join("")}</div>`;
+}
+
+function openTheme(id,memoId){
+  if(themeIsLocked(id)){
+    pinModal={action:"enter",themeId:id,memoId};
+    pinError="";render();history.pushState({},"");
+    document.getElementById("pin-inp")?.focus();
+    return;
+  }
+  activeTheme=id;view="detail";filterStatus="전체";showSearch=false;searchText="";
+  importantOnly=false;showAllList=false;expandedRegions={};
+  const match=(memos[id]||[]).find(m=>String(m.id)===memoId);
+  if(match){viewMemoData={...match};showViewModal=true;}
+  saveViewState();render();history.pushState({},"");
 }
 
 function buildHeader(){
@@ -2716,7 +2774,8 @@ function buildHeader(){
       </div></div>`;
   } else if(view==="themes"){
     hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:15px;font-weight:700">테마 선택</span></div>
-      <div class="hdr-right"><button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button><button class="btn-icon" id="btn-go-settings" aria-label="환경설정" title="환경설정">⚙️</button></div></div>`;
+      <div class="hdr-right"><button class="btn-hdr btn-save" id="btn-save-data">💾 저장</button><button type="button" class="btn-srch${showGlobalSearch?" on":""}" id="btn-global-search" aria-label="전체 테마 검색" aria-expanded="${showGlobalSearch}">🔍</button><button class="btn-icon" id="btn-go-settings" aria-label="환경설정" title="환경설정">⚙️</button></div></div>`;
+    if(showGlobalSearch)hdrHtml+=`<div class="search-zone"><input class="search-inp" id="global-search" type="search" aria-label="전체 테마 검색어" placeholder="전체 테마 검색" value="${esc(globalQuery)}"></div>`;
   } else if(view==="settings"){
     hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><span style="font-size:16px;font-weight:700">⚙️ 환경설정</span></div><div class="hdr-right"></div></div>`;
   } else if(view==="detail"){
@@ -2724,7 +2783,8 @@ function buildHeader(){
     hdrHtml=`<div class="hdr"><div class="hdr-left"><button class="btn-back" id="btn-back">←</button><button class="btn-icon" id="btn-go-home" title="처음 화면으로">🏠</button><span style="font-size:16px;font-weight:700">${esc(t.name)}</span></div>
       <div class="hdr-right">
         <span style="font-size:12px;color:#aaa">${(memos[activeTheme]||[]).length}개</span>
-        <button class="btn-srch${showSearch?" on":""}" id="btn-srch">🔍</button>
+        <button class="btn-srch${showSearch?" on":""}" id="btn-srch" aria-label="게시판 검색">🔍</button>
+        ${isMemoBoard(t)?`<button type="button" class="btn-srch${importantOnly?" on":""}" id="btn-important" aria-pressed="${importantOnly}">중요</button>`:""}
         <button class="btn-add-hdr" id="btn-add-modal" style="background:${t.color}">+ 추가</button>
       </div></div>`;
     if(showSearch) hdrHtml+=`<div class="search-zone"><input class="search-inp" id="srch-inp" placeholder="검색..." value="${esc(searchText)}" autocomplete="off"></div>`;
@@ -2745,15 +2805,16 @@ function buildStickyNote(tid){
 function saveStickyTA(tid,val){stickyNotes[tid]=val;saveSticky();}
 
 function buildHome(){
-  const all=memos["daily"]||[],pend=all.filter(m=>m.status!=="완료"),done=all.filter(m=>m.status==="완료");
+  const all=themeIsLocked("daily")?[]:(memos["daily"]||[]),pend=all.filter(m=>m.status!=="완료"),done=all.filter(m=>m.status==="완료");
   const flt=arr=>arr.filter(m=>!searchText||(m.title||"").includes(searchText)||(m.note||"").includes(searchText));
   const fp=flt(pend),fd=flt(done);
   let html=buildStickyNote("home");
   html+=`<div class="todo-board">`;
   html+=`<div class="board-head"><span class="board-title">${esc(themes.find(t=>t.id==="daily")?.name||"할 일")}</span><span class="board-count">미완료 ${pend.length}개</span></div>`;
-  const catOpts=themes.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join("");
-  const defT=themes[0];
-  if(!defT)return html+`<div class="no-todo">테마 탭에서 새 테마를 추가해 주세요.</div></div>`;
+  const available=themes.filter(t=>!themeIsLocked(t.id));
+  const catOpts=available.map(t=>`<option value="${t.id}">${esc(t.name)}</option>`).join("");
+  const defT=available[0];
+  if(!defT)return html+`<div class="no-todo">테마 탭에서 게시판을 열어 주세요.</div></div>`;
   html+=`<div class="todo-input-row"><input type="text" id="todo-inp" placeholder="할 일을 입력하세요..." maxlength="80" autocomplete="off"><button class="btn-tadd" id="btn-tadd">추가</button></div>
     <div class="todo-cat-row">
       <div class="cat-pick"><span style="font-size:12px;color:#888">📂</span><select id="todo-cat">${catOpts}</select></div>
@@ -2963,7 +3024,11 @@ function buildSettings(){
     if(isEditing) html+=`<div class="st-edit-area">
       <label class="st-edit-label">테마 이름</label>
       <input class="st-edit-name" id="st-name-inp" value="${esc(editThemeName)}" maxlength="12">
-      <div class="st-edit-btns"><button class="st-save-btn" id="btn-st-save">저장</button><button class="st-cancel-btn" id="btn-st-cancel">취소</button></div>
+      <div class="f-lbl" id="theme-edit-palette-label">카드 배경색</div>
+    <div class="theme-palette" id="theme-edit-palette" role="radiogroup" aria-labelledby="theme-edit-palette-label">
+      ${themeColorOptions("edit-theme-color", t.bg)}
+    </div>
+    <div class="st-edit-btns"><button class="st-save-btn" id="btn-st-save">저장</button><button class="st-cancel-btn" id="btn-st-cancel">취소</button></div>
     </div>`;
     html+=`</div>`;
   });
@@ -2979,6 +3044,10 @@ function buildSettings(){
   html+=`</div>`;return html;
 }
 
+function themeColorOptions(name,selected){
+  return THEME_COLORS.map((c,i)=>`<input type="radio" name="${name}" value="${i}" aria-label="${c.name}" style="--swatch:${c.bg}" ${c.bg===selected?"checked":""}>`).join("");
+}
+
 function buildThemeModal(){
   return `<div class="modal-bg" id="modal-bg-theme"><div class="modal-box"><div class="modal-handle"></div>
     <div class="modal-ttl">새 테마 추가</div>
@@ -2992,7 +3061,7 @@ function buildThemeModal(){
     </div>
     <div class="f-row"><div class="f-lbl" id="theme-palette-label">카드 배경색</div>
       <div class="theme-palette" id="theme-palette" role="radiogroup" aria-labelledby="theme-palette-label">
-        ${THEME_COLORS.map((c,i)=>`<input type="radio" name="theme-color" value="${i}" aria-label="${c.name}" style="--swatch:${c.bg}" ${i===0?"checked":""}>`).join("")}
+        ${themeColorOptions("theme-color",THEME_COLORS[0].bg)}
       </div>
       <div id="theme-color-preview" style="margin-top:8px;padding:10px;border-radius:8px;background:${THEME_COLORS[0].bg}">카드 미리보기</div>
     </div>
@@ -3032,7 +3101,7 @@ function buildMemoModal(){
     <div class="star-row">${[1,2,3,4,5].map(i=>`<button type="button" class="star-btn" data-star="${i}" style="color:${i<=curRating?'#FFB800':'#ddd'}">${i<=curRating?'★':'☆'}</button>`).join("")}</div>
   </div>` : `<div id="star-row"></div>`;
   const boardFields = isMemoBoard(theme) ? `
-    <div class="f-row"><label class="f-lbl" for="mm-category">분류</label><input class="f-inp" id="mm-category" maxlength="40" value="${esc(m.category)}"></div>
+    ${isEdit?`<div class="f-row"><label class="f-lbl" for="mm-move">이동할 테마</label><select class="f-sel" id="mm-move"><option value="${esc(theme.id)}">현재 테마 유지</option>${themes.filter(t=>t.id!==theme.id&&!themeIsLocked(t.id)).map(t=>`<option value="${esc(t.id)}">${esc(t.name)}</option>`).join("")}</select></div>`:""}
     <div class="f-row"><label class="f-lbl" for="mm-tags">태그 (쉼표로 구분)</label><input class="f-inp" id="mm-tags" maxlength="200" value="${esc(Array.isArray(m.tags)?m.tags.join(", "):"")}"></div>
     <div class="board-flags">
       <label><input id="mm-pin" type="checkbox" ${m.pinned?"checked":""}> 상단 고정</label>
@@ -3040,6 +3109,9 @@ function buildMemoModal(){
     </div>` : "";
   const photoFields = `
     <div class="f-row"><label class="f-lbl" for="mm-photo">첨부 사진</label><input id="mm-photo" type="file" accept="image/*">
+    <label class="btn-sec photo-file-option" for="mm-photo-file">파일 앱에서 선택</label>
+    <input id="mm-photo-file" type="file" class="photo-file-input" aria-label="파일 앱에서 사진 선택">
+    <span id="mm-photo-name" aria-live="polite"></span>
     ${memoPhoto(m)?`<img class="board-photo" src="${memoPhoto(m)}" alt="기존 첨부 사진"><label><input id="mm-remove-photo" type="checkbox"> 기존 사진 삭제</label>`:""}</div>
     <p id="mm-board-error" role="alert" hidden></p>`;
   const noteStyle = isRecipe ? 'min-height:160px' : '';
@@ -3086,8 +3158,7 @@ function buildPinModal(){
   return `<div class="pin-modal-bg" id="pin-modal-bg"><div class="pin-modal">
     <div class="pin-icon">${action==="enter"?"🔐":action==="setup"?"🔒":"🔓"}</div>
     <div class="pin-title">${title}</div><div class="pin-sub">${sub}</div>
-    <input class="pin-input" type="password" id="pin-inp" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="●●●●"
-      onkeydown="if(event.key==='Enter')submitPin()">
+    <input class="pin-input" type="text" id="pin-inp" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" autocomplete="off" aria-label="비밀번호 네 자리">
     <div class="pin-error" id="pin-err">${pinError}</div>
     <div class="pin-btns">
       <button style="background:#f0ede6;color:#555" id="btn-pin-cancel">취소</button>
@@ -3132,14 +3203,14 @@ function deleteTodo(id){
 }
 function submitPin(){
   const val=document.getElementById("pin-inp")?.value||"";
-  if(val.length<4){pinError="4자리를 입력해주세요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);return;}
-  const{action,themeId}=pinModal;
-  if(action==="setup"){locks[themeId]=val;saveLocks();pinModal=null;pinError="";showToast("🔒 잠금 설정 완료");render();}
+  if(!/^\d{4}$/.test(val)){pinError="4자리를 입력해주세요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);return;}
+  const{action,themeId,memoId}=pinModal;
+  if(action==="setup"){forgetUnlock(themeId);locks[themeId]=val;saveLocks();pinModal=null;pinError="";showToast("🔒 잠금 설정 완료");render();}
   else if(action==="enter"){
-    if(locks[themeId]===val){pinModal=null;pinError="";activeTheme=themeId;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};saveViewState();render();history.pushState({},""  );}
+    if(locks[themeId]===val){rememberUnlock(themeId);pinModal=null;pinError="";openTheme(themeId,memoId);}
     else{pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
   } else {
-    if(locks[themeId]===val){delete locks[themeId];saveLocks();pinModal=null;pinError="";showToast("🔓 잠금 해제 완료");render();}
+    if(locks[themeId]===val){delete locks[themeId];forgetUnlock(themeId);saveLocks();pinModal=null;pinError="";showToast("🔓 잠금 해제 완료");render();}
     else{pinError="비밀번호가 틀렸어요";render();setTimeout(()=>document.getElementById("pin-inp")?.focus(),30);}
   }
 }
@@ -3183,9 +3254,13 @@ async function saveMemoModal(){
   const button=get("btn-save-modal"), error=get("mm-board-error");
   if(button.disabled)return;
   const themeId=activeTheme, editId=modalEditId;
-  const file=get("mm-photo").files[0];
+  const file=get("mm-photo").files[0]||get("mm-photo-file").files[0];
+  const targetId=get("mm-move")?.value||themeId;
+  const target=themes.find(t=>t.id===targetId);
+  if(!target || (targetId!==themeId && themeIsLocked(targetId))){
+    error.textContent="이동할 테마를 다시 열고 선택해 주세요.";error.hidden=false;return;
+  }
   if(isMemoBoard(theme)){
-    m.category=get("mm-category").value.trim();
     m.tags=[...new Set(get("mm-tags").value.split(/[,#]/).map(tag=>tag.trim()).filter(Boolean))];
     m.pinned=get("mm-pin").checked;
     m.important=get("mm-important").checked;
@@ -3208,10 +3283,19 @@ async function saveMemoModal(){
       ? current.map(item=>item.id===editId?{...item,...m}:item)
       : [{...m,id:crypto.randomUUID?.()||Date.now().toString()},...current];
     const updated={...memos,[themeId]:next};
+    if(targetId!==themeId){
+      const moved=next.find(item=>item.id===editId);
+      if(!moved)return;
+      updated[themeId]=next.filter(item=>item.id!==editId);
+      const targetEntries=memos[targetId]||[];
+      const id=targetEntries.some(item=>item.id===moved.id)?(crypto.randomUUID?.()||Date.now().toString()):moved.id;
+      updated[targetId]=[{...moved,id,status:target.defaultStatus||"",rating:0},...targetEntries];
+    }
     localStorage.setItem("jaks_memos",JSON.stringify(updated));
     memos=updated;
     if(extra.region && extra.regionOrder!=="")setRegionOrder(themeId,extra.region,extra.regionOrder);
     showModal=false;modalEditId=null;modalRating=0;render();
+    if(targetId!==themeId)showToast("선택한 테마로 옮겼습니다.");
   }catch{
     error.textContent="저장하지 못했습니다. 사진을 빼거나 브라우저 저장공간을 확인해 주세요.";
     error.hidden=false;
@@ -3242,8 +3326,7 @@ function bind(){
       const tid=el.dataset.theme;
       if(tid==="__car__"){openCarApp();return;}
       if(tid==="__farm__"){openFarmApp();return;}
-      if(locks[tid]){pinModal={action:"enter",themeId:tid};pinError="";render();history.pushState({},""  );setTimeout(()=>$("pin-inp")?.focus(),50);return;}
-      activeTheme=tid;view="detail";filterStatus="전체";showSearch=false;searchText="";showAllList=false;expandedRegions={};saveViewState();render();history.pushState({},""  );
+      openTheme(tid);
     });
   });
 
@@ -3282,7 +3365,11 @@ function bind(){
   });
   $("btn-st-save")?.addEventListener("click",()=>{
     const name=($("st-name-inp")||{}).value?.trim();if(!name){showToast("이름을 입력해주세요");return;}
-    const t=themes.find(t=>t.id===editingThemeId);if(t)t.name=name;
+    const t=themes.find(t=>t.id===editingThemeId);if(t){
+      t.name=name;
+      const choice=document.querySelector('[name="edit-theme-color"]:checked');
+      if(choice){const {color,bg}=THEME_COLORS[Number(choice.value)];Object.assign(t,{color,bg});}
+    }
     save();editingThemeId=null;showToast("✅ 저장됐어요");render();
   });
   $("btn-st-cancel")?.addEventListener("click",()=>{editingThemeId=null;render();});
@@ -3298,7 +3385,7 @@ function bind(){
   $("btn-export")?.addEventListener("click",saveData);
   $("btn-reset-all")?.addEventListener("click",()=>{
     if(!confirm("모든 데이터를 초기화할까요?"))return;
-    memos={};locks={};stickyNotes={};regionOrders={};themes=JSON.parse(JSON.stringify(DEFAULT_THEMES));
+    memos={};locks={};unlockExpires.clear();saveUnlocks();stickyNotes={};regionOrders={};themes=JSON.parse(JSON.stringify(DEFAULT_THEMES));
     save();saveLocks();saveSticky();saveRegOrd();showToast("초기화 완료");render();
   });
 
@@ -3307,6 +3394,22 @@ function bind(){
   $("pin-modal-bg")?.addEventListener("click",e=>{if(e.target.id==="pin-modal-bg"){pinModal=null;pinError="";render();}});
   $("pin-inp")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitPin();});
 
+  $("btn-important")?.addEventListener("click",()=>{importantOnly=!importantOnly;showAllList=false;render();});
+  $("btn-global-search")?.addEventListener("click",()=>{
+    showGlobalSearch=!showGlobalSearch;globalQuery="";render();$("global-search")?.focus();
+  });
+  $("global-search")?.addEventListener("input",e=>{globalQuery=e.target.value;$("global-results").innerHTML=buildGlobalResults();});
+  $("global-results")?.addEventListener("click",e=>{
+    const result=e.target.closest("[data-search-memo]");
+    if(result)openTheme(result.dataset.searchTheme,result.dataset.searchMemo);
+  });
+  for(const [id,other] of [["mm-photo","mm-photo-file"],["mm-photo-file","mm-photo"]]){
+    $(id)?.addEventListener("change",e=>{
+      if(!e.target.files.length)return;
+      $(other).value="";
+      $("mm-photo-name").textContent=e.target.files[0].name;
+    });
+  }
   $("btn-srch")?.addEventListener("click",()=>{showSearch=!showSearch;if(!showSearch)searchText="";render();if(showSearch)setTimeout(()=>$("srch-inp")?.focus(),50);});
   const srchInp=$("srch-inp");
   if(srchInp){
@@ -3370,7 +3473,7 @@ function bind(){
     if(pendingThemeDelete){
       const id=pendingThemeDelete;
       themes=themes.filter(theme=>theme.id!==id);
-      delete memos[id];delete locks[id];delete stickyNotes[id];delete regionOrders[id];
+      delete memos[id];delete locks[id];forgetUnlock(id);delete stickyNotes[id];delete regionOrders[id];
       if(editingThemeId===id)editingThemeId=null;
       pendingThemeDelete=null;
       save();saveLocks();saveSticky();saveRegOrd();
